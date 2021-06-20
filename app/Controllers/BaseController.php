@@ -7,6 +7,8 @@ use CodeIgniter\HTTP\RequestInterface;
 use CodeIgniter\HTTP\ResponseInterface;
 use Psr\Log\LoggerInterface;
 
+use Modules\userManagement\Models\PermissionsModel;
+use Modules\userManagement\Models\ModulesModel;
 
 /**
  * Class BaseController
@@ -28,8 +30,7 @@ class BaseController extends Controller
 	 *
 	 * @var array
 	 */
-	protected $helpers = [];
-
+	protected $helpers = ['link', 'namesearch'];
 	/**
 	 * Constructor.
 	 *
@@ -48,5 +49,23 @@ class BaseController extends Controller
 		// E.g.: $this->session = \Config\Services::session();
 		$this->session = \Config\Services::session();
 		$this->validation = \Config\Services::validation();
+	}
+
+	public function __construct()
+	{
+		$this->session = \Config\Services::session();
+
+		$model_permission = new PermissionsModel();
+		$model_module = new ModulesModel();
+		
+		if(isset($_SESSION['user_logged_in']))
+		{
+			$this->permissions = $model_permission->like('allowed_roles', $_SESSION['rid'])->findAll();
+			$this->modules = $model_module->findAll();
+
+			$_SESSION['appmodules'] = $this->modules;
+			$_SESSION['userPermmissions'] = $this->permissions;
+		}
+		
 	}
 }

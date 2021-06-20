@@ -74,7 +74,7 @@
             </div>
             <div class="modal-footer justify-content-between">
               <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                <a class="btn btn-primary" href="<?php echo base_url('login') ?>">Yes</a>
+                <a class="btn btn-primary" href="<?php echo base_url() ?>">Yes</a>
             </div>
           </div>
           <!-- /.modal-content -->
