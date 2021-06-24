@@ -72,7 +72,8 @@
                               <td><?=esc($schedlab['num_people'])?></td>
                               <td>
                                 <a class="btn btn-outline-info btn-sm" href="<?=base_url('admin/schedlabs/edit/' . esc($schedlab['id'], 'url'))?>"> Edit </a>
-                                <a class="btn btn-danger" href="<?=base_url('admin/schedlabs/delete/' . esc($schedlab['id'], 'url'))?>"> Delete </a>
+                                <!-- <a class="btn btn-danger" href="<?=base_url('admin/schedlabs/delete/' . esc($schedlab['id'], 'url'))?>"> Delete </a> -->
+                                <a href="#" data-toggle="modal" data-target="#modal-delete" class="btn btn-sm btn-danger">Delete</a>
                               </td>
                             </tr>
                             <?php $ctr++?>

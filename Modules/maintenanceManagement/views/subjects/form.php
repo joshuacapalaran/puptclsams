@@ -5,12 +5,12 @@
       <div class="container-fluid ">
         <div class="row mb-2">
           <div class="col-sm-6">
-            <h2 class="m-0"><?= $edit ? 'Editing': 'Adding'?> Course</h2>
+            <h2 class="m-0"><?= $edit ? 'Editing': 'Adding'?> Subjects</h2>
           </div><!-- /.col -->
           <div class="col-sm-6">
             <ol class="breadcrumb float-sm-right">
               <li class="breadcrumb-item"><a href="#">Home</a></li>
-              <li class="breadcrumb-item active">Courses</li>
+              <li class="breadcrumb-item active">Subjects</li>
             </ol>
           </div><!-- /.col -->
         </div><!-- /.row -->
@@ -24,8 +24,8 @@
           <div class="card card-default">
           <div class="card-header">
             <!-- <h3 class="card-title">Select2 (Default Theme)</h3> -->
-            
-          
+
+
             <div class="card-tools">
                 <?= \Config\Services::validation()->listErrors(); ?>
             <span class="d-none alert alert-success mb-3" id="res_message"></span>
@@ -34,7 +34,7 @@
           <!-- /.card-header -->
         <form action="<?= base_url('admin/subjects')?>/<?= $edit ? 'edit/'.esc($id): 'add'?>" method="post" accept-charset="utf-8">
           <div class="card-body">
-           
+
             <div class="row">
               <div class="col-md-6">
                 <div class="form-group">
@@ -43,7 +43,7 @@
                 </div>
                 <?php if(isset($errors['subj_code'])):?>
                   <p class="text-danger"><?=esc($errors['subj_code'])?><p>
-                <?php endif;?>   
+                <?php endif;?>
              </div>
               <!-- /.col -->
               <div class="col-md-6">
@@ -65,7 +65,7 @@
               <!-- /.col -->
             </div>
             <!-- /.row -->
-  
+
             <!-- /.row -->
           </div>
           <!-- /.card-body -->
@@ -77,4 +77,3 @@
 
     <!-- /.content -->
   </div>
-  

@@ -5,12 +5,12 @@
       <div class="container-fluid ">
         <div class="row mb-2">
           <div class="col-sm-6">
-            <h2 class="m-0"><?= $edit ? 'Editing': 'Adding'?> Lab Schedule</h2>
+            <h2 class="m-0"><?= $edit ? 'Editing': 'Adding'?> Subject Schedule</h2>
           </div><!-- /.col -->
           <div class="col-sm-6">
             <ol class="breadcrumb float-sm-right">
               <li class="breadcrumb-item"><a href="#">Home</a></li>
-              <li class="breadcrumb-item active">Lab Schedule</li>
+              <li class="breadcrumb-item active">Subjects Schedule</li>
             </ol>
           </div><!-- /.col -->
         </div><!-- /.row -->
@@ -24,7 +24,7 @@
           <div class="card card-default">
               <div class="card-header">
                 <!-- <h3 class="card-title">Select2 (Default Theme)</h3> -->
-                
+
                   <div class="card-tools">
                       <!-- <?= \Config\Services::validation()->listErrors(); ?> -->
                       <span class="d-none alert alert-success mb-3" id="res_message"></span>
@@ -33,7 +33,7 @@
               <!-- /.card-header -->
             <form action="<?= base_url('admin/schedsubject')?>/<?= $edit ? 'edit/'.esc($id): 'add'?>" method="post" accept-charset="utf-8">
                 <div class="card-body">
-                 
+
                   <div class="row">
                     <div class="col-md-6">
                     <div class="form-group">
@@ -90,7 +90,7 @@
                           <p class="text-danger"><?=esc($errors['lab_id'])?><p>
                         <?php endif;?>
 
-                
+
                         <div class="form-group">
                         <label class="form-label" for="professor_id">Professor</label>
                         <select name="professor_id" id="professor_id" class="form-control">
@@ -113,7 +113,7 @@
                       <?php if(isset($errors['start_time'])):?>
                         <p class="text-danger"><?=esc($errors['start_time'])?><p>
                       <?php endif;?>
-                      
+
                     </div>
                     <!-- /.col -->
                     <div class="col-md-6">
@@ -157,13 +157,13 @@
                           <option value="Friday"<?= ($value['day'] == 'Friday') ? 'selected':''?>> Friday </option>
                           <option value="Satutrday"<?= ($value['day'] == 'Satutrday') ? 'selected':''?>> Satutrday </option>
                           <option value="Sunday"<?= ($value['day'] == 'Sunday') ? 'selected':''?>> Sunday </option>
-  
+
                         <!--  -->
                         </select>
                     </div>
                       <?php if(isset($errors['day'])):?>
                         <p class="text-danger"><?=esc($errors['day'])?><p>
-                      <?php endif;?>       
+                      <?php endif;?>
 
                       <div class="form-group">
                       <label class="form-label" for="end_day">To Day (optional)</label>
@@ -176,16 +176,16 @@
                           <option value="Friday"<?= ($value['end_day'] == 'Friday') ? 'selected':''?>> Friday </option>
                           <option value="Saturday"<?= ($value['end_day'] == 'Saturday') ? 'selected':''?>> Saturday </option>
                           <option value="Sunday"<?= ($value['end_day'] == 'Sunday') ? 'selected':''?>> Sunday </option>
-  
+
                         <!--  -->
                         </select>
                     </div>
                       <?php if(isset($errors['end_day'])):?>
                         <p class="text-danger"><?=esc($errors['end_day'])?><p>
-                      <?php endif;?>       
-                 
+                      <?php endif;?>
+
                  <!-- /.form-group -->
-             
+
                     <div class="form-group">
                        <label class="form-label" for="end_time">End Time</label>
                         <input type="time" class="form-control" value="<?=isset($value['end_time']) ? esc($value['end_time']): ''?>" placeholder="End Time" id="end_time" name="end_time">
@@ -193,7 +193,7 @@
                       <?php if(isset($errors['end_time'])):?>
                         <p class="text-danger"><?=esc($errors['end_time'])?><p>
                       <?php endif;?>
-                 
+
                     <!-- /.form-group -->
                     <div class="form-group">
                       <button type="submit" class="btn btn-success">Save</button>
@@ -202,7 +202,7 @@
                     <!-- /.col -->
                   </div>
                   <!-- /.row -->
-        
+
                   <!-- /.row -->
                 </div>
                 <!-- /.card-body -->
@@ -216,4 +216,3 @@
 
     <!-- /.content -->
   </div>
-  

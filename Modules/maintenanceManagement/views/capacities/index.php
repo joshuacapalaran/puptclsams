@@ -51,7 +51,8 @@
                                 <td><?=esc($capacity['capacity'])?></td>
                                 <td>
                                   <a class="btn btn-outline-info btn-sm" href="<?=base_url('admin/capacities/edit/' . esc($capacity['id'], 'url'))?>"> Edit </a>
-                                  <a class="btn btn-danger" href="<?=base_url('admin/capacities/delete/' . esc($capacity['id'], 'url'))?>"> Delete </a>
+                                  <!-- <a class="btn btn-danger" href="<?=base_url('admin/capacities/delete/' . esc($capacity['id'], 'url'))?>"> Delete </a> -->
+                                  <a href="#" data-toggle="modal" data-target="#modal-delete" class="btn btn-sm btn-danger">Delete</a>
                                 </td>
                               </tr>
                               <?php $ctr++?>

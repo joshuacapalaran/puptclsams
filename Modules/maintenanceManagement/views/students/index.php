@@ -56,8 +56,9 @@
                                   <td><?=esc($student['year'].'-'.$student['section'])?></td>
                                   <td>
                                     <a class="btn btn-outline-info btn-sm" href="<?=base_url('admin/students/edit/' . esc($student['id'], 'url'))?>"> Edit </a>
-                                    <a class="btn btn-danger btn-sm" href="<?=base_url('/admin/students/delete_student/' . esc($student['id'], 'url'))?>"> Delete </a>
-                                  
+                                    <!-- <a class="btn btn-danger btn-sm" href="<?=base_url('/admin/students/delete_student/' . esc($student['id'], 'url'))?>"> Delete </a>
+                                   -->
+                                   <a href="#" data-toggle="modal" data-target="#modal-delete" class="btn btn-sm btn-danger">Delete</a>
                                   </td>
                                 </tr>
                                   <?php $ctr++?>
