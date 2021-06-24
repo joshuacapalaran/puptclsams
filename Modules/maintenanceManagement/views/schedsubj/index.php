@@ -61,7 +61,8 @@
                               <td><?=esc($schedsubject['start_sy'])?> - <?=esc($schedsubject['end_sy'])?></td>
                               <td>
                                 <a class="btn btn-outline-info btn" href="<?=base_url('admin/schedsubject/edit/' . esc($schedsubject['id'], 'url'))?>"> Edit </a>
-                                <a class="btn btn-danger" href="<?=base_url('admin/schedsubject/delete/' . esc($schedsubject['id'], 'url'))?>"> Delete </a>
+                                <!-- <a class="btn btn-danger" href="<?=base_url('admin/schedsubject/delete/' . esc($schedsubject['id'], 'url'))?>"> Delete </a> -->
+                                <a href="#" data-toggle="modal" data-target="#modal-delete" class="btn btn-sm btn-danger">Delete</a>
                                 <a class="btn btn-primary" href="<?=base_url('admin/schedsubject/attendance/' . esc($schedsubject['id'], 'url'))?>"> Attendance </a>
                               </td>
                             </tr>
@@ -132,7 +133,7 @@
             <div class="modal-footer justify-content-between">
               <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
               <!-- <button type="button" class="btn btn-primary">Save changes</button> -->
-              <a class="btn btn-danger" href="<?=base_url('admin/schedlabs/delete/' . esc($schedlab['id'], 'url'))?>"> Yes </a>
+              <a class="btn btn-danger" href="<?=base_url('admin/schedsubj/delete/' . esc($schedlab['id'], 'url'))?>"> Yes </a>
             </div>
           </div>
           <!-- /.modal-content -->

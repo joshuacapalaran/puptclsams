@@ -49,7 +49,8 @@
                                 <td><?=esc($suffix['suffix_name'])?></td>
                                 <td>
                                   <a class="btn btn-primary" href="<?=base_url('admin/suffixes/edit/' . esc($suffix['id'], 'url'))?>"> Edit </a>
-                                  <a class="btn btn-danger" href="<?=base_url('admin/suffixes/delete/' . esc($suffix['id'], 'url'))?>"> Delete </a>
+                                  <!-- <a class="btn btn-danger" href="<?=base_url('admin/suffixes/delete/' . esc($suffix['id'], 'url'))?>"> Delete </a> -->
+                                  <a href="#" data-toggle="modal" data-target="#modal-delete" class="btn btn-sm btn-danger">Delete</a>
                                 </td>
                               </tr>
                               <?php $ctr++?>
