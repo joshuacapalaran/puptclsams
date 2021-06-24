@@ -77,26 +77,7 @@
             </div>
           </div>
       </div>
-      <p>Time:</p>
-      <table  class="table table-bordered table-striped">
-                    <thead>
-                      <tr>
-                      <th>Date</th>
-                      <th></th>
-                      </tr>
-                      <tr class='text-center'>
-                        <th>Name</th>
-                        <th>Time in</th>
-                        <th>Time out</th>
-                      </tr>
-                    </thead>
-          <tbody>
-            <tr>
-              <td>Hello World</td>
-            </tr>
-            
-          </tbody>
-</table>
+      
   </section>
 </div>
 
@@ -112,13 +93,7 @@ $(function(){
       "responsive": true,
       dom: 'frtipB',
       buttons: [
-        {
-          text:'Excel',
-          action: function ( e, dt, button, config ) {
-            var schedule_id = "<?= $schedule_id?>";
-            window.location = '<?= base_url('admin/schedsubject/report')?>/'+schedule_id;
-          }  
-        }
+      'excel'
       ]
   });
 });
