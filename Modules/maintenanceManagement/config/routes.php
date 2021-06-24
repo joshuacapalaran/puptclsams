@@ -96,12 +96,14 @@
   $routes->get('delete/(:num)', 'Schoolyears::delete/$1');
 });
 
-//schoolyears
+//Schedlabs
   $routes->group('admin/schedlabs', ['namespace' => 'Modules\MaintenanceManagement\Controllers'], function($routes){
   $routes->get('/', 'Schedlabs::index');
   $routes->match(['get', 'post'], 'add', 'Schedlabs::add');
   $routes->match(['get', 'post'], 'edit/(:num)', 'Schedlabs::edit/$1');
   $routes->get('delete/(:num)', 'Schedlabs::delete/$1');
+  $routes->match(['get', 'post'],'events', 'Schedlabs::get_events');
+
 });
 
 
@@ -116,5 +118,12 @@ $routes->group('admin/schedsubject', ['namespace' => 'Modules\MaintenanceManagem
   $routes->match(['get', 'post'],'verify', 'Schedsubj::verify');
   $routes->match(['get', 'post'],'attendanceTimeOut', 'Schedsubj::attendance_time_out');
   $routes->match(['get', 'post'],'report/(:num)', 'Schedsubj::report/$1');
+  $routes->match(['get', 'post'],'events', 'Schedsubj::get_events');
 
+});
+
+//home
+$routes->group('admin/home', ['namespace' => 'Modules\MaintenanceManagement\Controllers'], function($routes){
+  $routes->get('/', 'Home::index');
+  $routes->match(['get', 'post'],'events', 'Home::get_events');
 });

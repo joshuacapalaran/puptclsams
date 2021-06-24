@@ -25,6 +25,7 @@
                 <div class="card-header">
                   <div class="form-group col-md-6 offset-md-3">
                       <input id="schedule_id" name="schedule_id" value="<?= $schedule_id;?>" hidden>
+                      <input id="course_id" name="course_id" value="<?= $subject['course_id']?>" hidden>
                       <label class="form-label"><?= $subject['subj_code']?> <?= $subject['subj_name']?></label><br>
 
                       <label for="stud_num" class="form-label">Student Number</label>
@@ -101,10 +102,11 @@ $(function(){
 $('#time_in').on('click', function(){
   var student_num = $('#stud_num').val();
   var schedule_id = $('#schedule_id').val();
+  var course_id = $('#course_id').val();
   $.ajax({
       url: "<?= base_url("admin/schedsubject/verify")?>",
       type: "POST",
-      data: {student_num :student_num, schedule_id:schedule_id},
+      data: {student_num :student_num, schedule_id:schedule_id, course_id:course_id },
       success: function(response){
         console.log(response)
         location.reload();
@@ -116,13 +118,15 @@ $('#time_out').on('click', function(e){
   // e.preventDefault();
   var student_num = $('#stud_num').val();
   var schedule_id = $('#schedule_id').val();
+  var course_id = $('#course_id').val();
+
   $.ajax({
       url: "<?= base_url("admin/schedsubject/attendanceTimeOut")?>",
       type: "POST",
-      data: {student_num :student_num, schedule_id:schedule_id},
+      data: {student_num :student_num, schedule_id:schedule_id, course_id:course_id},
       success: function(response){
         console.log(response)
-        // location.reload();
+        location.reload();
       }
   });
 });

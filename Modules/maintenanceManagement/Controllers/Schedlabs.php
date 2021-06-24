@@ -87,4 +87,40 @@ class Schedlabs extends BaseController {
 
   }
 
+  public function get_events(){
+    $schedlabsModel = new SchedlabsModel;
+    $schedlabs = $schedlabsModel->getLabSchedules();
+
+    $data = [];
+    foreach($schedlabs as $schedlab){
+       $data[] = [
+         'title' => $schedlab['event_name'],
+         'start' => $schedlab['date'].'T'.$schedlab['start_time'],
+         'end' => 'T'.$schedlab['end_time']
+       ];
+     }
+    echo json_encode($data);
+  }
+  
+  public function getDayNumber($day){
+      switch($day){
+        case 'Sunday': return 0;
+        break;
+        case 'Monday': return 1;
+        break;
+        case 'Tuesday': return 2;
+        break;
+        case 'Wednesday': return 3;
+        break;
+        case 'Thursday': return 4;
+        break;
+        case 'Friday': return 5;
+        break;
+        case 'Saturday': return 6;
+        break;
+  
+      }
+      return false;
+    }
+  
 }

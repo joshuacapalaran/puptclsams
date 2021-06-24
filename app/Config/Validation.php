@@ -487,4 +487,22 @@ class Validation
 								'required' => 'End Time is required.']
 		],
 	];
+
+	public $visitor = [
+		'name' => [
+			'rules' => 'required',
+			'label' => 'Name',
+			'errors' => ['required' => 'Name is required.']
+		],
+		'purpose' => [
+			'rules' => 'required',
+			'label' => 'Purpose',
+			'errors' => ['required' => 'Purpose is required.']
+		],
+		'lab_id' => [
+			'rules' => 'required',
+			'label' => 'Laboratory',
+			'errors' => ['required' => 'Laboratory is required.']
+		],
+	];
 }

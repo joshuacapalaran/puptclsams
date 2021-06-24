@@ -149,7 +149,7 @@ public function verify(){
 
 		$attendance = $attendanceModel->getAttendance($students['id']);
 
-		if (empty($attendance)) {
+		if (empty($attendance) && $_POST['course_id'] !== $students['course_id']) {
 			if($attendanceModel->insertAttendance($data)){
 				$_SESSION['success'] = 'You have succesfully time in!';
 				$this->session->markAsFlashdata('success');
@@ -211,6 +211,50 @@ public function attendance_time_out(){
 }
 
 
+public function get_events(){
+  $sched = new SchedsubjsModel;
+  $schedsubjects = $sched->getSubjSchedules();
+  $data = [];
+  foreach($schedsubjects as $schedsubject){
+
+      $dow = [];
+      if(!empty($schedsubject['end_day'])){
+        $day = $this->getDayNumber($schedsubject['day']);
+        $end_day = $this->getDayNumber($schedsubject['end_day']);
+        $dow = [$day,$end_day];
+      }else{
+        $day = $this->getDayNumber($schedsubject['day']);
+        $dow = [$day];
+      }
+      $data[] = [
+        'title' => $schedsubject['subj_name'],
+        'daysOfWeek' => $dow,
+        'id' => $schedsubject['id'],
+        'start' => $schedsubject['start_time']
+      ];
+  }
+  echo json_encode($data);
+}
+public function getDayNumber($day){
+    switch($day){
+      case 'Sunday': return 0;
+      break;
+      case 'Monday': return 1;
+      break;
+      case 'Tuesday': return 2;
+      break;
+      case 'Wednesday': return 3;
+      break;
+      case 'Thursday': return 4;
+      break;
+      case 'Friday': return 5;
+      break;
+      case 'Saturday': return 6;
+      break;
+
+    }
+    return false;
+  }
 
 public function report($id){
   $attendanceModel = new AttendancesModel();

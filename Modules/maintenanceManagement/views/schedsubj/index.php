@@ -16,9 +16,22 @@
       </div><!-- /.container-fluid -->
     </div>
     <!-- /.content-header -->
+    <!-- calendar -->
+  <section class="content">
+    <div class="container-fluid">
+      <div class="row">
+          <div class="col-12">
+            <div class="card">
+              <div class="col-md-12">
+              <div id="calendar"></div>
+            </div>
+          </div>
+      </div>
+    </div>
+  </section>
 
     <!-- Main content -->
-    <section class="content">
+  <section class="content">
       <div class="container-fluid">
         <div class="row">
           <div class="col-12">
@@ -140,3 +153,24 @@
         <!-- /.modal-dialog -->
       </div>
       <!-- /.modal -->
+
+<script>
+
+document.addEventListener('DOMContentLoaded', function() {
+    var calendarEl = document.getElementById('calendar');
+    var calendar = new FullCalendar.Calendar(calendarEl, {
+      initialView: 'dayGridMonth',
+      events: {
+        url: "<?= base_url('admin/schedsubject/events')?>",
+        timeZone: 'H:mm',
+
+      },
+
+      failure: function() {
+      alert('there was an error while fetching events!');
+      },
+     
+    });
+    calendar.render();
+  });
+</script>

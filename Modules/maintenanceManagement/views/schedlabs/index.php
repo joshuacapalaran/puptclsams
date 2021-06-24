@@ -16,7 +16,18 @@
       </div><!-- /.container-fluid -->
     </div>
     <!-- /.content-header -->
-
+    <section class="content">
+    <div class="container-fluid">
+      <div class="row">
+          <div class="col-12">
+            <div class="card">
+              <div class="col-md-12">
+              <div id="calendar"></div>
+            </div>
+          </div>
+      </div>
+    </div>
+  </section>
     <!-- Main content -->
     <section class="content">
       <div class="container-fluid">
@@ -55,7 +66,7 @@
                               <td><?=esc($schedlab['event_name'])?></td>
                               <td><?=esc($schedlab['category'])?></td>
                               <td><?=esc($schedlab['date'])?></td>
-                              <td><?=esc($schedlab['start_time'].'-'.$schedlab['end_time'])?></td>
+                              <td><?=esc(date("h:i A",strtotime($schedlab['start_time'])).' -'.date("h:i A", strtotime($schedlab['end_time'])))?></td>
                               <td><?=esc($schedlab['lab_name'])?></td>
                               <td><?=esc($schedlab['assigned_person'])?></td>
                               <td><?=esc($schedlab['num_people'])?></td>
@@ -139,3 +150,24 @@
         <!-- /.modal-dialog -->
       </div>
       <!-- /.modal -->
+
+<script>
+
+document.addEventListener('DOMContentLoaded', function() {
+    var calendarEl = document.getElementById('calendar');
+    var calendar = new FullCalendar.Calendar(calendarEl, {
+      defaultView: 'timeGridMonth',
+      events: {
+        url: "<?= base_url('admin/schedlabs/events')?>",
+        timeZone: 'H:mm',
+
+      },
+
+      failure: function() {
+      alert('there was an error while fetching events!');
+      },
+     
+    });
+    calendar.render();
+  });
+</script>

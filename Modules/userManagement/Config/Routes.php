@@ -16,3 +16,12 @@ $routes->group('admin/permissions', ['namespace' => 'Modules\UserManagement\Cont
     $routes->get('/', 'Permissions::index');
     $routes->match(['get', 'post'], 'edit', 'Permissions::edit_permission');
 });
+
+$routes->group('admin/visitors', ['namespace' => 'Modules\UserManagement\Controllers'], function($routes)
+{
+    $routes->get('/', 'Visitors::index');
+    $routes->match(['get', 'post'], 'logout', 'Visitors::logout_visitor');
+    $routes->match(['get', 'post'], 'add', 'Visitors::add_visitor');
+
+});
+
