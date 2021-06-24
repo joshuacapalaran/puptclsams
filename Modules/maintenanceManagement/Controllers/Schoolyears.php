@@ -64,7 +64,7 @@ class Schoolyears extends BaseController {
     } else {
       $this->session->setFlashData('error_message', 'Something went wrong!');
     }
-    return redirect()->to(base_url('admin/schoolyearss'));
+    return redirect()->to(base_url('admin/schoolyears'));
   }
 
   public function view($slug){

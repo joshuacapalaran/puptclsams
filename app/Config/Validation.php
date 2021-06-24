@@ -409,4 +409,82 @@ class Validation
 	];
 
 
+	public $role = [
+        'role_name' => [
+            'label'  => 'Role Name',
+            'rules'  => 'required',
+            'errors' => [
+                'required' => 'Role Name field is required.'
+            ]
+        ],
+
+        'description' => [
+            'label'  => 'Role Description',
+            'rules'  => 'required',
+            'errors' => [
+                'required' => 'Role desciption field is required.'
+            ]
+        ],
+
+        'function_id' => [
+            'label'  => 'Landing Page',
+            'rules'  => 'required',
+            'errors' => [
+                'required' => 'Landing Page field is required.'
+            ]
+        ],
+
+	];
+	
+	public $schedsubj = [
+		'subject_id' => [
+			'rules' => 'required',
+			'label' => 'Subject',
+			'errors' => ['required' => 'Subject is required.']
+		],
+		'course_id' => [
+			'rules' => 'required',
+			'label' => 'Course',
+			'errors' => ['required' => 'Course is required.']
+		],
+		'lab_id' => [
+			'rules' => 'required',
+			'label' => 'Laboratory',
+			'errors' => ['required' => 'Laboratory is required.']
+		],
+		'professor_id' => [
+			'rules' => 'required',
+			'label' => 'Professor',
+			'errors' => ['required' => 'Professor is required.']
+		],
+		'semester_id' => [
+			'rules' => 'required',
+			'label' => 'Semester',
+			'errors' => ['required' => 'Semester is required.']
+		],
+		'sy_id' => [
+			'rules' => 'required',
+			'label' => 'School Year',
+			'errors' => ['required' => 'School Year is required.']
+		],
+		'day' => [
+			'rules' => 'required',
+			'label' => 'Day',
+			'errors' => ['required' => 'Day is required.']
+		],
+
+		'start_time' => [
+			'rules' => 'required',
+			'label' => 'Start Time',
+			'errors' => [
+								'required' => 'Start Time is required.']
+		],
+
+		'end_time' => [
+			'rules' => 'required',
+			'label' => 'End Time',
+			'errors' => [
+								'required' => 'End Time is required.']
+		],
+	];
 }

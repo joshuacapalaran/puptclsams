@@ -8,4 +8,9 @@ class SubjectsModel extends BaseModel {
 
   protected $allowedFields = ['subj_code', 'subj_name', 'deleted_at'];
 
+
+  public function getSubjects(){
+    return $this->findAll();
+  }
+
 }

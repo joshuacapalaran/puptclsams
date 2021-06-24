@@ -18,11 +18,11 @@ class RolesModel extends \CodeIgniter\Model
 	    return $this->findAll();
 	}
 
-	public function getRoleWithFunction($args = [])
+	public function getRoleWithFunction()
 	{
 		$db = \Config\Database::connect();
 
-		$str = "SELECT a.*, b.function_name FROM roles a LEFT JOIN permissions b ON a.function_id = b.id WHERE a.status = '".$args['status']."' LIMIT ". $args['offset'] .','.$args['limit'];
+		$str = "SELECT a.*, b.function_name FROM roles a LEFT JOIN permissions b ON a.function_id = b.id WHERE a.status = 'a'";
 		// print_r($str); die();
 		$query = $db->query($str);
 

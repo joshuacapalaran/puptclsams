@@ -8,4 +8,8 @@ class CategoriesModel extends BaseModel {
 
   protected $allowedFields = ['category', 'deleted_at'];
 
+  public function getCategories(){
+    return $this->findAll();
+  }
+
 }

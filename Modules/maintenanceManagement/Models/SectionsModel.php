@@ -8,4 +8,8 @@ class SectionsModel extends BaseModel {
 
   protected $allowedFields = ['year', 'section', 'deleted_at'];
 
+
+  public function getSections(){
+    return $this->findAll();
+  }
 }

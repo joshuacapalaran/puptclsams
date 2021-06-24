@@ -8,4 +8,8 @@ class SuffixesModel extends BaseModel {
 
   protected $allowedFields = ['suffix_name', 'deleted_at'];
 
+
+  public function getSuffixes(){
+    return $this->findAll();
+  }
 }

@@ -2,6 +2,9 @@
 
 use App\Controllers\BaseController;
 use Modules\MaintenanceManagement\Models as MaintenanceManagement;
+use Modules\MaintenanceManagement\Models\SchedlabsModel;
+use Modules\MaintenanceManagement\Models\LabsModel;
+use Modules\MaintenanceManagement\Models\CategoriesModel;
 
 class Schedlabs extends BaseController {
 
@@ -10,12 +13,19 @@ class Schedlabs extends BaseController {
   }
 
   public function index(){
-    $data['schedlabs'] = $this->schedlabsModel->get();
+    $sched = new SchedlabsModel;
+    $schedLabs = $sched->getLabSchedules();
+    $data['schedlabs'] = $schedLabs;
     $data['view'] = 'Modules\MaintenanceManagement\Views\schedlabs\index';
     return view('template/index', $data);
   }
 
   public function add(){
+    $sched = new SchedlabsModel;
+    $categories = new CategoriesModel;
+    $labs = new LabsModel;
+    $data['categories'] = $categories->getCategories();
+    $data['labs'] = $labs->getLabs();
     $data['edit'] = false;
     $data['view'] = 'Modules\MaintenanceManagement\Views\schedlabs\form';
     if($this->request->getMethod() === 'post'){
@@ -35,6 +45,12 @@ class Schedlabs extends BaseController {
   }
 
   public function edit($id){
+
+    $categories = new CategoriesModel;
+    $labs = new LabsModel;
+    $data['categories'] = $categories->getCategories();
+    $data['labs'] = $labs->getLabs();
+
     $data['edit'] = true;
     $data['view'] = 'Modules\MaintenanceManagement\Views\schedlabs\form';
     $data['id'] = $id;

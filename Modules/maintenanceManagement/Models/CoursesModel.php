@@ -8,4 +8,9 @@ class CoursesModel extends BaseModel {
 
   protected $allowedFields = ['course_name', 'course_abbrev', 'deleted_at'];
 
+
+  public function getCourse(){
+    return $this->findAll();
+  }
+
 }

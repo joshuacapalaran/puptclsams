@@ -6,12 +6,13 @@
 //   $routes->match(['get', 'post'], 'edit/(:num)', '<controller name>::edit/$1');
 //   $routes->delete('delete/(:num)', '<controller name>::delete/$1');
 // });
+
 //students
   $routes->group('admin/students', ['namespace' => 'Modules\MaintenanceManagement\Controllers'], function($routes){
   $routes->get('/', 'Students::index');
   $routes->match(['get', 'post'], 'add', 'Students::add');
   $routes->match(['get', 'post'], 'edit/(:num)', 'Students::edit/$1');
-  $routes->get('delete/(:num)', 'Students::delete/$1');
+  $routes->get('delete_student/(:num)', 'Students::delete_student/$1');
 });
 
 //professors
@@ -101,4 +102,19 @@
   $routes->match(['get', 'post'], 'add', 'Schedlabs::add');
   $routes->match(['get', 'post'], 'edit/(:num)', 'Schedlabs::edit/$1');
   $routes->get('delete/(:num)', 'Schedlabs::delete/$1');
+});
+
+
+
+//schedsubj
+$routes->group('admin/schedsubject', ['namespace' => 'Modules\MaintenanceManagement\Controllers'], function($routes){
+  $routes->get('/', 'Schedsubj::index');
+  $routes->get('attendance/(:num)', 'Schedsubj::attendance/$1');
+  $routes->match(['get', 'post'], 'add', 'Schedsubj::add');
+  $routes->match(['get', 'post'], 'edit/(:num)', 'Schedsubj::edit/$1');
+  $routes->get('delete/(:num)', 'Schedsubj::delete/$1');
+  $routes->match(['get', 'post'],'verify', 'Schedsubj::verify');
+  $routes->match(['get', 'post'],'attendanceTimeOut', 'Schedsubj::attendance_time_out');
+  $routes->match(['get', 'post'],'report/(:num)', 'Schedsubj::report/$1');
+
 });

@@ -8,4 +8,9 @@ class LabsModel extends BaseModel {
 
   protected $allowedFields = ['lab_name', 'deleted_at'];
 
+
+  public function getLabs(){
+    return $this->findAll();
+  }
+
 }

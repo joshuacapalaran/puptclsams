@@ -80,22 +80,33 @@
               <!-- /.col -->
               <div class="col-md-6">
                 <div class="form-group">
-                  <label for="course">Course</label>
-                    <select name="course" id="course" class="form-control">
+                  <label for="suffix_id">Suffix (optional)</label>
+                    <select name="suffix_id" id="suffix_id" class="form-control">
                     <option>-- Please Select Course --</option>
+                    <?php foreach($suffixes as $suffix): ?>
+                    <option value="<?= $suffix['id'] ?>" <?=   ($suffix['id'] == $value['suffix_id']) ? 'selected':'' ?>><?= ucwords($suffix['suffix_name']) ?> </option>
+                    <?php endforeach; ?>
+                    <!--  -->
+                    </select>
+                </div>
+                <div class="form-group">
+                  <label for="course_id">Course</label>
+                    <select name="course_id" id="course_id" class="form-control">
+                    <option selected disabled>-- Please Select Course --</option>
+                    <?php foreach($courses as $course): ?>
+                    <option value="<?= $course['id'] ?>" <?=   ($course['id'] == $value['course_id']) ? 'selected':'' ?>><?= ucwords($course['course_abbrev']) ?> - <?= ucwords($course['course_name'])?></option>
+                    <?php endforeach; ?>
                     <!--  -->
                     </select>
                 </div>
                  <!-- /.form-group -->
                 <div class="form-group">
-                  <label for="year" >Year and Section</label>
-                    <select name="year" id="year" class="form-control">
-                        <option value="">-- Please Select Year and Section --</option>
-                        <option value='I - 1' >I - 1</option>
-                        <option value='II - 1'>II - 1</option>
-                        <option value='III - 1'>III - 1</option>
-                        <option value='IV - 1' >IV - 1</option>
-                        <option value='IV - 1' >V - 1</option>
+                  <label for="section_id" >Year and Section</label>
+                    <select name="section_id" id="section_id" class="form-control">
+                        <option selected disabled>-- Please Select Year and Section --</option>
+                        <?php foreach($sections as $section): ?>
+                        <option value="<?= $section['id'] ?>" <?=   ($section['id'] == $value['section_id']) ? 'selected':'' ?>><?= ucwords($section['year']) ?> - <?= ucwords($section['section'])?></option>
+                        <?php endforeach; ?>
                     </select>
                 </div>
                 <!-- /.form-group -->
@@ -104,9 +115,12 @@
                   <input type="number" name="pcnum" class="form-control" id="pcnum" placeholder="Please enter pc number">
                 </div>    -->             
                  <!-- /.form-group -->
-                <div class="form-group">
-                  <button type="submit" class="btn btn-success">Save</button>
-                </div>
+                 </div>
+                 <div class="col-md-12 text-right">
+                    <div class="form-group">
+                      <button type="submit" class="btn btn-success">Save</button>
+                    </div>
+                  </div>
               </div>
               <!-- /.col -->
             </div>

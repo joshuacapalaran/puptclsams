@@ -1,52 +1,115 @@
+<div class="content-wrapper">
+    <!-- Content Header (Page header) -->
+    <div class="content-header">
+      <div class="container-fluid ">
+        <div class="row mb-2">
+          <div class="col-sm-6">
+            <h2 class="m-0">List of Role</h2>
+          </div><!-- /.col -->
+          <div class="col-sm-6">
+            <ol class="breadcrumb float-sm-right">
+              <li class="breadcrumb-item"><a href="#">Home</a></li>
+              <li class="breadcrumb-item active">Roles</li>
+            </ol>
+          </div><!-- /.col -->
+        </div><!-- /.row -->
+      </div><!-- /.container-fluid -->
+    </div>
+    <!-- /.content-header -->
 
-<br>
-<div class="card bg-light ">
-  <div class="card-body">
-    <div class="row">
-       <div class="col-md-4">
-         <h1> <?=$function_title?> </h1>
-       </div>
-       <div class="col-md-2 offset-md-6">
-        <?php user_add_link('roles', $_SESSION['userPermmissions']) ?>
-       </div>
-     </div>
-    <br>
-      <?php $uri = new \CodeIgniter\HTTP\URI(current_url()); ?>
-     <div class="table-responsive">
-       <table class="table table-sm table-striped table-bordered index-table">
-        <thead class="thead-dark">
-          <tr class="text-center">
-            <th>#</th>
-            <th>Name</th>
-            <th>Description</th>
-            <th>Landing Page</th>
-            <th>Action</th>
-          </tr>
-        </thead>
-        <tbody>
-          <?php $cnt = 1; ?>
-          <?php foreach($roles as $role): ?>
-          <tr id="<?php echo $role['id']; ?>">
-            <th scope="row"><?= $cnt++ ?></th>
-            <td><?= ucwords($role['role_name']) ?></td>
-            <td><?= ucwords($role['description']) ?></td>
-            <td><?= ucwords($role['function_name']) ?></td>
-            <td class="text-center">
-              <?php
-                users_action('roles', $_SESSION['userPermmissions'], $role['id']);
-              ?>
-            </td>
-          </tr>
-          <?php endforeach; ?>
-        </tbody>
-      </table>
-     </div>
-    <hr>
+    <!-- Main content -->
+    <section class="content">
+      <div class="container-fluid">
+        <div class="row">
+          <div class="col-12">
+            <div class="card">
+                      <div class="card-header">
+                         <a href="<?=base_url('admin/roles/add')?>" class="btn btn-sm btn-success">+Add</a>
 
-    <div class="row">
-      <div class="col-md-6 offset-md-6">
-        <?php paginater('roles', count($all_items), PERPAGE, $offset) ?>
+                      </div>
+                      <!-- /.card-header -->
+                      <div class="card-body">
+                        <table id="example2" class="table table-bordered table-striped">
+                          <thead>
+                          <tr class="text-center">
+                            <th>#</th>
+                            <th>Name</th>
+                            <th>Description</th>
+                            <th>Landing Page</th>
+                            <th>Action</th>
+                          </tr>
+                          </thead>
+                          <tbody class="text-center">
+                            <?php foreach($roles as $role): ?>
+                            <tr>
+                              <td><?=esc($role['id'])?></td>
+                              <td><?=esc($role['role_name'])?></td>
+                              <td><?=esc($role['description'])?></td>
+                              <td><?=esc($role['function_name']) ?></td>
+
+                              <td>
+                               <a class="btn btn-outline-info btn-sm" href="<?=base_url('admin/roles/edit/' . esc($role['id'], 'url'))?>"> Edit </a>
+                               <a class="btn btn-danger btn-sm" href="<?=base_url('/admin/roles/delete_role/' . esc($role['id'], 'url'))?>"> Delete </a>
+                              </td>
+                            </tr>
+                            <?php endforeach; ?>
+                          </tbody>
+                        </table>
+                      </div>
+              <!-- /.card-body -->
+            </div>
+        </div>
       </div>
     </div>
+  </section>
+    <!-- /.content -->
   </div>
-</div>
+  <!-- /.content-wrapper -->
+  <!-- EDIT MODAL -->
+    <div class="modal fade" id="modal-edit">
+        <div class="modal-dialog modal-lg">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h4 class="modal-title">Edit Information</h4>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body">
+              <p>One fine body&hellip;</p>
+            </div>
+            <div class="modal-footer justify-content-between">
+              <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+              <button type="button" class="btn btn-primary">Save changes</button>
+            </div>
+          </div>
+          <!-- /.modal-content -->
+        </div>
+        <!-- /.modal-dialog -->
+      </div>
+      <!-- /.modal -->
+      <!-- DELETE MODAL -->
+      <div class="modal fade" id="modal-delete">
+        <div class="modal-dialog modal-sm">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h4 class="modal-title">Do you want to delete the data?</h4>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body">
+              <p>Select "Yes" below if you are ready to delete this data.</p>
+            </div>
+            <div class="modal-footer justify-content-between">
+              <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+              <a class="btn btn-danger" href="<?=base_url("admin/roles/delete/".esc($role['id'], 'url'))?>"> Yes </a>
+            </div>
+          </div>
+          <!-- /.modal-content -->
+        </div>
+        <!-- /.modal-dialog -->
+      </div>
+      <!-- /.modal -->
+      <!-- /DELETE MODAL -->
+    

@@ -8,4 +8,9 @@ class SemestersModel extends BaseModel {
 
   protected $allowedFields = ['sem', 'deleted_at'];
 
+
+  public function getSemesters(){
+    return $this->findAll();
+  }
+
 }

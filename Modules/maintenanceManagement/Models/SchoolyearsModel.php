@@ -8,4 +8,8 @@ class SchoolyearsModel extends BaseModel {
 
   protected $allowedFields = ['start_sy', 'end_sy', 'deleted_at'];
 
+  public function getSchoolYears(){
+    return $this->findAll();
+  }
+
 }

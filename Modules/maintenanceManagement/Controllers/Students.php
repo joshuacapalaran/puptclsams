@@ -2,6 +2,10 @@
 
 use App\Controllers\BaseController;
 use Modules\MaintenanceManagement\Models as MaintenanceManagement;
+use Modules\MaintenanceManagement\Models\StudentsModel;
+use Modules\MaintenanceManagement\Models\CoursesModel;
+use Modules\MaintenanceManagement\Models\SectionsModel;
+use Modules\MaintenanceManagement\Models\SuffixesModel;
 
 class Students extends BaseController {
 
@@ -10,12 +14,21 @@ class Students extends BaseController {
   }
 
   public function index(){
-    $data['students'] = $this->studentsModel->get();
+    $student = new StudentsModel;
+    $data['students'] = $student->getStudents();
     $data['view'] = 'Modules\MaintenanceManagement\Views\students\index';
     return view('template/index', $data);
   }
 
   public function add(){
+    $student = new StudentsModel;
+    $course = new CoursesModel;
+    $section = new SectionsModel;
+    $suffix = new SuffixesModel;
+
+    $data['courses'] = $course->getCourse();
+    $data['sections'] = $section->getSections();
+    $data['suffixes'] = $suffix->getSuffixes();
     $data['edit'] = false;
     $data['view'] = 'Modules\MaintenanceManagement\Views\students\form';
     if($this->request->getMethod() === 'post'){
@@ -38,7 +51,16 @@ class Students extends BaseController {
     $data['edit'] = true;
     $data['view'] = 'Modules\MaintenanceManagement\Views\students\form';
     $data['id'] = $id;
-    $data['value'] = $this->studentsModel->get(['id' => $id])[0];
+    $course = new CoursesModel;
+    $section = new SectionsModel;
+    $suffix = new SuffixesModel;
+    $student = new StudentsModel;
+
+    $data['courses'] = $course->getCourse();
+    $data['sections'] = $section->getSections();
+    $data['suffixes'] = $suffix->getSuffixes();
+    $data['value'] = $student->getStudentById($id);
+
     if(empty($data['value'])){
       die('Some Error Code Here (No Record)');
     }
@@ -58,8 +80,9 @@ class Students extends BaseController {
     return view('template/index', $data);
   }
 
-  public function delete($id){
-    if($this->studentsModel->softDelete($id)) {
+  public function delete_student($id){
+    
+    if($this->studentsModel->delete($id)) {
       $this->session->setFlashData('success_message', 'Successfully deleted student');
     } else {
       $this->session->setFlashData('error_message', 'Something went wrong!');
