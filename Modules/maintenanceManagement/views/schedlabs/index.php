@@ -160,8 +160,6 @@ document.addEventListener('DOMContentLoaded', function() {
       defaultView: 'timeGridMonth',
       events: {
         url: "<?= base_url('admin/schedlabs/events')?>",
-        timeZone: 'H:mm',
-
       },
 
       failure: function() {

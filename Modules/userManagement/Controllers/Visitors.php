@@ -24,7 +24,7 @@ class Visitors extends BaseController
 
     	$model = new VisitorsModel();
 
-        $data['visitors'] = $model->getVisitors();
+        $data['visitors'] = $model->getVisitorsLab();
 
         $data['view'] = 'Modules\UserManagement\Views\visitors\index';
         return view('template\index', $data);
@@ -37,33 +37,49 @@ class Visitors extends BaseController
     	$model = new VisitorsModel();
 		
 		$data['labs'] = $labs->getLabs();
-
+		$visit = $model->getVisitorByName($_POST['name']);
     	helper(['form', 'url']);
 
     	if(!empty($_POST))
     	{
-	    	if (!$this->validate('visitor'))
-		    {
-		    	$data['errors'] = \Config\Services::validation()->getErrors();
-		        $data['function_title'] = "Adding Role";
-		        $data['view'] = 'Modules\UserManagement\Views\visitors\frmVisitor';
-		        echo view('App\Views\template\index', $data);
-		    }
-		    else
-		    {
-		        if($model->loginVisitor($_POST))
-		        {
-		        	$_SESSION['success'] = 'You have added a new record';
-					$this->session->markAsFlashdata('success');
-		        	return redirect()->to(base_url('admin/visitors'));
-		        }
-		        else
-		        {
-		        	$_SESSION['error'] = 'You have an error in adding a new record';
-					$this->session->markAsFlashdata('error');
-		        	return redirect()->to(base_url('admin/visitors'));
-		        }
-		    }
+	    	// if (!$this->validate('visitor'))
+		    // {
+		    // 	$data['errors'] = \Config\Services::validation()->getErrors();
+		    //     $data['function_title'] = "Adding Role";
+		    //     $data['view'] = 'Modules\UserManagement\Views\visitors\frmVisitor';
+		    //     echo view('App\Views\template\index', $data);
+		    // }
+		    // else
+		    // {
+				if(!empty($visit)){
+					if($model->logoutVisitor($_POST, $visit['id']))
+					{
+						$_SESSION['success'] = 'You have added a new record';
+						$this->session->markAsFlashdata('success');
+						return redirect()->to(base_url());
+					}
+					else
+					{
+						$_SESSION['error'] = 'You have an error in adding a new record';
+						$this->session->markAsFlashdata('error');
+						return redirect()->to(base_url());
+					}
+				}else{
+					if($model->loginVisitor($_POST))
+					{
+						$_SESSION['success'] = 'You have added a new record';
+						$this->session->markAsFlashdata('success');
+						return redirect()->to(base_url());
+					}
+					else
+					{
+						$_SESSION['error'] = 'You have an error in adding a new record';
+						$this->session->markAsFlashdata('error');
+						return redirect()->to(base_url());
+					}
+				}
+		        
+		    // }
     	}
     	else
     	{

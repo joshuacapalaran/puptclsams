@@ -18,35 +18,33 @@ class VisitorsModel extends \CodeIgniter\Model
 	    return $this->findAll();
 	}
 
-	public function getVisitorWithFunction()
-	{
-		$db = \Config\Database::connect();
-
-		$str = "SELECT a.*, b.function_name FROM roles a LEFT JOIN permissions b ON a.function_id = b.id WHERE a.status = 'a'";
-		// print_r($str); die();
-		$query = $db->query($str);
-
-		// print_r($query->getResultArray()); die();
-	    return $query->getResultArray();
+	public function getVisitorsLab(){
+		$this->distinct('visitors.id');
+		$this->join('labs', 'visitors.lab_id = labs.id');
+		return $this->find();
 	}
-
     public function getVisitors()
 	{
 	    return $this->findAll();
 	}
 
+	public function getVisitorByName($name){
+		$this->where('name', $name);
+		return $this->first();
+	}
     public function loginVisitor($val_array = [])
 	{
 		date_default_timezone_set('Asia/Singapore');
-		$val_array['time_in'] = date('H:i:s');
+		$val_array['time_in'] = date('Y-m-d H:i:s');
 		$val_array['created_at'] = (new \DateTime())->format('Y-m-d H:i:s');
 	    return $this->save($val_array);
 	}
 
-    public function logoutVisitor($val_array = [], $id)
+    public function logoutVisitor($val_array = [],$id)
 	{
+		date_default_timezone_set('Asia/Singapore');
 		$val_array['updated_at'] = (new \DateTime())->format('Y-m-d H:i:s');
-		$val_array['time_out'] = date('H:i:s');
+		$val_array['time_out'] = date('Y-m-d H:i:s');
 		return $this->update($id, $val_array);
 	}
 

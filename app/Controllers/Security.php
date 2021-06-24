@@ -1,12 +1,14 @@
 <?php namespace App\Controllers;
 
 use Modules\maintenanceManagement\Models\UsersModel;
+use Modules\maintenanceManagement\Models\labsModel;
 
 class Security extends BaseController
 {
 	public function index()
 	{
 		$model = new UsersModel();
+		
 		if($_POST)
 		{
 			$loginOK = 0;
@@ -55,8 +57,11 @@ class Security extends BaseController
 		}
 		else
 		{
+			$labs = new labsModel();
+			$data['labs'] = $labs->getLabs();
+
 			echo view('App\Views\template\header');
-			echo view('App\Views\login');
+			echo view('App\Views\login',$data);
 			echo view('App\Views\template\footer');
 
         }

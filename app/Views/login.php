@@ -47,11 +47,75 @@
               <p>Enter your details and start journey with us</p>
               <button class="ghost" >
               <a href="<?php echo base_url('Registration') ?>" style="color: #E1AD01">Create account</a></button>
+              <br>
+              <button class="ghost" data-toggle="modal" data-target="#modal-edit" > For Visitors</a></button>
             </div>
           </div>
         </div>
       </div>
 
+      <div class="modal fade" id="modal-edit">
+        <div class="modal-dialog modal-lg">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h4 class="modal-title">Edit Information</h4>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="card-body">
+              <form action="<?= base_url('admin/visitors/add')?>" method="post" accept-charset="utf-8">
+           
+                  <div class="col-md-9">
+                    <div class="form-group">
+                      <label>Name</label>
+                      <input type="text" class="form-control" value="<?=isset($value['name']) ? esc($value['name']): ''?>" placeholder="Year" id="name" name="name" required>
+                    </div>
+                    <?php if(isset($errors['name'])):?>
+                    <p class="text-danger"><?=esc($errors['name'])?><p>
+                    <?php endif;?>
+
+                    
+                    <div class="form-group">
+                    <label>Purpose</label>
+                      <input type="text" class="form-control" value="<?=isset($value['purpose']) ? esc($value['purpose']): ''?>" placeholder="Section" id="purpose" name="purpose">
+                    </div>
+                    <?php if(isset($errors['purpose'])):?>
+                        <p class="text-danger"><?=esc($errors['purpose'])?><p>
+                    <?php endif;?>
+                    <!-- /.form-group -->
+
+                    <div class="form-group">
+                    <label>Laboratory</label>
+                    <select name="lab_id" id="lab_id" class="form-control">
+                      <option selected disabled>-- Please Select Laboratory --</option>
+                      <?php foreach($labs as $lab): ?>
+                      <option value="<?= $lab['id'] ?>" <?=   ($lab['id'] == $value['lab_id']) ? 'selected':'' ?>><?= ucwords($lab['lab_name']) ?></option>
+                      <?php endforeach; ?>
+                    <!--  -->
+                    </select>
+                    </div>
+                    <?php if(isset($errors['purpose'])):?>
+                        <p class="text-danger"><?=esc($errors['purpose'])?><p>
+                    <?php endif;?>
+                    <!-- /.form-group -->
+                    </div>
+                  <!-- /.col -->
+                  </div>
+                <!-- /.row -->
+ 
+           <!-- /.row -->
+            <div class="modal-footer justify-content-between">
+              <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+              <button type="submit" class="btn btn-primary"> Save changes</button>
+            </div>
+            </form>
+
+          </div>
+          <!-- /.modal-content -->
+        </div>
+        <!-- /.modal-dialog -->
+      </div>
 <?php if(isset($_SESSION["success_registered"])): ?>
 	<script type="text/javascript">
 	    alert_success('<?= $_SESSION["success_registered"]; ?>');

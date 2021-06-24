@@ -5,11 +5,12 @@
       <div class="container-fluid ">
         <div class="row mb-2">
           <div class="col-sm-6">
+            <h2 class="m-0">List of Visitors </h2>
           </div><!-- /.col -->
           <div class="col-sm-6">
             <ol class="breadcrumb float-sm-right">
-              <!-- <li class="breadcrumb-item"><a href="#">Home</a></li> -->
-              <!-- <li class="breadcrumb-item active">Visitors</li> -->
+              <li class="breadcrumb-item"><a href="#">Home</a></li>
+              <li class="breadcrumb-item active">Visitors</li>
             </ol>
           </div><!-- /.col -->
         </div><!-- /.row -->
@@ -25,13 +26,52 @@
 
           <div class="col-12">
             <div class="card">
-               
+                <div class="card-header">
+                </div>
+                <!-- /.card-header -->
                 <div class="card-body">
-                <CENTER>
-                <a href="<?=base_url('admin/visitors/add')?>" class="btn btn-sm btn-success">Log in</a>
-                </CENTER>
+                
+                  <table id="example2" class="table table-bordered table-striped">
+                    <thead>
+                    <tr class="text-center">
+                      <th>#</th>
+                      <th>Name</th>
+                      <th>Purpose</th>
+                      <th>Laboratory Name</th>
+                      <th>Time in</th>
+                      <th>Time out</th>
+                    </tr>
+                    </thead>
+                    <tbody class="text-center">
+                    <?php $ctr = 1?>
+                      <?php if(empty($visitors)): ?>
+                        <tr>
+                          <td colspan="6" class="text-center"> No Data Available </td>
+                        </tr>
+                      <?php else: ?>
+                        <?php foreach($visitors as $visitor): ?>
+                          <tr>
+                            <td><?=esc($ctr)?></td>
+                            <td><?=esc($visitor['name'])?></td>
+                            <td><?=esc($visitor['purpose'])?></td>
+                            <td><?=esc($visitor['lab_name'])?></td>
+                            <td><?=esc(date('h:i A', strtotime($visitor['time_in'])))?></td>
+                            <td><?=esc(($visitor['time_out'] != '0000-00-00 00:00:00') ? date('h:i A', strtotime($visitor['time_out'])) :'')?></td>
 
-                  
+                     
+                      </tr>
+                      <?php $ctr++?>
+                      <?php endforeach; ?>
+                    <?php endif; ?>
+                    </tbody>
+                    <!-- <tfoot>
+                    <tr class="text-center">
+                      <th>#</th>
+                      <th>Laboratory Name</th>
+                      <th>Action</th>
+                    </tr>
+                    </tfoot> -->
+                  </table>
                 </div>
               <!-- /.card-body -->
             </div>
