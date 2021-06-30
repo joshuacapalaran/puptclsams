@@ -2,6 +2,7 @@
 
 use App\Controllers\BaseController;
 use Modules\MaintenanceManagement\Models as MaintenanceManagement;
+use Modules\MaintenanceManagement\Models\capacitiesModel;
 
 class Capacities extends BaseController {
 
@@ -17,12 +18,13 @@ class Capacities extends BaseController {
   }
 
   public function add(){
+    $capacitiesModel = new capacitiesModel;
     $data['edit'] = false;
     $data['view'] = 'Modules\MaintenanceManagement\Views\capacities\form';
     $data['labs'] = $this->labsModel->get();
     if($this->request->getMethod() === 'post'){
       if($this->validate('capacities')){
-        if($this->capacitiesModel->add($_POST)){
+        if($capacitiesModel->add($_POST)){
           $this->session->setFlashData('success_message', 'Sucessfuly created a capacity');
         } else {
           $this->session->setFlashData('error_message', 'Something went wrong!');
@@ -62,16 +64,33 @@ class Capacities extends BaseController {
   }
 
   public function delete($id){
-    if($this->capacitiesModel->softDelete($id)) {
+    $capacitiesModel = new capacitiesModel;
+
+    if($capacitiesModel->inactive($id)) {
       $this->session->setFlashData('success_message', 'Successfully deleted capacity');
     } else {
       $this->session->setFlashData('error_message', 'Something went wrong!');
     }
     return redirect()->to(base_url('admin/capacities'));
   }
+  public function active($id){
+    $capacitiesModel = new capacitiesModel;
 
-  public function view($slug){
+    if($capacitiesModel->active($id)) {
+      $this->session->setFlashData('success_message', 'Successfully restored capacity');
+    } else {
+      $this->session->setFlashData('error_message', 'Something went wrong!');
+    }
+    return redirect()->to(base_url('admin/capacities'));
+  }
 
+  public function view($id){
+    $data['view'] = 'Modules\MaintenanceManagement\Views\capacities\view';
+    $data['id'] = $id;
+    $data['value'] = $this->capacitiesModel->get(['id' => $id])[0];
+    $data['labs'] = $this->labsModel->get();
+
+    return view('template/index', $data);
   }
 
 }

@@ -33,6 +33,7 @@
                           <tr class="text-center">
                             <th>#</th>
                             <th>Year & Section</th>
+                            <th>Status</th>
                             <th>Action</th>
                           </tr>
                           </thead>
@@ -47,12 +48,16 @@
                             <tr>
                               <td><?=esc($ctr)?></td>
                                 <td><?=esc($section['year'].'-'.$section['section'])?></td>
+                                <td><?=esc(($section['status'] == 'a') ? 'Active':'Inactive')?></td>
 
                               <td>
+                               <a class="btn btn-secondary btn-sm" href="<?=base_url('admin/sections/view/' . esc($section['id'], 'url'))?>"> View</a>
                                <a class="btn btn-outline-info btn-sm" href="<?=base_url('admin/sections/edit/' . esc($section['id'], 'url'))?>"> Edit </a>
-                                <button type="button" class="btn btn-sm btn-danger" data-toggle="modal" data-target="#modal-delete">
-                                Delete
-                                </button>
+                               <?php if($section['status'] == 'a'):?>
+                                  <a class="btn btn-danger btn-sm remove" onclick=" confirmUpdateStatus('<?= base_urL('admin/sections/delete/')?>',<?=$section['id']?>,'d')" title="deactivate">Delete</i></a>
+                                <?php else:?>
+                                  <a class="btn btn-info btn-sm remove" onclick=" confirmUpdateStatus('<?= base_urL('admin/sections/active/')?>',<?=$section['id']?>,'a')" title="activate">Restore</i></a>
+                                <?php endif;?>
                               </td>
                             </tr>
                             <?php $ctr++?>

@@ -38,7 +38,7 @@
             <div class="row">
               <div class="col-md-6">
                 <div class="form-group">
-                  <label class="form-label" for="subj_code">Subject Code</label>
+                  <label class="form-label" for="subj_code">Subject Code*</label>
                 <input type="text" class="form-control" value="<?=isset($value['subj_code']) ? esc($value['subj_code']): ''?>" placeholder="Subject Code" id="subj_code" name="subj_code">
                 </div>
                 <?php if(isset($errors['subj_code'])):?>
@@ -49,7 +49,7 @@
               <div class="col-md-6">
 
                 <div class="form-group">
-                 <label class="form-label" for="subj_name">Subject Name</label>
+                 <label class="form-label" for="subj_name">Subject Name*</label>
                 <input type="text" class="form-control" value="<?=isset($value['subj_name']) ? esc($value['subj_name']): ''?>" placeholder="Subject Name" id="subj_name" name="subj_name">
                 </div>
                 <?php if(isset($errors['subj_name'])):?>

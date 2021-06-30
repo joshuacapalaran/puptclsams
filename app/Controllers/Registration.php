@@ -2,11 +2,19 @@
 
 use Modules\maintenanceManagement\Models\UsersModel;
 use Modules\maintenanceManagement\Models\StudentsModel;
+use Modules\MaintenanceManagement\Models\CoursesModel;
+use Modules\MaintenanceManagement\Models\SectionsModel;
 
 class Registration extends BaseController
 {
 	public function index()
 	{
+        $course = new CoursesModel;
+        $section = new SectionsModel;
+        $data['courses'] = $course->getActiveCourse();
+        $data['sections'] = $section->getActiveSections();
+    
+
         if($_POST){
             if(array_search("", $_POST)){
                 $_SESSION['error_login'] = 'Please fill up all fields below';
@@ -22,26 +30,26 @@ class Registration extends BaseController
                     if($users_model->addStudentAccount($_POST)){
                         $user_id = $users_model->insertID();
                         if($student_model->addRegisteredStudent($_POST, $user_id)){
-                            $_SESSION['success_registered'] = 'You Successfuly have PUP-CLSAMS Account!';
-                            $this->session->markAsFlashdata('success_registered');
+                            $_SESSION['success_message'] = 'You Successfuly have PUP-CLSAMS Account!';
+                            $this->session->setFlashData('success_message',$_SESSION['success_message']);
                             return redirect()->to( base_url());
                         }
                         
                     }else{
-                        $_SESSION['error'] = 'You have an error in adding a new record';
-                        $this->session->markAsFlashdata('error');
+                        $_SESSION['error_message'] = 'You have an error in adding a new record';
+                        $this->session->setFlashData('error_message',$_SESSION['error_message']);
                         return redirect()->to( base_url('Registration'));
                     }
                     
                 }else{
-                    $_SESSION['error_login'] = 'Your Password and Re-type Password mismatch!';
-                    $this->session->markAsFlashdata('error_login');
+                    $_SESSION['error_message'] = 'Your Password and Re-type Password mismatch!';
+                    $this->session->setFlashData('error_message', $_SESSION['error_message']);
                     return redirect()->to(base_url("Registration"));
                 }
             }
         }
         echo view('App\Views\template\header');
-		echo view('App\Views\registration\index');
+		echo view('App\Views\registration\index',$data);
         echo view('App\Views\template\footer');
 		
 	}

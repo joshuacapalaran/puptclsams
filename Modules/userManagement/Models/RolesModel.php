@@ -22,7 +22,7 @@ class RolesModel extends \CodeIgniter\Model
 	{
 		$db = \Config\Database::connect();
 
-		$str = "SELECT a.*, b.function_name FROM roles a LEFT JOIN permissions b ON a.function_id = b.id WHERE a.status = 'a'";
+		$str = "SELECT a.*, b.function_name FROM roles a LEFT JOIN permissions b ON a.function_id = b.id";
 		// print_r($str); die();
 		$query = $db->query($str);
 
@@ -32,7 +32,7 @@ class RolesModel extends \CodeIgniter\Model
 
     public function getRoles()
 	{
-	    return $this->findAll();
+	    return $this->where('status','a')->findAll();
 	}
 
     public function addRoles($val_array = [])
@@ -53,6 +53,12 @@ class RolesModel extends \CodeIgniter\Model
 	{
 		$val_array['deleted_at'] = (new \DateTime())->format('Y-m-d H:i:s');
 		$val_array['status'] = 'd';
+		return $this->update($id, $val_array);
+	}
+	public function active($id)
+	{
+		$val_array['deleted_at'] = (new \DateTime())->format('Y-m-d H:i:s');
+		$val_array['status'] = 'a';
 		return $this->update($id, $val_array);
 	}
 }

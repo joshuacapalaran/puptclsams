@@ -66,7 +66,10 @@ class BaseController extends Controller
 
 			$_SESSION['appmodules'] = $this->modules;
 			$_SESSION['userPermmissions'] = $this->permissions;
+		}else{
+			return redirect()->to(base_url('logout'));
 		}
+		
 		
 	}
 }

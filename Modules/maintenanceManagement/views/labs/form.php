@@ -40,7 +40,7 @@
               <div class="col-md-12">
 
                 <div class="form-group">
-                <label class="form-label" for="lab_name">Room</label>
+                <label class="form-label" for="lab_name">Room*</label>
                 <div class="input-group mb-3">
                   <input type="text" class="form-control" value="<?=isset($value['lab_name']) ? esc($value['lab_name']): ''?>" placeholder="Lab Name" id="lab_name" name="lab_name">
                 </div>

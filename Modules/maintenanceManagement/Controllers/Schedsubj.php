@@ -44,14 +44,14 @@ class Schedsubj extends BaseController {
     $section = new SectionsModel;
 
 
-    $data['categories'] = $categories->getCategories();
-    $data['subjects'] = $subj->getSubjects();
-    $data['labs'] = $labs->getLabs();
-    $data['courses'] = $course->getCourse();
+    $data['categories'] = $categories->getActiveCategories();
+    $data['subjects'] = $subj->getActiveSubjects();
+    $data['labs'] = $labs->getLabsByActive();
+    $data['courses'] = $course->getActiveCourse();
     $data['professor'] = $prof->getProfessors();
-    $data['semesters'] = $sems->getSemesters();
-    $data['schoolyears'] = $schoolyear->getSchoolYears();
-    $data['sections'] = $section->getSections();
+    $data['semesters'] = $sems->getActiveSemesters();
+    $data['schoolyears'] = $schoolyear->getActiveSchoolYears();
+    $data['sections'] = $section->getActiveSections();
     $data['edit'] = false;
     $data['view'] = 'Modules\MaintenanceManagement\Views\schedsubj\form';
     if($this->request->getMethod() === 'post'){
@@ -83,14 +83,14 @@ class Schedsubj extends BaseController {
     $section = new SectionsModel;
 
 
-    $data['categories'] = $categories->getCategories();
-    $data['subjects'] = $subj->getSubjects();
-    $data['labs'] = $labs->getLabs();
-    $data['courses'] = $course->getCourse();
+    $data['categories'] = $categories->getActiveCategories();
+    $data['subjects'] = $subj->getActiveSubjects();
+    $data['labs'] = $labs->getLabsByActive();
+    $data['courses'] = $course->getActiveCourse();
     $data['professor'] = $prof->getProfessors();
-    $data['semesters'] = $sems->getSemesters();
-    $data['schoolyears'] = $schoolyear->getSchoolYears();
-    $data['sections'] = $section->getSections();
+    $data['semesters'] = $sems->getActiveSemesters();
+    $data['schoolyears'] = $schoolyear->getActiveSchoolYears();
+    $data['sections'] = $section->getActiveSections();
 
     $data['edit'] = true;
     $data['view'] = 'Modules\MaintenanceManagement\Views\schedsubj\form';
@@ -118,7 +118,7 @@ class Schedsubj extends BaseController {
   public function delete($id){
     $schedsubj = new SchedsubjsModel;
 
-    if($schedsubj->delete_schedsubj($id)) {
+    if($schedsubj->inactive($id)) {
       $this->session->setFlashData('success_message', 'Successfully deleted schedsubject');
     } else {
       $this->session->setFlashData('error_message', 'Something went wrong!');
@@ -126,6 +126,44 @@ class Schedsubj extends BaseController {
     return redirect()->to(base_url('admin/schedsubject'));
   }
 
+  public function active($id){
+    $schedsubj = new SchedsubjsModel;
+
+    if($schedsubj->active($id)) {
+      $this->session->setFlashData('success_message', 'Successfully restored schedsubject');
+    } else {
+      $this->session->setFlashData('error_message', 'Something went wrong!');
+    }
+    return redirect()->to(base_url('admin/schedsubject'));
+  }
+
+  public function view($id){
+    $subj = new SubjectsModel;
+    $course = new CoursesModel;
+    $categories = new CategoriesModel;
+    $prof = new ProfessorsModel;
+    $labs = new LabsModel;
+    $sems = new SemestersModel;
+    $schoolyear = new SchoolyearsModel;
+    $schedsubj = new SchedsubjsModel;
+    $section = new SectionsModel;
+
+
+    $data['categories'] = $categories->getActiveCategories();
+    $data['subjects'] = $subj->getActiveSubjects();
+    $data['labs'] = $labs->getLabsByActive();
+    $data['courses'] = $course->getActiveCourse();
+    $data['professor'] = $prof->getProfessors();
+    $data['semesters'] = $sems->getActiveSemesters();
+    $data['schoolyears'] = $schoolyear->getActiveSchoolYears();
+    $data['sections'] = $section->getActiveSections();
+
+    $data['view'] = 'Modules\MaintenanceManagement\Views\schedsubj\view';
+    $data['id'] = $id;
+    $data['value'] = $schedsubj->getScheduleSubjById($id);
+    return view('template/index', $data);
+
+  }
   public function attendance($id){
     $attendanceModel = new AttendancesModel();
     $schedsubj = new SchedsubjsModel;

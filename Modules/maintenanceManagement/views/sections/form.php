@@ -44,7 +44,7 @@
             <div class="row">
               <div class="col-md-6">
                 <div class="form-group">
-                  <label>Year</label>
+                  <label>Year*</label>
                   <input type="text" class="form-control" value="<?=isset($value['year']) ? esc($value['year']): ''?>" placeholder="Year" id="year" name="year" required>
                 </div>
                 <?php if(isset($errors['year'])):?>
@@ -56,7 +56,7 @@
               <div class="col-md-6">
 
                 <div class="form-group">
-                <label>Section</label>
+                <label>Section*</label>
                  <input type="text" class="form-control" value="<?=isset($value['section']) ? esc($value['section']): ''?>" placeholder="Section" id="section" name="section" required>
                 </div>
                 <?php if(isset($errors['section'])):?>

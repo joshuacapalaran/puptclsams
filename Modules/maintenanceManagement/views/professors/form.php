@@ -44,7 +44,7 @@
             <div class="row">
               <div class="col-md-6">
                 <div class="form-group">
-                  <label>Faculty Code</label>
+                  <label>Faculty Code*</label>
                   <input type="text" class="form-control" value="<?=isset($value['f_code']) ? esc($value['f_code']): ''?>" placeholder="Faculty Code" id="f_code" name="f_code" required>
                 </div>
                 <?php if(isset($errors['f_code'])):?>
@@ -52,7 +52,7 @@
                 <?php endif;?>
 
                 <div class="form-group">
-                  <label>First Name</label>
+                  <label>First Name*</label>
                  <input type="text" class="form-control" value="<?=isset($value['first_name']) ? esc($value['first_name']): ''?>" placeholder="Firstname" id="first_name" name="first_name" required>
                 </div>
                 <?php if(isset($errors['first_name'])):?>
@@ -65,7 +65,7 @@
               <div class="col-md-6">
 
                 <div class="form-group">
-                <label>Last Name</label>
+                <label>Last Name*</label>
                  <input type="text" class="form-control" value="<?=isset($value['last_name']) ? esc($value['last_name']): ''?>" placeholder="Lastname" id="last_name" name="last_name" required>
                 </div>
                 <?php if(isset($errors['last_name'])):?>
@@ -74,7 +74,7 @@
                 <!-- /.form-group -->
 
                 <div class="form-group">
-                  <label>Middle Name</label>
+                  <label>Middle Name*</label>
                  <input type="text" class="form-control" value="<?=isset($value['m_initial']) ? esc($value['m_initial']): ''?>" placeholder="Middle Initial" id="m_initial" name="m_initial" required>
                 </div>
                 <?php if(isset($errors['m_initial'])):?>
@@ -85,11 +85,11 @@
                 <div class="row">
                   <div class="col-md-6">
                     <div class="form-group">
-                      <label class="form-label" for="suffix_id">Suffix</label>
-                      <select class="form-select" aria-label="Default select example" name="suffix_id">
+                      <label class="form-label" for="suffix_id">Suffix*</label>
+                      <select class="form-control select" aria-label="Default select example" name="suffix_id">
                         <option value ='n' <?= !$edit ? "selected" : ''?>> Select Suffix</option>
                         <?php foreach($suffixes as $suffix):?>
-                            <option value="<?=$suffix['id'] ?>" <?= isset($errors['suffix_id']) || $edit ? 'selected' : ''?>><?=$suffix['suffix_name'] ?></option>
+                            <option value="<?=$suffix['id'] ?>" <?= ($value['suffix_id'] == $suffix['id'])  ? 'selected' : ''?>><?=$suffix['suffix_name'] ?></option>
                         <?php endforeach; ?>
                       </select>
                     </div>

@@ -44,7 +44,7 @@
             <div class="row">
               <div class="col-md-6">
                 <div class="form-group">
-                  <label>Student Number</label>
+                  <label>Student Number*</label>
                   <input type="text" class="form-control" value="<?=isset($value['student_num']) ? esc($value['student_num']): ''?>" placeholder="Student Number" id="student_num" name="student_num" required>
                 </div>
                 <?php if(isset($errors['student_num'])):?>
@@ -52,7 +52,7 @@
                 <?php endif;?>
 
                 <div class="form-group">
-                  <label>Last Name</label>
+                  <label>Last Name*</label>
                  <input type="text" class="form-control" value="<?=isset($value['last_name']) ? esc($value['last_name']): ''?>" placeholder="Lastname" id="last_name" name="last_name" required>
                 </div>
                 <?php if(isset($errors['last_name'])):?>
@@ -60,7 +60,7 @@
                 <?php endif;?>
 
                 <div class="form-group">
-                  <label>First Name</label>
+                  <label>First Name*</label>
                  <input type="text" class="form-control" value="<?=isset($value['first_name']) ? esc($value['first_name']): ''?>" placeholder="Firstname" id="first_name" name="first_name" required>
                 </div>
                 <?php if(isset($errors['first_name'])):?>
@@ -68,7 +68,7 @@
                 <?php endif;?> 
 
                 <div class="form-group">
-                  <label>Middle Name</label>
+                  <label>Middle Name*</label>
                  <input type="text" class="form-control" value="<?=isset($value['m_initial']) ? esc($value['m_initial']): ''?>" placeholder="Middle Initial" id="m_initial" name="m_initial" required>
                 </div>
                 <?php if(isset($errors['m_initial'])):?>
@@ -90,7 +90,7 @@
                     </select>
                 </div>
                 <div class="form-group">
-                  <label for="course_id">Course</label>
+                  <label for="course_id">Course*</label>
                     <select name="course_id" id="course_id" class="form-control">
                     <option selected disabled>-- Please Select Course --</option>
                     <?php foreach($courses as $course): ?>
@@ -101,7 +101,7 @@
                 </div>
                  <!-- /.form-group -->
                 <div class="form-group">
-                  <label for="section_id" >Year and Section</label>
+                  <label for="section_id" >Year and Section*</label>
                     <select name="section_id" id="section_id" class="form-control">
                         <option selected disabled>-- Please Select Year and Section --</option>
                         <?php foreach($sections as $section): ?>

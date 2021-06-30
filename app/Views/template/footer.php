@@ -48,9 +48,13 @@
 <script src="<?=base_url();?>/stemp/js/demo.js"></script>
 <script src="<?=base_url();?>/plugins/fullcalendar/main.min.js"></script>
 <script src="<?=base_url();?>/plugins/moment/moment.min.js"></script>
+<script src="<?=base_url();?>/plugins/myAlert/myAlerts.js"></script>
+<script src='<?=base_url();?>/plugins/sweetalert2/sweetalert2.js'></script>
 
 <!-- Page specific script -->
+
 <script>
+
   $(function () {
     $("#example1").DataTable({
       "responsive": true, 

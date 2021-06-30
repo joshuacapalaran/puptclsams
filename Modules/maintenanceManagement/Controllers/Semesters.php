@@ -2,6 +2,7 @@
 
 use App\Controllers\BaseController;
 use Modules\MaintenanceManagement\Models as MaintenanceManagement;
+use Modules\MaintenanceManagement\Models\semestersModel;
 
 class Semesters extends BaseController {
 
@@ -16,11 +17,12 @@ class Semesters extends BaseController {
   }
 
   public function add(){
+    $semestersModel = new semestersModel;
     $data['edit'] = false;
     $data['view'] = 'Modules\MaintenanceManagement\Views\semesters\form';
     if($this->request->getMethod() === 'post'){
       if($this->validate('semesters')){
-        if($this->semestersModel->add($_POST)){
+        if($semestersModel->add($_POST)){
           $this->session->setFlashData('success_message', 'Sucessfuly created a semester');
         } else {
           $this->session->setFlashData('error_message', 'Something went wrong!');
@@ -59,7 +61,9 @@ class Semesters extends BaseController {
   }
 
   public function delete($id){
-    if($this->semestersModel->softDelete($id)) {
+    $semestersModel = new semestersModel;
+
+    if($semestersModel->inactive($id)) {
       $this->session->setFlashData('success_message', 'Successfully deleted semester');
     } else {
       $this->session->setFlashData('error_message', 'Something went wrong!');
@@ -67,8 +71,22 @@ class Semesters extends BaseController {
     return redirect()->to(base_url('admin/semesters'));
   }
 
-  public function view($slug){
+  public function active($id){
+    $semestersModel = new semestersModel;
 
+    if($semestersModel->active($id)) {
+      $this->session->setFlashData('success_message', 'Successfully restored semester');
+    } else {
+      $this->session->setFlashData('error_message', 'Something went wrong!');
+    }
+    return redirect()->to(base_url('admin/semesters'));
+  }
+
+  public function view($id){
+    $data['view'] = 'Modules\MaintenanceManagement\Views\semesters\view';
+    $data['id'] = $id;
+    $data['value'] = $this->semestersModel->get(['id' => $id])[0];
+    return view('template/index', $data);
   }
 
 }

@@ -36,6 +36,7 @@
                             <th>Name</th>
                             <th>Description</th>
                             <th>Landing Page</th>
+                            <th>Status</th>
                             <th>Action</th>
                           </tr>
                           </thead>
@@ -46,10 +47,16 @@
                               <td><?=esc($role['role_name'])?></td>
                               <td><?=esc($role['description'])?></td>
                               <td><?=esc($role['function_name']) ?></td>
+                              <td><?=esc(($role['status'] == 'a') ? 'Active':'Inactive')?></td>
 
                               <td>
+                              <a class="btn btn-secondary btn-sm" href="<?=base_url('admin/roles/view/' . esc($role['id'], 'url'))?>"> View</a>
                                <a class="btn btn-outline-info btn-sm" href="<?=base_url('admin/roles/edit/' . esc($role['id'], 'url'))?>"> Edit </a>
-                               <a class="btn btn-danger btn-sm" href="<?=base_url('/admin/roles/delete_role/' . esc($role['id'], 'url'))?>"> Delete </a>
+                               <?php if($role['status'] == 'a'):?>
+                                  <a class="btn btn-danger btn-sm remove" onclick=" confirmUpdateStatus('<?= base_urL('admin/roles/delete_role/')?>',<?=$role['id']?>,'d')" title="deactivate">Delete</i></a>
+                                <?php else:?>
+                                  <a class="btn btn-info btn-sm remove" onclick=" confirmUpdateStatus('<?= base_urL('admin/roles/active/')?>',<?=$role['id']?>,'a')" title="activate">Restore</i></a>
+                                <?php endif;?>
                               </td>
                             </tr>
                             <?php endforeach; ?>

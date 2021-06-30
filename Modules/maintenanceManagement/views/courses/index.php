@@ -34,6 +34,7 @@
                             <th>#</th>
                             <th>Course Name</th>
                             <th>Course Abbreviation</th>
+                            <th>Status</th>
                             <th>Action</th>
                           </tr>
                           </thead>
@@ -49,15 +50,16 @@
                               <td><?=esc($ctr)?></td>
                               <td><?=esc($course['course_name'])?></td>
                               <td><?=esc($course['course_abbrev'])?></td>
+                              <td><?=esc(($course['status'] == 'a') ? 'Active':'Inactive')?></td>
 
                               <td>
+                               <a class="btn btn-secondary btn-sm" href="<?=base_url('admin/courses/view/' . esc($course['id'], 'url'))?>"> View</a>
                                <a class="btn btn-outline-info btn-sm" href="<?=base_url('admin/courses/edit/' . esc($course['id'], 'url'))?>"> Edit </a>
-                              <!--  <button type="button" class="btn btn-sm btn-primary" data-toggle="modal" data-target="#modal-edit">
-                                Edit
-                                </button> -->
-                                <button type="button" class="btn btn-sm btn-danger" data-toggle="modal" data-target="#modal-delete">
-                                Delete
-                                </button>
+                               <?php if($course['status'] == 'a'):?>
+                                  <a class="btn btn-danger btn-sm remove" onclick=" confirmUpdateStatus('<?= base_urL('admin/courses/delete/')?>',<?=$course['id']?>,'d')" title="deactivate">Delete</i></a>
+                                <?php else:?>
+                                  <a class="btn btn-info btn-sm remove" onclick=" confirmUpdateStatus('<?= base_urL('admin/courses/active/')?>',<?=$course['id']?>,'a')" title="activate">Restore</i></a>
+                                <?php endif;?>
                               </td>
                             </tr>
                             <?php $ctr++?>

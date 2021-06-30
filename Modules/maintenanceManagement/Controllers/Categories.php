@@ -2,6 +2,7 @@
 
 use App\Controllers\BaseController;
 use Modules\MaintenanceManagement\Models as MaintenanceManagement;
+use Modules\MaintenanceManagement\Models\categoriesModel;
 
 class Categories extends BaseController {
 
@@ -16,11 +17,12 @@ class Categories extends BaseController {
   }
 
   public function add(){
+    $categoriesModel = new categoriesModel;
     $data['edit'] = false;
     $data['view'] = 'Modules\MaintenanceManagement\Views\categories\form';
     if($this->request->getMethod() === 'post'){
       if($this->validate('categories')){
-        if($this->categoriesModel->add($_POST)){
+        if($categoriesModel->add($_POST)){
           $this->session->setFlashData('success_message', 'Sucessfuly created a category');
         } else {
           $this->session->setFlashData('error_message', 'Something went wrong!');
@@ -59,7 +61,9 @@ class Categories extends BaseController {
   }
 
   public function delete($id){
-    if($this->categoriesModel->softDelete($id)) {
+    $categoriesModel = new categoriesModel;
+
+    if($categoriesModel->inactive($id)) {
       $this->session->setFlashData('success_message', 'Successfully deleted category');
     } else {
       $this->session->setFlashData('error_message', 'Something went wrong!');
@@ -67,7 +71,22 @@ class Categories extends BaseController {
     return redirect()->to(base_url('admin/categories'));
   }
 
-  public function view($slug){
+  public function active($id){
+    $categoriesModel = new categoriesModel;
+
+    if($categoriesModel->active($id)) {
+      $this->session->setFlashData('success_message', 'Successfully restored category');
+    } else {
+      $this->session->setFlashData('error_message', 'Something went wrong!');
+    }
+    return redirect()->to(base_url('admin/categories'));
+  }
+
+  public function view($id){
+    $data['view'] = 'Modules\MaintenanceManagement\Views\categories\view';
+    $data['id'] = $id;
+    $data['value'] = $this->categoriesModel->get(['id' => $id])[0];
+    return view('template/index', $data);
 
   }
 

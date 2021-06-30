@@ -28,42 +28,63 @@ class Home extends BaseController {
     $data['view'] = 'Modules\MaintenanceManagement\Views\home\index';
     return view('template/index', $data);
   }
-public function get_events(){
-  $schedlabsModel = new SchedlabsModel;
-  $schedModel = new SchedsubjsModel;
-
-  $schedsubjects = $schedModel->getSubjSchedules();
-  $schedlabs = $schedlabsModel->getLabSchedules();
-
-  $data = [];
-  foreach($schedsubjects as $schedsubject){
-
-        $dow = [];
-        if(!empty($schedsubject['end_day'])){
-          $day = $this->getDayNumber($schedsubject['day']);
-          $end_day = $this->getDayNumber($schedsubject['end_day']);
-          $dow = [$day,$end_day];
-        }else{
-          $day = $this->getDayNumber($schedsubject['day']);
-          $dow = [$day];
-        }
-        $data[] = [
-          'title' => $schedsubject['subj_name'],
-          'daysOfWeek' => $dow,
-          'id' => $schedsubject['id'],
-          'start' => $schedsubject['start_time']
-        ];
+  public function get_events(){
+    $schedlabsModel = new SchedlabsModel;
+    $schedModel = new SchedsubjsModel;
+  
+    $schedsubjects = $schedModel->getSubjSchedules();
+    $schedlabs = $schedlabsModel->getLabSchedules();
+  
+    $data = [];
+    foreach($schedsubjects as $schedsubject){
+  
+          $dow = [];
+          if(!empty($schedsubject['end_day'])){
+            $day = $this->getDayNumber($schedsubject['day']);
+            $end_day = $this->getDayNumber($schedsubject['end_day']);
+            $dow = [$day,$end_day];
+          }else{
+            $day = $this->getDayNumber($schedsubject['day']);
+            $dow = [$day];
+          }
+          $data[] = [
+            'title' => $schedsubject['subj_name'],
+            'daysOfWeek' => $dow,
+            'id' => $schedsubject['id'],
+            'start' => $schedsubject['start_time'],
+            'extendedProps' => [
+              'course' => $schedsubject['course_name'],
+              'time' => date("h:i A", strtotime($schedsubject['start_time'])).'-'.date("h:i A", strtotime($schedsubject['end_time'])),
+              'lab_day' => ($schedsubject['end_day']) ? $schedsubject['day'].' and '.$schedsubject['end_day']:$schedsubject['day'],
+              'lab' => $schedsubject['lab_name'],
+              'prof' => $schedsubject['first_name'].' '.$schedsubject['last_name'].' '.$schedsubject['suffix_name'] ,
+              'sem' => $schedsubject['sem'],
+              'sy' => $schedsubject['start_sy'].' - '.$schedsubject['end_sy'],
+              'schedule' => 'event',
+            ] 
+          ];
+         
+    }
+  
+    foreach($schedlabs as $schedlab){
+      $data[] = [
+        'title' => $schedlab['event_name'],
+        'start' => $schedlab['date'],
+        'id' => $schedlab['id'],
+        'extendedProps' => [
+          'category' => $schedlab['category'],
+          'time' => date("h:i A", strtotime($schedlab['start_time'])).'-'.date("h:i A", strtotime($schedlab['end_time'])),
+          'date' => $schedlab['date'],
+          'lab' => $schedlab['lab_name'],
+          'assigned_person' => $schedlab['assigned_person'],
+          'num_people' => $schedlab['num_people'],
+          'schedule' => 'lab',
+        ] 
+      ];
+    }
+    echo json_encode($data);
   }
-
-  foreach($schedlabs as $schedlab){
-    $data[] = [
-      'title' => $schedlab['event_name'],
-      'start' => $schedlab['date']
-    ];
-  }
-
-  echo json_encode($data);
-}
+  
 public function getDayNumber($day){
     switch($day){
       case 'Sunday': return 0;

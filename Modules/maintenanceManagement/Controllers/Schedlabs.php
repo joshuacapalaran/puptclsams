@@ -21,16 +21,16 @@ class Schedlabs extends BaseController {
   }
 
   public function add(){
-    $sched = new SchedlabsModel;
+    $schedlabsModel = new SchedlabsModel;
     $categories = new CategoriesModel;
     $labs = new LabsModel;
-    $data['categories'] = $categories->getCategories();
-    $data['labs'] = $labs->getLabs();
+    $data['categories'] = $categories->getActiveCategories();
+    $data['labs'] = $labs->getLabsByActive();
     $data['edit'] = false;
     $data['view'] = 'Modules\MaintenanceManagement\Views\schedlabs\form';
     if($this->request->getMethod() === 'post'){
       if($this->validate('schedlabs')){
-        if($this->schedlabsModel->add($_POST)){
+        if($schedlabsModel->add($_POST)){
           $this->session->setFlashData('success_message', 'Sucessfuly created a schedsubject');
         } else {
           $this->session->setFlashData('error_message', 'Something went wrong!');
@@ -48,8 +48,8 @@ class Schedlabs extends BaseController {
 
     $categories = new CategoriesModel;
     $labs = new LabsModel;
-    $data['categories'] = $categories->getCategories();
-    $data['labs'] = $labs->getLabs();
+    $data['categories'] = $categories->getActiveCategories();
+    $data['labs'] = $labs->getLabsByActive();
 
     $data['edit'] = true;
     $data['view'] = 'Modules\MaintenanceManagement\Views\schedlabs\form';
@@ -75,7 +75,10 @@ class Schedlabs extends BaseController {
   }
 
   public function delete($id){
-    if($this->schedlabsModel->softDelete($id)) {
+    $schedlabsModel = new SchedlabsModel;
+
+    if($schedlabsModel->inactive($id)) {
+
       $this->session->setFlashData('success_message', 'Successfully deleted schedsubject');
     } else {
       $this->session->setFlashData('error_message', 'Something went wrong!');
@@ -83,7 +86,28 @@ class Schedlabs extends BaseController {
     return redirect()->to(base_url('admin/schedlabs'));
   }
 
-  public function view($slug){
+  public function active($id){
+    $schedlabsModel = new SchedlabsModel;
+
+    if($schedlabsModel->active($id)) {
+      $this->session->setFlashData('success_message', 'Successfully restored schedsubject');
+    } else {
+      $this->session->setFlashData('error_message', 'Something went wrong!');
+    }
+    return redirect()->to(base_url('admin/schedlabs'));
+  }
+
+  public function view($id){
+    $categories = new CategoriesModel;
+    $labs = new LabsModel;
+    $data['categories'] = $categories->getCategories();
+    $data['labs'] = $labs->getLabs();
+
+    $data['edit'] = true;
+    $data['view'] = 'Modules\MaintenanceManagement\Views\schedlabs\view';
+    $data['id'] = $id;
+    $data['value'] = $this->schedlabsModel->get(['id' => $id])[0];
+    return view('template/index', $data);
 
   }
 

@@ -2,6 +2,7 @@
 
 use App\Controllers\BaseController;
 use Modules\MaintenanceManagement\Models as MaintenanceManagement;
+use Modules\MaintenanceManagement\Models\suffixesModel;
 
 class Suffixes extends BaseController {
 
@@ -16,11 +17,12 @@ class Suffixes extends BaseController {
   }
 
   public function add(){
+    $suffixesModel = new suffixesModel;
     $data['edit'] = false;
     $data['view'] = 'Modules\MaintenanceManagement\Views\suffixes\form';
     if($this->request->getMethod() === 'post'){
       if($this->validate('suffixes')){
-        if($this->suffixesModel->add($_POST)){
+        if($suffixesModel->add($_POST)){
           $this->session->setFlashData('success_message', 'Sucessfuly created a suffix');
         } else {
           $this->session->setFlashData('error_message', 'Something went wrong!');
@@ -59,7 +61,8 @@ class Suffixes extends BaseController {
   }
 
   public function delete($id){
-    if($this->suffixesModel->softDelete($id)) {
+    $suffixesModel = new suffixesModel;
+    if($suffixesModel->inactive($id)) {
       $this->session->setFlashData('success_message', 'Successfully deleted suffix');
     } else {
       $this->session->setFlashData('error_message', 'Something went wrong!');
@@ -67,7 +70,21 @@ class Suffixes extends BaseController {
     return redirect()->to(base_url('admin/suffixes'));
   }
 
-  public function view($slug){
+  public function active($id){
+    $suffixesModel = new suffixesModel;
+    if($suffixesModel->active($id)) {
+      $this->session->setFlashData('success_message', 'Successfully restored suffix');
+    } else {
+      $this->session->setFlashData('error_message', 'Something went wrong!');
+    }
+    return redirect()->to(base_url('admin/suffixes'));
+  }
+
+  public function view($id){
+    $data['view'] = 'Modules\MaintenanceManagement\Views\suffixes\view';
+    $data['id'] = $id;
+    $data['value'] = $this->suffixesModel->get(['id' => $id])[0];
+    return view('template/index', $data);
 
   }
 

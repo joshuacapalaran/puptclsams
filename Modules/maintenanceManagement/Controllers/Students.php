@@ -33,7 +33,7 @@ class Students extends BaseController {
     $data['view'] = 'Modules\MaintenanceManagement\Views\students\form';
     if($this->request->getMethod() === 'post'){
       if($this->validate('students')){
-        if($this->studentsModel->add($_POST)){
+        if($student->add($_POST)){
           $this->session->setFlashData('success_message', 'Sucessfuly created a student');
         } else {
           $this->session->setFlashData('error_message', 'Something went wrong!');
@@ -81,8 +81,9 @@ class Students extends BaseController {
   }
 
   public function delete_student($id){
+    $studentsModel = new StudentsModel;
     
-    if($this->studentsModel->delete($id)) {
+    if($studentsModel->inactive($id)) {
       $this->session->setFlashData('success_message', 'Successfully deleted student');
     } else {
       $this->session->setFlashData('error_message', 'Something went wrong!');
@@ -90,7 +91,31 @@ class Students extends BaseController {
     return redirect()->to(base_url('admin/students'));
   }
 
-  public function view($slug){
+  public function active($id){
+    $studentsModel = new StudentsModel;
+    
+    if($studentsModel->active($id)) {
+      $this->session->setFlashData('success_message', 'Successfully restored student');
+    } else {
+      $this->session->setFlashData('error_message', 'Something went wrong!');
+    }
+    return redirect()->to(base_url('admin/students'));
+  }
+
+  public function view($id){
+    $data['view'] = 'Modules\MaintenanceManagement\Views\students\view';
+    $data['id'] = $id;
+    $course = new CoursesModel;
+    $section = new SectionsModel;
+    $suffix = new SuffixesModel;
+    $student = new StudentsModel;
+
+    $data['courses'] = $course->getCourse();
+    $data['sections'] = $section->getSections();
+    $data['suffixes'] = $suffix->getSuffixes();
+    $data['value'] = $student->getStudentById($id);
+    return view('template/index', $data);
+
 
   }
 

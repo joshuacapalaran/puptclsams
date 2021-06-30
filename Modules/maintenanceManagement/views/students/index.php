@@ -37,6 +37,7 @@
                             <th>Name</th>
                             <th>Course</th>
                             <th>Year and Section</th>
+                            <th>Status</th>
                             <th>Action</th>
                           </tr>
                           </thead>
@@ -54,11 +55,15 @@
                                   <td><?=esc($student['last_name'].', '.$student['first_name'].' '.$student['m_initial'].'.')?></td>
                                   <td><?=esc($student['course_abbrev'])?></td>
                                   <td><?=esc($student['year'].'-'.$student['section'])?></td>
+                                  <td><?=esc(($student['status'] == 'a') ? 'Active':'Inactive')?></td>
                                   <td>
+                                    <a class="btn btn-secondary btn-sm" href="<?=base_url('admin/students/view/' . esc($student['id'], 'url'))?>"> View</a>
                                     <a class="btn btn-outline-info btn-sm" href="<?=base_url('admin/students/edit/' . esc($student['id'], 'url'))?>"> Edit </a>
-                                    <!-- <a class="btn btn-danger btn-sm" href="<?=base_url('/admin/students/delete_student/' . esc($student['id'], 'url'))?>"> Delete </a>
-                                   -->
-                                   <a href="#" data-toggle="modal" data-target="#modal-delete" class="btn btn-sm btn-danger">Delete</a>
+                                    <?php if($student['status'] == 'a'):?>
+                                      <a class="btn btn-danger btn-sm remove" onclick=" confirmUpdateStatus('<?= base_urL('admin/students/delete_student/')?>',<?=$student['id']?>,'d')" title="deactivate">Delete</i></a>
+                                    <?php else:?>
+                                      <a class="btn btn-info btn-sm remove" onclick=" confirmUpdateStatus('<?= base_urL('admin/students/active/')?>',<?=$student['id']?>,'a')" title="activate">Restore</i></a>
+                                    <?php endif;?>
                                   </td>
                                 </tr>
                                   <?php $ctr++?>

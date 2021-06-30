@@ -7,7 +7,7 @@ class UsersModel extends \CodeIgniter\Model
 {
     protected $table = 'users';
 
-    protected $allowedFields = ['lastname', 'firstname', 'username', 'email', 'password', 'birthdate', 'role_id', 'status', 'created_at','updated_at', 'deleted_at', 'title', 'description'];
+    protected $allowedFields = ['last_name', 'first_name','m_initial', 'username', 'email', 'password', 'role_id', 'status', 'created_at','updated_at', 'deleted_at', 'title', 'description'];
 
     public function getUserWithCondition($conditions = [])
 	{
@@ -30,6 +30,20 @@ class UsersModel extends \CodeIgniter\Model
 	    return $query->getResultArray();
 	}
 
+	public function getUsersWithRoles()
+	{	
+		$this->select('users.*, roles.*, users.id as id, users.status as status');
+		$this->join('roles', 'users.role_id = roles.id', 'left');
+	    return $this->findAll();
+	}
+
+	public function getUsersWithRolesById($id)
+	{	
+		$this->select('users.*, roles.*, users.id as id');
+		$this->join('roles', 'users.role_id = roles.id', 'left');
+		$this->where('users.id', $id);
+	    return $this->first();
+	}
 
     public function getUsers()
 	{
@@ -45,30 +59,25 @@ class UsersModel extends \CodeIgniter\Model
 	    return $this->save($val_array);
 	}
 
-    public function editUsers($val_array = [], $id)
+    public function editUsers($val_array, $id)
 	{
 		$user = $this->find($id);
 
 		$val_array['updated_at'] = (new \DateTime())->format('Y-m-d H:i:s');
 		$val_array['status'] = 'a';
-		//print_r($val_array); die();
-		if(empty($val_array['password']))
-		{
-			$val_array['password'] = $user['password'];
-		}
-		else
-		{
-			$val_array['password'] = password_hash($val_array['password'], PASSWORD_DEFAULT);
-		}
-
+		$val_array['password'] = password_hash($val_array['password'], PASSWORD_DEFAULT);
+	
 		return $this->update($id, $val_array);
 	}
 
-    public function deleteUser($id)
-	{
-		$val_array['deleted_at'] = (new \DateTime())->format('Y-m-d H:i:s');
-		$val_array['status'] = 'd';
-		return $this->update($id, $val_array);
+	public function inactive($id){
+		$data['status'] = 'd';
+		return $this->update($id, $data);
+	}
+	  
+	public function active($id){
+		$data['status'] = 'a';
+		return $this->update($id, $data);
 	}
 
 	public function addStudentAccount($val_array = [])

@@ -145,6 +145,28 @@ class Roles extends BaseController
 		  $this->session->setFlashData('error_message', 'Something went wrong!');
 		}
 		return redirect()->to(base_url('admin/roles'));
-    }
+	}
+
+	public function active($id)
+    {
+    	$model = new RolesModel();
+    	if($model->active($id)){
+			$this->session->setFlashData('success_message', 'Successfully restored role');
+		} else {
+		  $this->session->setFlashData('error_message', 'Something went wrong!');
+		}
+		return redirect()->to(base_url('admin/roles'));
+	}
+	
+	public function view($id){
+		helper(['form', 'url']);
+    	$model = new RolesModel();
+		$data['rec'] = $model->find($id);
+    	$data['permissions'] = $this->permissions;
+
+		$data['function_title'] = "View Role";
+		$data['view'] = 'Modules\UserManagement\Views\roles\view';
+		echo view('App\Views\template\index', $data);
+	}
 
 }

@@ -46,9 +46,9 @@
               <div class="col-md-12">
 
                 <div class="form-group">
-                <label class="form-label" for="suffix">Suffix</label>
+                <label class="form-label" for="suffix">Suffix*</label>
                 <div class="input-group mb-3">
-                  <input type="text" class="form-control" value="<?=isset($value['suffix']) ? esc($value['suffix']): ''?>" placeholder="Suffix" id="suffix" name="suffix">
+                  <input type="text" class="form-control" value="<?=isset($value['suffix_name']) ? esc($value['suffix_name']): ''?>" placeholder="Suffix" id="suffix" name="suffix">
                 </div>
                   <?php if(isset($errors['suffix'])):?>
                     <p class="text-danger"><?=esc($errors['suffix'])?><p>

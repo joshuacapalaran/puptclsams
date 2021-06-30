@@ -2,6 +2,7 @@
 
 use App\Controllers\BaseController;
 use Modules\MaintenanceManagement\Models as MaintenanceManagement;
+use Modules\MaintenanceManagement\Models\CoursesModel;
 
 class Courses extends BaseController {
 
@@ -16,11 +17,12 @@ class Courses extends BaseController {
   }
 
   public function add(){
+    $courseModel = new CoursesModel;
     $data['edit'] = false;
     $data['view'] = 'Modules\MaintenanceManagement\Views\courses\form';
     if($this->request->getMethod() === 'post'){
       if($this->validate('courses')){
-        if($this->coursesModel->add($_POST)){
+        if($courseModel->add($_POST)){
           $this->session->setFlashData('success_message', 'Sucessfuly created a course');
         } else {
           $this->session->setFlashData('error_message', 'Something went wrong!');
@@ -59,7 +61,9 @@ class Courses extends BaseController {
   }
 
   public function delete($id){
-    if($this->coursesModel->softDelete($id)) {
+    $courseModel = new CoursesModel;
+
+    if($courseModel->inactive($id)) {
       $this->session->setFlashData('success_message', 'Successfully deleted course');
     } else {
       $this->session->setFlashData('error_message', 'Something went wrong!');
@@ -67,7 +71,22 @@ class Courses extends BaseController {
     return redirect()->to(base_url('admin/courses'));
   }
 
-  public function view($slug){
+  public function active($id){
+    $courseModel = new CoursesModel;
+
+    if($courseModel->active($id)) {
+      $this->session->setFlashData('success_message', 'Successfully restored course');
+    } else {
+      $this->session->setFlashData('error_message', 'Something went wrong!');
+    }
+    return redirect()->to(base_url('admin/courses'));
+  }
+
+  public function view($id){
+    $data['view'] = 'Modules\MaintenanceManagement\Views\courses\view';
+    $data['id'] = $id;
+    $data['value'] = $this->coursesModel->get(['id' => $id])[0];
+    return view('template/index', $data);
 
   }
 

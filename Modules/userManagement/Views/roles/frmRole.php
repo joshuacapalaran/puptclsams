@@ -39,7 +39,7 @@
           <div class="row">
             <div class="col-md-6 offset-md-3">
               <div class="form-group">
-                <label for="role_name">Role name</label>
+                <label for="role_name">Role name*</label>
                 <input name="role_name" type="text" value="<?= isset($rec['role_name']) ? $rec['role_name'] : set_value('role_name') ?>" class="form-control <?= isset($errors['role_name']) ? 'is-invalid':' ' ?>" id="role_name" placeholder="Role Name">
                 <?php if(isset($errors['role_name'])):?>
                   <p class="text-danger"><?=esc($errors['role_name'])?><p>
@@ -50,7 +50,7 @@
           <div class="row">
             <div class="col-md-6 offset-md-3">
               <div class="form-group">
-                <label for="description">Role Description</label>
+                <label for="description">Role Description*</label>
                 <textarea name="description" type="text" class="form-control <?= isset($errors['description']) ? 'is-invalid':' '  ?>" id="description" placeholder="Role Description" rows="5"><?= isset($rec['description']) ? $rec['description'] : set_value('description') ?></textarea>
                 <?php if(isset($errors['role_name'])):?>
                   <p class="text-danger"><?=esc($errors['role_name'])?><p>
@@ -64,7 +64,7 @@
               <div class="form-group">
                 <!-- <label for="function_id">Landing Page</label>
                 <input type="hidden" value="1" name="function_id"> -->
-                <label for="function_id">Role's Landing Page</label>
+                <label for="function_id">Role's Landing Page*</label>
                 <select name="function_id" class="form-control <?= isset($errors['function_id']) ? 'is-invalid':' ' ?>">
                   <?php if(isset($rec['function_id'])): ?>
                     <option value="<?= $rec['function_id'] ?>"><?= ucwords(name_on_system($rec['function_id'], $permissions, 'permissions')) ?></option>

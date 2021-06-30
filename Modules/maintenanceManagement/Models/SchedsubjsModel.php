@@ -1,6 +1,7 @@
 <?php namespace Modules\MaintenanceManagement\Models;
 
 use CodeIgniter\Model;
+use CodeIgniter\I18n\Time;
 
 class SchedsubjsModel extends \CodeIgniter\Model {
 
@@ -10,7 +11,7 @@ class SchedsubjsModel extends \CodeIgniter\Model {
 
 
   public function getSubjSchedules(){
-    $this->select('sched.*,subjects.*, suffixes.*, courses.*,professors.*,semesters.*,schoolyears.*,courses.*, labs.*, sched.id as id');
+    $this->select('sched.*,subjects.*, suffixes.*, courses.*,professors.*,semesters.*,schoolyears.*,courses.*, labs.*, sched.id as id, sched.status as status');
     $this->distinct('sched');
     $this->from('schedsubjs sched');
     $this->join('labs','sched.lab_id = labs.id','inner');
@@ -20,7 +21,7 @@ class SchedsubjsModel extends \CodeIgniter\Model {
     $this->join('semesters','sched.semester_id = semesters.id','inner');
     $this->join('schoolyears','sched.sy_id = schoolyears.id','inner');
     $this->join('suffixes','professors.suffix_id = suffixes.id','inner');
-    $this->where('sched.deleted_at', null);
+    // $this->where('sched.deleted_at', null);
     return $this->findAll();
   }
 
@@ -44,6 +45,14 @@ class SchedsubjsModel extends \CodeIgniter\Model {
     $this->where('sched.id', $id);
     return $this->first();
   }
+  public function checkSchedule($course_id, $section_id){
+    $this->where('course_id', $course_id);
+    $this->where('section_id', $section_id);
+    // $this->where('start_time >=','22:30:00');
+    // $this->where('end_time', '<','22:35:00');
+    // $this->where('day', 'Monday');
+    return $this->first();
+  }
 
   public function getScheduleSubjById($id){
     $this->where('id', $id);
@@ -55,7 +64,17 @@ class SchedsubjsModel extends \CodeIgniter\Model {
 		$val_array['created_at'] = (new \DateTime())->format('Y-m-d H:i:s');
 		$val_array['status'] = 'a';
     return $this->save($val_array);
-	}
+  }
+
+  public function inactive($id){
+    $data['status'] = 'd';
+    return $this->update($id, $data);
+  }
+  
+  public function active($id){
+    $data['status'] = 'a';
+    return $this->update($id, $data);
+  }
 
 
   public function edit_schedsubj($id,$val_array)

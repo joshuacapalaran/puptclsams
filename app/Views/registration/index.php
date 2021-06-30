@@ -63,7 +63,23 @@
                             <input placeholder="Last Name" type="text" class="form-control" name="last_name">
                         </div>
                     </div>
-       
+
+                    <div class="col-sm-6">
+                      <div class="form-group">
+                          <label class="form-label" for="course_id" >Course*</label>
+                          <select name="course_id" id="course_id" class="form-control">
+                            <option selected disabled>-- Please Select Course --</option>
+                            <?php foreach($courses as $course): ?>
+                            <option value="<?= $course['id'] ?>" <?=   ($course['id'] == $value['course_id']) ? 'selected':'' ?>><?= ucwords($course['course_abbrev']) ?> - <?= ucwords($course['course_name']) ?></option>
+                            <?php endforeach; ?>
+                          <!--  -->
+                          </select>
+                      </div>
+                      <?php if(isset($errors['course_id'])):?>
+                          <p class="text-danger"><?=esc($errors['course_id'])?><p>
+                        <?php endif;?>
+                    </div>
+                   
                     <div class="col-sm-6">
                         <div id="" class="form-group">
                             <label>Username*</label>
@@ -71,6 +87,22 @@
                         </div>
                     </div>
 
+                    <div class="col-sm-6">
+                      <div class="form-group">
+                          <label class="form-label" for="section_id">Section*</label>
+                          <select name="section_id" id="section_id" class="form-control">
+                            <option selected disabled>-- Please Select Section --</option>
+                            <?php foreach($sections as $section): ?>
+                            <option value="<?= $section['id'] ?>" <?=   ($section['id'] == $value['section_id']) ? 'selected':'' ?>><?= ucwords($section['year']) ?> - <?= ucwords($section['section']) ?></option>
+                            <?php endforeach; ?>
+                          <!--  -->
+                          </select>
+                      </div>
+                        <?php if(isset($errors['section_id'])):?>
+                          <p class="text-danger"><?=esc($errors['section_id'])?><p>
+                        <?php endif;?>
+                    </div>
+       
                     <div class="col-sm-6">
                         <div id="" class="form-group">
                             <label>Password*</label>

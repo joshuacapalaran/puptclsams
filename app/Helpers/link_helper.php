@@ -14,59 +14,6 @@ if (! function_exists('hasPrimary'))
 	}
 }
 
-// if (! function_exists('user_primary_links'))
-// {
-// 	function user_primary_links(array $array_permissions)
-// 	{
-// 		$strAdditionalUrl = '';
-// 		foreach($_SESSION['appmodules'] as $module)
-// 		{
-// 			if(hasPrimary($module['id'], $array_permissions))
-// 			{
-// 				echo '<li class="nav-item">';
-// 					echo '<a href="#" class="nav-link">';
-// 						echo getIcon($module['id'], $_SESSION['appmodules'], false);
-// 						echo '<p>';
-// 							echo ucwords(name_on_system($module['id'], $_SESSION['appmodules'], 'modules'));
-// 							echo'<i class="right fas fa-angle-left"></i>';
-// 						echo '</p>';
-// 					echo '</a>';
-// 					echo '<ul class="nav nav-treeview">';
-
-
-
-				// echo '<li class="nav-item">';
-				// echo '<div class="dropdown primary-menu-top">';
-				// echo '<button class="btn btn-secondary btn-sm dropdown-toggle" type="button" id="'.str_replace(' ', '', ucwords(name_on_system($module['id'], $_SESSION['appmodules'], 'modules'))).'" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">';
-				// echo getIcon($module['id'], $_SESSION['appmodules'], false).' '. ucwords(name_on_system($module['id'], $_SESSION['appmodules'], 'modules'));
-				// echo '</button>';
-				// echo '<div class="dropdown-menu drop-items-primary" aria-labelledby="'.str_replace(' ', '', ucwords(name_on_system($module['id'], $_SESSION['appmodules'], 'modules'))).'">';
-// 				foreach($array_permissions as $permission)
-// 				{
-// 					if($permission['module_id'] == $module['id'] && $permission['func_type'] == 1 && in_array($_SESSION['rid'], json_decode($permission['allowed_roles'])))
-// 					{
-// 						if($permission['slugs'] == 'user-own-profile')
-// 						{
-// 							echo '<a class="dropdown-item" title="'.ucwords($permission['function_name']) .'" data-toggle="tooltip" data-placement="bottom" class="nav-link" href="'. base_url() .''.str_replace("_","-",$permission['table_name']).'/own/'.$_SESSION['uid'] .'">'.getIcon($permission['id'], $_SESSION['userPermmissions']).' '.ucwords($permission['function_name']) .' </a>';
-// 						}
-// 						else
-// 						{
-// 							echo '<li class="nav-item">';
-// 								echo '<a href="'. base_url() .''.str_replace("_","-",$permission['table_name']).'" title="'.ucwords($permission['function_name']) .'" class="nav-link">';
-// 									echo getIcon($permission['id'], $_SESSION['userPermmissions']);
-// 									echo '<p>'.ucwords($permission['function_name']) .'</p>';
-// 								echo '</a>';
-// 								echo '</li>';
-// 							echo '<a class="dropdown-item" title="'.ucwords($permission['function_name']) .'" data-toggle="tooltip" data-placement="bottom" class="nav-link" href="'. base_url() .''.str_replace("_","-",$permission['table_name']).'">'.getIcon($permission['id'], $_SESSION['userPermmissions']).' '.ucwords($permission['function_name']) .' </a>';
-// 						}
-// 					}
-// 				}
-// 				echo '</ul>';
-// 				echo '</li>';
-// 			}
-// 		}
-// 	}
-// }
 if (! function_exists('user_primary_links'))
 {
 	function user_primary_links(array $array_permissions)
@@ -78,8 +25,8 @@ if (! function_exists('user_primary_links'))
 			if(hasPrimary($module['id'], $array_permissions))
 			{
 				if($module['module_name'] !== 'Users' && $module['is_dropdown'] == 0){
-					echo '<li class="nav-item  ">';
-						echo '<a href="'.base_url().'/'.$module['route'].'" class="nav-link '.( (uri_string() == $module['route']) ? "active":" ").'">';
+					echo '<li class="nav-item">';
+						echo '<a href="'.base_url().'/'.$module['route'].'" class="nav-link '.( (uri_string() == $module['route']) ? "active":" ").'"> ';
 						echo $module['module_icon'];	
 						echo ' <p>';
 						echo $module['module_name'];	

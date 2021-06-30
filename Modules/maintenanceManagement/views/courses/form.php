@@ -44,7 +44,7 @@
             <div class="row">
               <div class="col-md-6">
                 <div class="form-group">
-                  <label>Course Name</label>
+                  <label>Course Name*</label>
                   <input type="text" class="form-control" value="<?=isset($value['course_name']) ? esc($value['course_name']): ''?>" placeholder="Course Name" id="course_name" name="course_name" required>
                 </div>
                 <?php if(isset($errors['course_name'])):?>
@@ -56,7 +56,7 @@
               <div class="col-md-6">
 
                 <div class="form-group">
-                <label>Course Abbreviation</label>
+                <label>Course Abbreviation*</label>
                  <input type="text" class="form-control" value="<?=isset($value['course_abbrev']) ? esc($value['course_abbrev']): ''?>" placeholder="Course Abbreviation" id="course_abbrev" name="course_abbrev" required>
                 </div>
                 <?php if(isset($errors['course_abbrev'])):?>

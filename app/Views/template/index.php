@@ -3,4 +3,6 @@
 <?= view('template/sidebar') ?>
 
   <?= view(esc($view)) ?>
+
 <?= view('template/footer') ?>
+<?= view('template/notification') ?>

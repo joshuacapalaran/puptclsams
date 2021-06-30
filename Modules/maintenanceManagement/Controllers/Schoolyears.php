@@ -2,6 +2,7 @@
 
 use App\Controllers\BaseController;
 use Modules\MaintenanceManagement\Models as MaintenanceManagement;
+use Modules\MaintenanceManagement\Models\schoolyearsModel;
 
 class Schoolyears extends BaseController {
 
@@ -16,11 +17,13 @@ class Schoolyears extends BaseController {
   }
 
   public function add(){
+    $schoolyears = new schoolyearsModel;
+
     $data['edit'] = false;
     $data['view'] = 'Modules\MaintenanceManagement\Views\schoolyears\form';
     if($this->request->getMethod() === 'post'){
       if($this->validate('schoolyears')){
-        if($this->schoolyearsModel->add($_POST)){
+        if($schoolyears->add($_POST)){
           $this->session->setFlashData('success_message', 'Sucessfuly created a school year');
         } else {
           $this->session->setFlashData('error_message', 'Something went wrong!');
@@ -58,8 +61,16 @@ class Schoolyears extends BaseController {
     return view('template/index', $data);
   }
 
+  public function view($id){
+    $data['view'] = 'Modules\MaintenanceManagement\Views\schoolyears\view';
+    $data['id'] = $id;
+    $data['value'] = $this->schoolyearsModel->get(['id' => $id])[0];
+    return view('template/index', $data);
+  }
+
   public function delete($id){
-    if($this->schoolyearsModel->softDelete($id)) {
+    $schoolyears = new schoolyearsModel;
+    if($schoolyears->inactive($id)) {
       $this->session->setFlashData('success_message', 'Successfully deleted school year');
     } else {
       $this->session->setFlashData('error_message', 'Something went wrong!');
@@ -67,8 +78,15 @@ class Schoolyears extends BaseController {
     return redirect()->to(base_url('admin/schoolyears'));
   }
 
-  public function view($slug){
-
+  public function active($id){
+    $schoolyears = new schoolyearsModel;
+    if($schoolyears->active($id)) {
+      $this->session->setFlashData('success_message', 'Successfully restored school year');
+    } else {
+      $this->session->setFlashData('error_message', 'Something went wrong!');
+    }
+    return redirect()->to(base_url('admin/schoolyears'));
   }
+
 
 }

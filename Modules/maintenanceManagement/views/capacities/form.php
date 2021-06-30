@@ -37,11 +37,11 @@
             <div class="row">
               <div class="col-md-6">
                 <div class="form-group">
-                  <label class="form-label" for="lab_id">Laboratory</label>
-                  <select class="form-select" aria-label="Default select example" name="lab_id">
+                  <label class="form-label" for="lab_id">Laboratory*</label>
+                  <select class="form-control select" aria-label="Default select example" name="lab_id">
                     <option value ='n' <?= !$edit ? "selected" : ''?>> Select Laboratory</option>
                     <?php foreach($labs as $lab):?>
-                        <option value="<?=$lab['id'] ?>" <?= isset($errors['lab_id']) || $edit ? 'selected' : ''?>><?=$lab['lab_name'] ?></option>
+                        <option value="<?=$lab['id'] ?>" <?= ( ($value['lab_id'] == $lab['id']) ? 'selected' : '')?>> <?=$lab['lab_name'] ?></option>
                       <?php endforeach; ?>
                     </select>
                   </div>
@@ -55,7 +55,7 @@
               <div class="col-md-6">
 
                 <div class="form-group">
-                <label>Capacity</label>
+                <label>Capacity*</label>
                  <input type="number" class="form-control" value="<?=isset($value['capacity']) ? esc($value['capacity']): ''?>" placeholder="Capacity" id="capacity" name="capacity">
                 </div>
                 <?php if(isset($errors['capacity'])):?>

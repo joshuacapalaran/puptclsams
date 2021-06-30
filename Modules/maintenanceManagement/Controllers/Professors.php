@@ -2,6 +2,7 @@
 
 use App\Controllers\BaseController;
 use Modules\MaintenanceManagement\Models as MaintenanceManagement;
+use Modules\MaintenanceManagement\Models\professorsModel;
 
 class Professors extends BaseController {
 
@@ -17,12 +18,13 @@ class Professors extends BaseController {
   }
 
   public function add(){
+    $professorsModel = new professorsModel;
     $data['edit'] = false;
     $data['view'] = 'Modules\MaintenanceManagement\Views\professors\form';
     $data['suffixes'] = $this->suffixesModel->get();
     if($this->request->getMethod() === 'post'){
       if($this->validate('professors')){
-        if($this->professorsModel->add($_POST)){
+        if($professorsModel->add($_POST)){
           $this->session->setFlashData('success_message', 'Sucessfuly created a professor');
         } else {
           $this->session->setFlashData('error_message', 'Something went wrong!');
@@ -62,7 +64,9 @@ class Professors extends BaseController {
   }
 
   public function delete($id){
-    if($this->professorsModel->softDelete($id)) {
+    $professorsModel = new professorsModel;
+
+    if($professorsModel->inactive($id)) {
       $this->session->setFlashData('success_message', 'Successfully deleted professor');
     } else {
       $this->session->setFlashData('error_message', 'Something went wrong!');
@@ -70,7 +74,25 @@ class Professors extends BaseController {
     return redirect()->to(base_url('admin/professors'));
   }
 
-  public function view($slug){
+  public function active($id){
+    $professorsModel = new professorsModel;
+
+    if($professorsModel->active($id)) {
+      $this->session->setFlashData('success_message', 'Successfully deleted professor');
+    } else {
+      $this->session->setFlashData('error_message', 'Something went wrong!');
+    }
+    return redirect()->to(base_url('admin/professors'));
+  }
+
+  
+
+  public function view($id){
+    $data['view'] = 'Modules\MaintenanceManagement\Views\professors\view';
+    $data['id'] = $id;
+    $data['value'] = $this->professorsModel->get(['id' => $id])[0];
+    $data['suffixes'] = $this->suffixesModel->get();
+    return view('template/index', $data);
 
   }
 

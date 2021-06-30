@@ -33,6 +33,7 @@
                           <tr class="text-center">
                             <th>#</th>
                             <th>Suffix</th>
+                            <th>Status</th>
                             <th>Action</th>
                           </tr>
                           </thead>
@@ -47,11 +48,16 @@
                               <tr>
                                 <td><?=esc($ctr)?></td>
                                 <td><?=esc($suffix['suffix_name'])?></td>
+                                <td><?=esc(($suffix['status'] == 'a') ? 'Active':'Inactive')?></td>
                                 <td>
-                                  <a class="btn btn-primary" href="<?=base_url('admin/suffixes/edit/' . esc($suffix['id'], 'url'))?>"> Edit </a>
-                                  <!-- <a class="btn btn-danger" href="<?=base_url('admin/suffixes/delete/' . esc($suffix['id'], 'url'))?>"> Delete </a> -->
-                                  <a href="#" data-toggle="modal" data-target="#modal-delete" class="btn btn-sm btn-danger">Delete</a>
-                                </td>
+                                  <a class="btn btn-secondary btn-sm" href="<?=base_url('admin/suffixes/view/' . esc($suffix['id'], 'url'))?>"> View</a>
+                                  <a class="btn btn-primary btn-sm" href="<?=base_url('admin/suffixes/edit/' . esc($suffix['id'], 'url'))?>"> Edit </a>
+                                  <?php if($suffix['status'] == 'a'):?>
+                                  <a class="btn btn-danger btn-sm remove" onclick=" confirmUpdateStatus('<?= base_urL('admin/suffixes/delete/')?>',<?=$suffix['id']?>,'d')" title="deactivate">Delete</i></a>
+                                  <?php else:?>
+                                    <a class="btn btn-info btn-sm remove" onclick=" confirmUpdateStatus('<?= base_urL('admin/suffixes/active/')?>',<?=$suffix['id']?>,'a')" title="activate">Restore</i></a>
+                                  <?php endif;?>
+                              </td>                                </td>
                               </tr>
                               <?php $ctr++?>
                             <?php endforeach; ?>

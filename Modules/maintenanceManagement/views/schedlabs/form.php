@@ -38,7 +38,7 @@
                     <div class="col-md-6">
 
                     <div class="form-group">
-                        <label class="form-label" for="lab_id">Laboratory</label>
+                        <label class="form-label" for="lab_id">Laboratory*</label>
                         <select name="lab_id" id="lab_id" class="form-control">
                           <option selected disabled>-- Please Select Laboratory --</option>
                           <?php foreach($labs as $lab): ?>
@@ -52,7 +52,7 @@
                         <?php endif;?>
 
                       <div class="form-group">
-                        <label class="form-label" for="event_name">Event Name</label>
+                        <label class="form-label" for="event_name">Event Name*</label>
                           <input type="text" class="form-control" value="<?=isset($value['event_name']) ? esc($value['event_name']): ''?>" placeholder="Event Name" id="event_name" name="event_name">
                       </div>
                         <?php if(isset($errors['event_name'])):?>
@@ -60,7 +60,7 @@
                         <?php endif;?>
 
                     <div class="form-group">
-                      <label class="form-label" for="assigned_person">Assigned Person</label>
+                      <label class="form-label" for="assigned_person">Assigned Person*</label>
                     
                       <input type="text" class="form-control" value="<?=isset($value['assigned_person']) ? esc($value['assigned_person']): ''?>" placeholder="Assigned Person" id="assigned_person" name="assigned_person">
                     </div>
@@ -69,7 +69,7 @@
                       <?php endif;?>
 
                     <div class="form-group">
-                      <label class="form-label" for="num_people">No. of People</label>
+                      <label class="form-label" for="num_people">No. of People*</label>
                         <input type="number" class="form-control" value="<?=isset($value['num_people']) ? esc($value['num_people']): ''?>" placeholder="No. of People" id="num_people" name="num_people">
                       </div>
                         <?php if(isset($errors['num_people'])):?>
@@ -81,7 +81,7 @@
                     <div class="col-md-6">
 
                     <div class="form-group">
-                        <label class="form-label" for="category_id">Category</label>
+                        <label class="form-label" for="category_id">Category*</label>
                         <select name="category_id" id="category_id" class="form-control">
                           <option selected disabled>-- Please Select Category --</option>
                           <?php foreach($categories as $category): ?>
@@ -95,7 +95,7 @@
                         <?php endif;?>
 
                         <div class="form-group">
-                      <label class="form-label" for="date">Dates</label>
+                      <label class="form-label" for="date">Dates*</label>
                       <input type="date" class="form-control" value="<?=isset($value['date']) ? esc($value['date']): ''?>" placeholder="Date" id="date" name="date">
                     </div>
                       <?php if(isset($errors['date'])):?>
@@ -104,7 +104,7 @@
                  
                  <!-- /.form-group -->
                     <div class="form-group">
-                      <label class="form-label" for="start_time">Start Time</label>
+                      <label class="form-label" for="start_time">Start Time*</label>
                       <input type="time" class="form-control" value="<?=isset($value['start_time']) ? esc($value['start_time']): ''?>" placeholder="Start Time" id="start_time" name="start_time">
                     </div>
                       <?php if(isset($errors['start_time'])):?>
@@ -112,7 +112,7 @@
                       <?php endif;?>
              
                     <div class="form-group">
-                       <label class="form-label" for="end_time">End Time</label>
+                       <label class="form-label" for="end_time">End Time*</label>
                         <input type="time" class="form-control" value="<?=isset($value['end_time']) ? esc($value['end_time']): ''?>" placeholder="End Time" id="end_time" name="end_time">
                     </div>
                       <?php if(isset($errors['end_time'])):?>

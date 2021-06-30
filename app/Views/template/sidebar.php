@@ -26,7 +26,10 @@
         <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
           <!-- Add icons to the links using the .nav-icon class
                with font-awesome or any other icon font library -->
-				    <?php user_primary_links($_SESSION['userPermmissions']);?>
+            <?php if(isset($_SESSION['userPermmissions'])):?>
+				       <?php user_primary_links($_SESSION['userPermmissions']);?>
+            <?php else:?>
+            <?php endif;?>
 
         </ul>
         
@@ -56,5 +59,13 @@ $('li.nav-item ul.nav-treeview li.nav-item a').each(function(){
 		$(this).parent().parent().parent().addClass('menu-is-opening menu-open');
 	}
 });
+
+// var mins = 60 * 60;
+// var active = setTimeout("logout()",(mins*1000));
+// function logout()
+// {
+//     location='<?= base_url('logout'); ?>'; // <-- put your controller function here to destroy the session object and redirect the user to the login page.
+// }
+
 
 </script>

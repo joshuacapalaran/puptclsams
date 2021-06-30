@@ -36,6 +36,7 @@
                           <tr class="text-center">
                             <th>#</th>
                             <th>Semester</th>
+                            <th>Status</th>
                             <th>Action</th>
                           </tr>
                           </thead>
@@ -50,15 +51,16 @@
                             <tr>
                               <td><?=esc($ctr)?></td>
                               <td><?=esc($semester['sem'].' Semester')?></td>
+                              <td><?=esc(($semester['status'] == 'a') ? 'Active':'Inactive')?></td>
 
                               <td>
+                              <a class="btn btn-secondary btn-sm" href="<?=base_url('admin/semesters/view/' . esc($semester['id'], 'url'))?>"> View</a>
                                <a class="btn btn-outline-info btn-sm" href="<?=base_url('admin/semesters/edit/' . esc($semester['id'], 'url'))?>"> Edit </a>
-                              <!--  <button type="button" class="btn btn-sm btn-primary" data-toggle="modal" data-target="#modal-edit">
-                                Edit
-                                </button> -->
-                                <button type="button" class="btn btn-sm btn-danger" data-toggle="modal" data-target="#modal-delete">
-                                Delete
-                                </button>
+                               <?php if($semester['status'] == 'a'):?>
+                                  <a class="btn btn-danger btn-sm remove" onclick=" confirmUpdateStatus('<?= base_urL('admin/semesters/delete/')?>',<?=$semester['id']?>,'d')" title="deactivate">Delete</i></a>
+                                <?php else:?>
+                                  <a class="btn btn-info btn-sm remove" onclick=" confirmUpdateStatus('<?= base_urL('admin/semesters/active/')?>',<?=$semester['id']?>,'a')" title="activate">Restore</i></a>
+                                <?php endif;?>
                               </td>
                             </tr>
                             <?php $ctr++?>

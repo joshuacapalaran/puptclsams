@@ -27,11 +27,7 @@
         </div>
         <br>
         <div class="row">
-          <div class="col-md-3 offset-8">
-            <?php
-            user_edit_link('roles','edit-role', $permissions, $role[0]['id']);
-            ?>
-          </div>
+          
         </div>
       </div>
     </div>

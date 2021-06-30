@@ -37,7 +37,7 @@
             <div class="row">
               <div class="col-md-6">
                 <div class="form-group">
-                  <label>Start Year</label>
+                  <label>Start Year*</label>
                   <select id="Year" class="form-control" value="<?=isset($value['start_sy']) ? esc($value['start_sy']): ''?>" placeholder="Start Year" id="start_sy" name="start_sy">
                   </select>
                 </div>
@@ -50,7 +50,7 @@
               <div class="col-md-6">
 
                 <div class="form-group">
-                <label>End Year</label>
+                <label>End Year*</label>
                 <input type="number" class="form-control" value="<?=isset($value['end_sy']) ? esc($value['end_sy']): ''?>" placeholder="End Year" id="end_sy" name="end_sy">
                 
                 </div>

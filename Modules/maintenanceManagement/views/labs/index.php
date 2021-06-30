@@ -37,6 +37,7 @@
                           <tr class="text-center">
                             <th>#</th>
                             <th>Laboratory Name</th>
+                            <th>Status</th>
                             <th>Action</th>
                           </tr>
                           </thead>
@@ -51,12 +52,16 @@
                                 <tr>
                                   <td><?=esc($ctr)?></td>
                                   <td><?=esc($lab['lab_name'])?></td>
+                                  <td><?=esc(($lab['status'] == 'a') ? 'Active':'Inactive')?></td>
 
                               <td>
+                              <a class="btn btn-secondary btn-sm" href="<?=base_url('admin/labs/view/' . esc($lab['id'], 'url'))?>"> View</a>
                                <a class="btn btn-outline-info btn-sm" href="<?=base_url('admin/labs/edit/' . esc($lab['id'], 'url'))?>"> Edit </a>
-                                <button type="button" class="btn btn-sm btn-danger" data-toggle="modal" data-target="#modal-delete">
-                                Delete
-                                </button>
+                               <?php if($lab['status'] == 'a'):?>
+                                  <a class="btn btn-danger btn-sm remove" onclick=" confirmUpdateStatus('<?= base_urL('admin/labs/delete/')?>',<?=$lab['id']?>,'d')" title="deactivate">Delete</i></a>
+                                <?php else:?>
+                                  <a class="btn btn-info btn-sm remove" onclick=" confirmUpdateStatus('<?= base_urL('admin/labs/active/')?>',<?=$lab['id']?>,'a')" title="activate">Restore</i></a>
+                                <?php endif;?>
                               </td>
                             </tr>
                             <?php $ctr++?>

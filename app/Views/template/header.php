@@ -27,6 +27,7 @@
   <link rel="stylesheet" href="<?=base_url();?>/plugins/datatables-responsive/css/responsive.bootstrap4.min.css">
   <link rel="stylesheet" href="<?=base_url();?>/plugins/datatables-buttons/css/buttons.bootstrap4.min.css">
   <link rel="stylesheet" href="<?=base_url();?>/plugins/fullcalendar/main.min.css">
+  <link  rel="stylesheet" href="<?=base_url();?>/plugins/sweetalert2/sweetalert2.css">
 
 </head>
 <body class="hold-transition sidebar-mini">

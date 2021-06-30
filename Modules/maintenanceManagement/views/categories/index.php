@@ -35,6 +35,7 @@
                           <tr class="text-center">
                             <th>#</th>
                             <th>Category</th>
+                            <th>Status</th>
                             <th>Action</th>
                           </tr>
                           </thead>
@@ -49,15 +50,17 @@
                             <tr>
                               <td><?=esc($ctr)?></td>
                               <td><?=esc($category['category'])?></td>
-
+                              <td><?=esc(($category['status'] == 'a') ? 'Active':'Inactive')?></td>
+t
                               <td>
-                                <!-- <button type="button" class="btn btn-outline-info btn-sm" data-toggle="modal" data-target="#modal-edit" >
-                                Edit
-                                </button> -->
+                               <a class="btn btn-secondary btn-sm" href="<?=base_url('admin/categories/view/' . esc($category['id'], 'url'))?>"> View</a>
                                 <a class="btn btn-outline-info btn-sm" href="<?=base_url('admin/categories/edit/' . esc($category['id'], 'url'))?>"> Edit </a>
-                                <button type="button" class="btn btn-sm btn-danger" data-toggle="modal" data-target="#modal-delete">
-                                Delete
-                                </button>
+                                <?php if($category['status'] == 'a'):?>
+                                  <a class="btn btn-danger btn-sm remove" onclick=" confirmUpdateStatus('<?= base_urL('admin/categories/delete/')?>',<?=$category['id']?>,'d')" title="deactivate">Delete</i></a>
+                                <?php else:?>
+                                  <a class="btn btn-info btn-sm remove" onclick=" confirmUpdateStatus('<?= base_urL('admin/categories/active/')?>',<?=$category['id']?>,'a')" title="activate">Restore</i></a>
+                                <?php endif;?>
+                              </td>
                               </td>
                             </tr>
                             <?php $ctr++?>

@@ -2,6 +2,7 @@
 
 use App\Controllers\BaseController;
 use Modules\MaintenanceManagement\Models as MaintenanceManagement;
+use Modules\MaintenanceManagement\Models\SectionsModel;
 
 class Sections extends BaseController {
 
@@ -16,11 +17,12 @@ class Sections extends BaseController {
   }
 
   public function add(){
+    $sectionModel = new SectionsModel;
     $data['edit'] = false;
     $data['view'] = 'Modules\MaintenanceManagement\Views\sections\form';
     if($this->request->getMethod() === 'post'){
       if($this->validate('sections')){
-        if($this->sectionsModel->add($_POST)){
+        if( $sectionModel->add($_POST)){
           $this->session->setFlashData('success_message', 'Sucessfuly created a section');
         } else {
           $this->session->setFlashData('error_message', 'Something went wrong!');
@@ -59,16 +61,31 @@ class Sections extends BaseController {
   }
 
   public function delete($id){
-    if($this->sectionsModel->softDelete($id)) {
+    $sectionModel = new SectionsModel;
+
+    if( $sectionModel->inactive($id)) {
       $this->session->setFlashData('success_message', 'Successfully deleted section');
     } else {
       $this->session->setFlashData('error_message', 'Something went wrong!');
     }
     return redirect()->to(base_url('admin/sections'));
   }
+  public function active($id){
+    $sectionModel = new SectionsModel;
 
-  public function view($slug){
+    if( $sectionModel->active($id)) {
+      $this->session->setFlashData('success_message', 'Successfully restored section');
+    } else {
+      $this->session->setFlashData('error_message', 'Something went wrong!');
+    }
+    return redirect()->to(base_url('admin/sections'));
+  }
 
+  public function view($id){
+    $data['view'] = 'Modules\MaintenanceManagement\Views\sections\view';
+    $data['id'] = $id;
+    $data['value'] = $this->sectionsModel->get(['id' => $id])[0];
+    return view('template/index', $data);
   }
 
 }

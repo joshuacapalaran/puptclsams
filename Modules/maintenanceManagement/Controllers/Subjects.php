@@ -2,6 +2,7 @@
 
 use App\Controllers\BaseController;
 use Modules\MaintenanceManagement\Models as MaintenanceManagement;
+use Modules\MaintenanceManagement\Models\SubjectsModel;
 
 class Subjects extends BaseController {
 
@@ -16,11 +17,13 @@ class Subjects extends BaseController {
   }
 
   public function add(){
+    $subjectsModel = new SubjectsModel;
+
     $data['edit'] = false;
     $data['view'] = 'Modules\MaintenanceManagement\Views\subjects\form';
     if($this->request->getMethod() === 'post'){
       if($this->validate('subjects')){
-        if($this->subjectsModel->add($_POST)){
+        if($subjectsModel->add($_POST)){
           $this->session->setFlashData('success_message', 'Sucessfuly created a subject');
         } else {
           $this->session->setFlashData('error_message', 'Something went wrong!');
@@ -59,15 +62,29 @@ class Subjects extends BaseController {
   }
 
   public function delete($id){
-    if($this->subjectsModel->softDelete($id)) {
+    $subjectsModel = new SubjectsModel;
+    if($subjectsModel->inactive($id)) {
       $this->session->setFlashData('success_message', 'Successfully deleted subject');
     } else {
       $this->session->setFlashData('error_message', 'Something went wrong!');
     }
     return redirect()->to(base_url('admin/subjects'));
   }
+  public function active($id){
+    $subjectsModel = new SubjectsModel;
+    if($subjectsModel->active($id)) {
+      $this->session->setFlashData('success_message', 'Successfully restored subject');
+    } else {
+      $this->session->setFlashData('error_message', 'Something went wrong!');
+    }
+    return redirect()->to(base_url('admin/subjects'));
+  }
 
-  public function view($slug){
+  public function view($id){
+    $data['view'] = 'Modules\MaintenanceManagement\Views\subjects\view';
+    $data['id'] = $id;
+    $data['value'] = $this->subjectsModel->get(['id' => $id])[0];
+    return view('template/index', $data);
 
   }
 

@@ -6,7 +6,7 @@ class CapacitiesModel extends BaseModel {
 
   protected $table = 'capacities';
 
-  protected $allowedFields = ['lab_id', 'capacity', 'deleted_at'];
+  protected $allowedFields = ['lab_id', 'capacity', 'status', 'deleted_at'];
 
   //labs
   public function getEventsFK(){
@@ -17,6 +17,21 @@ class CapacitiesModel extends BaseModel {
       //$builder->join('name ng table + alias', 'saan dapat mag ccross')
       //return $builder->get(); (makukua nya lahat pati mga deleted)
       return $builder->getWhere(['p.deleted_at' => null]); //kukuhain lang yung may values na null sa deleted_at
-    }
+  }
+  
+  public function add($val_array){
+    $val_array['status'] = 'a';
+    return $this->save($val_array);
+  }
+  
+  public function inactive($id){
+    $data['status'] = 'd';
+    return $this->update($id, $data);
+  }
+  
+  public function active($id){
+    $data['status'] = 'a';
+    return $this->update($id, $data);
+  }
 
 }

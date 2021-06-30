@@ -37,7 +37,7 @@
             <div class="row">
               <div class="col-md-12">
                 <div class="form-group">
-                   <label class="form-label" for="category">Category</label>
+                   <label class="form-label" for="category">Category*</label>
                     <div class="input-group mb-3">
                       <input type="text" class="form-control" value="<?=isset($value['category']) ? esc($value['category']): ''?>" placeholder="Category" id="category" name="category">
                     </div>

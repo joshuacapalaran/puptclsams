@@ -40,7 +40,7 @@
               <div class="col-md-12">
 
                 <div class="form-group">
-                <label class="form-label" for="sem">Semester</label>
+                <label class="form-label" for="sem">Semester*</label>
                   <div class="input-group mb-3">
                     <input type="text" class="form-control" value="<?=isset($value['sem']) ? esc($value['sem']): ''?>" placeholder="Example: 1st" id="sem" name="sem">
                   </div>

@@ -16,18 +16,6 @@
       </div><!-- /.container-fluid -->
     </div>
     <!-- /.content-header -->
-    <section class="content">
-    <div class="container-fluid">
-      <div class="row">
-          <div class="col-12">
-            <div class="card">
-              <div class="col-md-12">
-              <div id="calendar"></div>
-            </div>
-          </div>
-      </div>
-    </div>
-  </section>
     <!-- Main content -->
     <section class="content">
       <div class="container-fluid">
@@ -50,6 +38,7 @@
                             <th>Laboratory</th>
                             <th>Assigned Person</th>
                             <th>No. of People</th>
+                            <th>Status</th>
                             <th>Action</th>
                           </tr>
                           </thead>
@@ -70,10 +59,15 @@
                               <td><?=esc($schedlab['lab_name'])?></td>
                               <td><?=esc($schedlab['assigned_person'])?></td>
                               <td><?=esc($schedlab['num_people'])?></td>
+                              <td><?=esc(($schedlab['status'] == 'a') ? 'Active':'Inactive')?></td>
                               <td>
+                               <a class="btn btn-secondary btn-sm" href="<?=base_url('admin/schedlabs/view/' . esc($schedlab['id'], 'url'))?>"> View</a>
                                 <a class="btn btn-outline-info btn-sm" href="<?=base_url('admin/schedlabs/edit/' . esc($schedlab['id'], 'url'))?>"> Edit </a>
-                                <!-- <a class="btn btn-danger" href="<?=base_url('admin/schedlabs/delete/' . esc($schedlab['id'], 'url'))?>"> Delete </a> -->
-                                <a href="#" data-toggle="modal" data-target="#modal-delete" class="btn btn-sm btn-danger">Delete</a>
+                                <?php if($schedlab['status'] == 'a'):?>
+                                  <a class="btn btn-danger btn-sm remove" onclick=" confirmUpdateStatus('<?= base_urL('admin/schedlabs/delete/')?>',<?=$schedlab['id']?>,'d')" title="deactivate">Delete</i></a>
+                                <?php else:?>
+                                  <a class="btn btn-info btn-sm remove" onclick=" confirmUpdateStatus('<?= base_urL('admin/schedlabs/active/')?>',<?=$schedlab['id']?>,'a')" title="activate">Restore</i></a>
+                                <?php endif;?>
                               </td>
                             </tr>
                             <?php $ctr++?>
@@ -154,19 +148,5 @@
 
 <script>
 
-document.addEventListener('DOMContentLoaded', function() {
-    var calendarEl = document.getElementById('calendar');
-    var calendar = new FullCalendar.Calendar(calendarEl, {
-      defaultView: 'timeGridMonth',
-      events: {
-        url: "<?= base_url('admin/schedlabs/events')?>",
-      },
 
-      failure: function() {
-      alert('there was an error while fetching events!');
-      },
-     
-    });
-    calendar.render();
-  });
 </script>

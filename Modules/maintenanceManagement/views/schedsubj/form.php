@@ -37,7 +37,7 @@
                   <div class="row">
                     <div class="col-md-6">
                     <div class="form-group">
-                        <label class="form-label" for="subject_id">Subject</label>
+                        <label class="form-label" for="subject_id">Subject*</label>
                         <select name="subject_id" id="subject_id" class="form-control">
                           <option selected disabled>-- Please Select Subject --</option>
                           <?php foreach($subjects as $subject): ?>
@@ -51,7 +51,7 @@
                         <?php endif;?>
 
                     <div class="form-group">
-                        <label class="form-label" for="course_id">Course</label>
+                        <label class="form-label" for="course_id">Course*</label>
                         <select name="course_id" id="course_id" class="form-control">
                           <option selected disabled>-- Please Select Course --</option>
                           <?php foreach($courses as $course): ?>
@@ -64,7 +64,7 @@
                           <p class="text-danger"><?=esc($errors['course_id'])?><p>
                         <?php endif;?>
                         <div class="form-group">
-                        <label class="form-label" for="section_id">Section</label>
+                        <label class="form-label" for="section_id">Section*</label>
                         <select name="section_id" id="section_id" class="form-control">
                           <option selected disabled>-- Please Select Section --</option>
                           <?php foreach($sections as $section): ?>
@@ -77,7 +77,7 @@
                           <p class="text-danger"><?=esc($errors['section_id'])?><p>
                         <?php endif;?>
                     <div class="form-group">
-                        <label class="form-label" for="lab_id">Laboratory</label>
+                        <label class="form-label" for="lab_id">Laboratory*</label>
                         <select name="lab_id" id="lab_id" class="form-control">
                           <option selected disabled>-- Please Select Laboratory --</option>
                           <?php foreach($labs as $lab): ?>
@@ -92,7 +92,7 @@
 
 
                         <div class="form-group">
-                        <label class="form-label" for="professor_id">Professor</label>
+                        <label class="form-label" for="professor_id">Professor*</label>
                         <select name="professor_id" id="professor_id" class="form-control">
                           <option selected disabled>-- Please Select Professor --</option>
                           <?php foreach($professor as $prof): ?>
@@ -107,7 +107,7 @@
 
 
                         <div class="form-group">
-                      <label class="form-label" for="start_time">Start Time</label>
+                      <label class="form-label" for="start_time">Start Time*</label>
                       <input type="time" class="form-control" value="<?=isset($value['start_time']) ? esc($value['start_time']): ''?>" placeholder="Start Time" id="start_time" name="start_time">
                     </div>
                       <?php if(isset($errors['start_time'])):?>
@@ -119,7 +119,7 @@
                     <div class="col-md-6">
 
                     <div class="form-group">
-                        <label class="form-label" for="semester_id">Semester</label>
+                        <label class="form-label" for="semester_id">Semester*</label>
                         <select name="semester_id" id="semester_id" class="form-control">
                           <option selected disabled>-- Please Select Semester --</option>
                           <?php foreach($semesters as $semester): ?>
@@ -133,7 +133,7 @@
                         <?php endif;?>
 
                         <div class="form-group">
-                        <label class="form-label" for="sy_id">School Year</label>
+                        <label class="form-label" for="sy_id">School Year*</label>
                         <select name="sy_id" id="sy_id" class="form-control">
                           <option selected disabled>-- Please Select School Year --</option>
                           <?php foreach($schoolyears as $schoolyear): ?>
@@ -147,7 +147,7 @@
                         <?php endif;?>
 
                     <div class="form-group">
-                      <label class="form-label" for="day">Day</label>
+                      <label class="form-label" for="day">Day*</label>
                       <select name="day" id="day" class="form-control">
                           <option selected disabled>-- Please Select Day --</option>
                           <option value="Monday" <?= ($value['day'] == 'Monday') ? 'selected':''?>> Monday </option>
@@ -187,7 +187,7 @@
                  <!-- /.form-group -->
 
                     <div class="form-group">
-                       <label class="form-label" for="end_time">End Time</label>
+                       <label class="form-label" for="end_time">End Time*</label>
                         <input type="time" class="form-control" value="<?=isset($value['end_time']) ? esc($value['end_time']): ''?>" placeholder="End Time" id="end_time" name="end_time">
                     </div>
                       <?php if(isset($errors['end_time'])):?>

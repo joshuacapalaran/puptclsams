@@ -1,125 +1,119 @@
-<br><div class="card bg-light ">
-  <div class="card-body">
-     <div class="row">
-       <div class="col-md-10">
-         <h3> <?=$function_title?> </h3>
-       </div>
-       <div class="col-md-2">
-         <!--  <a href="<?= base_url() ?>node/add" class="btn btn-sm btn-primary btn-block float-right">Add Node</a> -->
-       </div>
-     </div>
-    <br>
-    <div class="row">
-      <div class="col-md-12">
-        <form action="<?= base_url() ?>users/<?= isset($rec) ? 'edit/'.$rec['id'] : 'add' ?>" method="post">
-          <div class="row">
-            <div class="col-md-5 offset-md-1">
-              <div class="form-group">
-                <label for="firstname">Firstname</label>
-                <input name="firstname" type="text" value="<?= isset($rec['firstname']) ? $rec['firstname'] : set_value('firstname') ?>" class="form-control <?= isset($errors['firstname']) ? 'is-invalid':' ' ?>" id="firstname" placeholder="Firstname">
-                  <?php if(isset($errors['firstname'])): ?>
-                    <div class="invalid-feedback">
-                      <?= $errors['firstname'] ?>
-                    </div>
-                  <?php endif; ?>
-              </div>
-            </div>
-            <div class="col-md-5">
-              <div class="form-group">
-                <label for="lastname">Lastname</label>
-                <input name="lastname" type="text" value="<?= isset($rec['lastname']) ? $rec['lastname'] : set_value('lastname') ?>" class="form-control <?= isset($errors['lastname']) ? 'is-invalid':' ' ?>" id="lastname" placeholder="Lastname">
-                  <?php if(isset($errors['lastname'])): ?>
-                    <div class="invalid-feedback">
-                      <?= $errors['lastname'] ?>
-                    </div>
-                  <?php endif; ?>
-              </div>
-            </div>
-          </div>
-          <div class="row">
-            <div class="col-md-5 offset-md-1">
-              <div class="form-group">
-                <label for="username">Username</label>
-                <input name="username" type="text" value="<?= isset($rec['username']) ? $rec['username'] : set_value('username') ?>" class="form-control <?= isset($errors['username']) ? 'is-invalid':' ' ?>" id="username" placeholder="Username">
-                  <?php if(isset($errors['username'])): ?>
-                    <div class="invalid-feedback">
-                      <?= $errors['username'] ?>
-                    </div>
-                  <?php endif; ?>
-              </div>
-            </div>
-            <div class="col-md-5">
-              <div class="form-group">
-                <label for="email">Email</label>
-                <input name="email" type="email" value="<?= isset($rec['email']) ? $rec['email'] : set_value('email') ?>" class="form-control <?= isset($errors['email']) ? 'is-invalid':' ' ?>" id="email" placeholder="Email">
-                  <?php if(isset($errors['email'])): ?>
-                    <div class="invalid-feedback">
-                      <?= $errors['email'] ?>
-                    </div>
-                  <?php endif; ?>
-              </div>
-            </div>
-          </div>
-          <div class="row">
-            <div class="col-md-5 offset-md-1">
-              <div class="form-group">
-                <label for="password">Password</label>
-                <input name="password" type="password" value="<?= isset($rec['password']) ? '': set_value('password') ?>" class="form-control <?= isset($errors['password']) ? 'is-invalid':' ' ?>" id="password" placeholder="Password">
-                  <?php if(isset($errors['password'])): ?>
-                    <div class="invalid-feedback">
-                      <?= $errors['password'] ?>
-                    </div>
-                  <?php endif; ?>
-              </div>
-            </div>
-            <div class="col-md-5">
-              <div class="form-group">
-                <label for="password_retype">Password Re-type</label>
-                <input name="password_retype" type="password" value="<?= isset($rec['password']) ? '' : set_value('password_retype') ?>" class="form-control <?= isset($errors['password_retype']) ? 'is-invalid':' ' ?>" id="password_retype" placeholder="Password Re-type">
-                  <?php if(isset($errors['password_retype'])): ?>
-                    <div class="invalid-feedback">
-                      <?= $errors['password_retype'] ?>
-                    </div>
-                  <?php endif; ?>
-              </div>
-            </div>
-          </div>
-          <div class="row">
-            <div class="col-md-5 offset-md-1">
-              <div class="form-group">
-                <label for="birthdate">Birthdate</label>
-                <input name="birthdate" type="date" value="<?= isset($rec['birthdate']) ? $rec['birthdate'] : set_value('birthdate') ?>" class="form-control <?= isset($errors['birthdate']) ? 'is-invalid':' ' ?>" id="birthdate" placeholder="Birthdate">
-                  <?php if(isset($errors['birthdate'])): ?>
-                    <div class="invalid-feedback">
-                      <?= $errors['birthdate'] ?>
-                    </div>
-                  <?php endif; ?>
-              </div>
-            </div>
-            <div class="col-md-5">
-              <label for="role_id">User Role</label>
-              <select name="role_id" class="form-control <?= isset($errors['role_id']) ? 'is-invalid':' ' ?>">
-                <?php if(isset($rec['role_id'])): ?>
-                  <option value="<?= $rec['role_id'] ?>"><?= name_on_system($rec['role_id'], $roles, 'roles') ?></option>
-                <?php else: ?>
-                  <option value="">Select User Role</option>
-                <?php endif; ?>
 
-                <?php foreach($roles as $role): ?>
-                  <option value="<?= $role['id'] ?>"><?= ucwords($role['role_name']) ?></option>
-                <?php endforeach; ?>
-              </select>
-               <?php if(isset($errors['role_id'])): ?>
-                  <div class="invalid-feedback">
-                    <?= $errors['role_id'] ?>
+ <div class="content-wrapper">
+    <!-- Content Header (Page header) -->
+    <div class="content-header">
+      <div class="container-fluid ">
+        <div class="row mb-2">
+          <div class="col-sm-6">
+            <h2 class="m-0"><?= isset($rec) ? 'Editing': 'Adding'?> User</h2>
+          </div><!-- /.col -->
+          <div class="col-sm-6">
+            <ol class="breadcrumb float-sm-right">
+              <li class="breadcrumb-item"><a href="#">Home</a></li>
+              <li class="breadcrumb-item active">Users</li>
+            </ol>
+          </div><!-- /.col -->
+        </div><!-- /.row -->
+      </div><!-- /.container-fluid -->
+    </div>
+    <!-- /.content-header -->
+
+  <!-- Main content -->
+  <div class="content">
+    <div class="container-fluid">
+      <div class="card card-default">
+       
+          <form action="<?= base_url("admin/users")?>/<?= isset($rec) ? 'edit/'.esc($rec['id']): 'add'?>" method="post" accept-charset="utf-8">
+            <div class="card-body">
+                <div class="row">
+                  <div class="col-md-6">
+                    <div class="form-group">
+                      <label for="first_name">First name*</label>
+                      <input name="first_name" type="text" value="<?= isset($rec['first_name']) ? $rec['first_name'] : set_value('first_name') ?>" class="form-control <?= isset($errors['first_name']) ? 'is-invalid':' ' ?>" id="first_name" placeholder="First Name">
+                      <?php if(isset($errors['first_name'])):?>
+                        <p class="text-danger"><?=esc($errors['first_name'])?><p>
+                      <?php endif;?>  
+                    </div>
                   </div>
-                <?php endif; ?>
+
+                  <div class="col-md-6">
+                    <div class="form-group">
+                      <label for="last_name">Last Name*</label>
+                      <input name="last_name" type="text" value="<?= isset($rec['last_name']) ? $rec['last_name'] : set_value('last_name') ?>" class="form-control <?= isset($errors['last_name']) ? 'is-invalid':' '  ?>" id="last_name" placeholder="Last Name">
+                      <?php if(isset($errors['last_name'])):?>
+                        <p class="text-danger"><?=esc($errors['last_name'])?><p>
+                      <?php endif;?>  
+                    </div>
+                  </div>
+
+                </div>
+
+                <div class="row">
+                  <div class="col-md-6">
+                    <div class="form-group">
+                      <label for="m_initial">M Initial*</label>
+                      <input name="m_initial" type="text" value="<?= isset($rec['m_initial']) ? $rec['m_initial'] : set_value('m_initial') ?>" class="form-control <?= isset($errors['m_initial']) ? 'is-invalid':' '  ?>" id="m_initial" placeholder="M Initial">
+                      <?php if(isset($errors['m_initial'])):?>
+                        <p class="text-danger"><?=esc($errors['m_initial'])?><p>
+                      <?php endif;?>  
+                    </div>
+                  </div>
+
+                  <div class="col-md-6">
+                    <div class="form-group">
+                      <label for="username">User Name*</label>
+                      <input name="username" type="text" value="<?= isset($rec['username']) ? $rec['username'] : set_value('username') ?>" class="form-control <?= isset($errors['username']) ? 'is-invalid':' '  ?>" id="username" placeholder="User name">
+                      <?php if(isset($errors['username'])):?>
+                        <p class="text-danger"><?=esc($errors['username'])?><p>
+                      <?php endif;?>  
+                    </div>
+                  </div>
+
+                  
+                </div>
+              
+               
+
+                <div class="row">
+                  <div class="col-md-6">
+                    <div class="form-group">
+                      <label for="password">Password*</label>
+                      <input name="password" type="password" value="<?= isset($rec['password']) ? $rec['password'] : set_value('password') ?>" class="form-control <?= isset($errors['password']) ? 'is-invalid':' '  ?>" id="password" placeholder="Password">
+                      <?php if(isset($errors['password'])):?>
+                        <p class="text-danger"><?=esc($errors['password'])?><p>
+                      <?php endif;?>  
+                    </div>
+                  </div>
+
+                  <div class="col-md-6">
+                    <div class="form-group">
+                      <label for="username">Role*</label>
+                      <select name="role_id" class="form-control <?= isset($errors['role_id']) ? 'is-invalid':' ' ?>">
+                      <option selected disabled >Please select role</option>
+                      <?php foreach($roles as $role): ?>
+                        <option value="<?= $role['id'] ?>" <?= ($role['id'] == $rec['role_id'] ? 'selected':'')?>><?= ucwords($role['role_name']) ?></option>
+                      <?php endforeach; ?>
+                    </select>
+                      <?php if(isset($errors['role_id'])):?>
+                        <p class="text-danger"><?=esc($errors['role_id'])?><p>
+                      <?php endif;?>  
+                    </div>
+                  </div>
+
+                  
+                </div>
+                <div class="row">
+                  <div class="col-md-6 offset-md-5">
+                    <button type="submit" class="btn btn-primary float-right">Submit</button>
+                  </div>
+                </div>
             </div>
-          </div>
-          <button type="submit" class="btn btn-primary float-right">Submit</button>
-        </form>
-        <p style="clear: both"></p>
+  
+          </form>
       </div>
     </div>
-    </div>
-    </div>
+  </div>
+
+
+    <!-- /.content -->
+</div>

@@ -6,11 +6,11 @@ class StudentsModel extends BaseModel {
 
   protected $table = 'students';
 
-  protected $allowedFields = ['student_num', 'first_name', 'last_name', 'm_initial', 'suffix_id', 'course_id', 'section_id', 'deleted_at'];
+  protected $allowedFields = ['student_num', 'first_name', 'last_name', 'm_initial', 'suffix_id', 'course_id', 'section_id','status','created_at','updated_at','deleted_at'];
 
 
   public function getStudents(){
-    $this->select('stud.*,sec.*,cours.*,suffixes.*, stud.id as id');
+    $this->select('stud.*,sec.*,cours.*,suffixes.*, stud.id as id, stud.status as status');
     $this->from('students stud');
     $this->distinct('stud.id');
     $this->join('sections sec', 'stud.section_id = sec.id', 'inner');
@@ -43,5 +43,20 @@ class StudentsModel extends BaseModel {
     $data['created_at'] = (new \DateTime())->format('Y-m-d H:i:s');
 
     return $this->save($data);
+  }
+
+  public function add($val_array){
+    $val_array['status'] = 'a';
+    return $this->save($val_array);
+  }
+  
+  public function inactive($id){
+    $data['status'] = 'd';
+    return $this->update($id, $data);
+  }
+  
+  public function active($id){
+    $data['status'] = 'a';
+    return $this->update($id, $data);
   }
 }
