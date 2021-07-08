@@ -33,7 +33,7 @@
                             <th>User</th>
                             <th>Description</th>
                             <th>Properties</th>
-                            <th>Data</th>
+                            <th>Date</th>
                           </tr>
                           </thead>
                           <tbody class="text-center">
@@ -49,7 +49,7 @@
                                 <td><?=esc($activityLog['username'])?></td>
                                 <td><?=esc($activityLog['description'])?></td>
                                 <td><?=esc($activityLog['properties'])?></td>
-                                <td><?=esc($activityLog['data'])?></td>
+                                <td><?=esc(date('M d y, H:i:s a',strtotime($activityLog['created_at'])))?></td>
                               </tr>
                               <?php $ctr++?>
                             <?php endforeach; ?>

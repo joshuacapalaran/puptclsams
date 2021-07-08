@@ -106,14 +106,14 @@
                     <div class="col-sm-6">
                         <div id="" class="form-group">
                             <label>Password*</label>
-                            <input placeholder="Password" type="text" class="form-control" name="password">
+                            <input placeholder="Password" type="password" class="form-control" name="password">
                         </div>
                     </div>
 
                     <div class="col-sm-6">
                         <div id="" class="form-group">
                             <label>Re-type Password*</label>
-                            <input placeholder="Re-type Password" type="text" class="form-control" name="password_retype">
+                            <input placeholder="Re-type Password" type="password" class="form-control" name="password_retype">
                         </div>
                     </div>
 

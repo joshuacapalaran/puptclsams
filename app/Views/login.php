@@ -27,7 +27,6 @@
           <?php endif; ?>
           <input type="text" name="username" class="form-control" placeholder="Your Username" id="username" required>
           <input type="password" name="password" class="form-control" placeholder="Your Password" id="password"required>
-          <a href="#">Forgot Your Password</a>
 
           <button type="submit" value="Sign In" >Sign In</button>
           <!-- <input type="submit" value="Sign In" class="btn btn-block btn-dark" style="background-color:#E1AD01;"> -->

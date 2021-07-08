@@ -45,7 +45,11 @@ class Security extends BaseController
 				// die('logged in');
 				$_SESSION['success_login'] = 'Welcome '.$user['username'].'!';
 				$this->session->markAsFlashdata('success_login');
-                return redirect()->to(base_url('admin/home'));
+				if($_SESSION['rid'] == '1'){
+					return redirect()->to(base_url('admin/home'));
+				}else{
+					return redirect()->to(base_url($landing_page['table_name']));
+				}
 			}
 			else
 			{
