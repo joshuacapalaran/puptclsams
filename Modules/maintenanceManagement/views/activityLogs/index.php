@@ -46,7 +46,7 @@
                             <?php foreach($activityLogs as $activityLog): ?>
                               <tr>
                                 <td><?=esc($ctr)?></td>
-                                <td><?=esc($activityLog['user_id'])?></td>
+                                <td><?=esc($activityLog['username'])?></td>
                                 <td><?=esc($activityLog['description'])?></td>
                                 <td><?=esc($activityLog['properties'])?></td>
                                 <td><?=esc($activityLog['data'])?></td>
