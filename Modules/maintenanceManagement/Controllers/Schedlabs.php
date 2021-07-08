@@ -5,11 +5,13 @@ use Modules\MaintenanceManagement\Models as MaintenanceManagement;
 use Modules\MaintenanceManagement\Models\SchedlabsModel;
 use Modules\MaintenanceManagement\Models\LabsModel;
 use Modules\MaintenanceManagement\Models\CategoriesModel;
+use Modules\MaintenanceManagement\Models\ActivityLogsModel;
 
 class Schedlabs extends BaseController {
 
   function __construct(){
     $this->schedlabsModel = new MaintenanceManagement\schedlabsModel();
+    $this->activityLogsModel = new ActivityLogsModel;
   }
 
   public function index(){
@@ -31,6 +33,7 @@ class Schedlabs extends BaseController {
     if($this->request->getMethod() === 'post'){
       if($this->validate('schedlabs')){
         if($schedlabsModel->add($_POST)){
+          $this->activityLogsModel->addLogs($_SESSION['uid'], 'Add Sched lab', 'admin/schedlabs', json_encode($_POST));
           $this->session->setFlashData('success_message', 'Sucessfuly created a schedsubject');
         } else {
           $this->session->setFlashData('error_message', 'Something went wrong!');
@@ -61,6 +64,7 @@ class Schedlabs extends BaseController {
     if($this->request->getMethod() === 'post'){
       if($this->validate('schedlabs')){
         if($this->schedlabsModel->edit($id, $_POST)){
+          $this->activityLogsModel->addLogs($_SESSION['uid'], 'Edit Sched lab', 'admin/schedlabs', $id);
           $this->session->setFlashData('success_message', 'Sucessfuly edited a schedsubject');
         } else {
           $this->session->setFlashData('error_message', 'Something went wrong!');
@@ -78,7 +82,7 @@ class Schedlabs extends BaseController {
     $schedlabsModel = new SchedlabsModel;
 
     if($schedlabsModel->inactive($id)) {
-
+      $this->activityLogsModel->addLogs($_SESSION['uid'], 'Archive Sched lab', 'admin/schedlabs', $id);
       $this->session->setFlashData('success_message', 'Successfully deleted schedsubject');
     } else {
       $this->session->setFlashData('error_message', 'Something went wrong!');
@@ -90,6 +94,7 @@ class Schedlabs extends BaseController {
     $schedlabsModel = new SchedlabsModel;
 
     if($schedlabsModel->active($id)) {
+      $this->activityLogsModel->addLogs($_SESSION['uid'], 'Restore Sched lab', 'admin/schedlabs', $id);
       $this->session->setFlashData('success_message', 'Successfully restored schedsubject');
     } else {
       $this->session->setFlashData('error_message', 'Something went wrong!');

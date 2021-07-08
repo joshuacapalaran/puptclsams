@@ -4,6 +4,7 @@ namespace Modules\UserManagement\Controllers;
 use Modules\UserManagement\Models\RolesModel;
 use Modules\UserManagement\Models\PermissionsModel;
 use App\Controllers\BaseController;
+use Modules\MaintenanceManagement\Models\ActivityLogsModel;
 
 class Roles extends BaseController
 {
@@ -15,6 +16,7 @@ class Roles extends BaseController
 
 		$permissions_model = new PermissionsModel();
 		$this->permissions = $permissions_model->getPermissionsWithCondition(['status' => 'a']);
+		$this->activityLogsModel = new ActivityLogsModel;
 	}
 
     public function index($offset = 0)
@@ -73,7 +75,8 @@ class Roles extends BaseController
 		        {
 		        	$role_id = $model->insertID();
 		        	$permissions_model->update_permitted_role($role_id, $_POST['function_id']);
-		        	$_SESSION['success'] = 'You have added a new record';
+					$this->activityLogsModel->addLogs($_SESSION['uid'], 'Add Role', 'admin/roles', json_encode($_POST));
+					$_SESSION['success'] = 'You have added a new record';
 					$this->session->markAsFlashdata('success');
 		        	return redirect()->to(base_url('admin/roles'));
 		        }
@@ -116,6 +119,7 @@ class Roles extends BaseController
 		    	if($model->editRoles($_POST, $id))
 		        {
 		        	$permissions_model->update_permitted_role($id, $_POST['function_id'], $data['rec']['function_id']);
+					$this->activityLogsModel->addLogs($_SESSION['uid'], 'Edit Role', 'admin/roles', $id);
 		        	$_SESSION['success'] = 'You have updated a record';
 					$this->session->markAsFlashdata('success');
 		        	return redirect()->to(base_url('admin/roles'));
@@ -140,7 +144,8 @@ class Roles extends BaseController
     {
     	$model = new RolesModel();
     	if($model->deleteRole($id)){
-			$this->session->setFlashData('success_message', 'Successfully deleted role');
+		  $this->activityLogsModel->addLogs($_SESSION['uid'], 'Archive Role', 'admin/roles', $id);
+		  $this->session->setFlashData('success_message', 'Successfully deleted role');
 		} else {
 		  $this->session->setFlashData('error_message', 'Something went wrong!');
 		}
@@ -151,7 +156,8 @@ class Roles extends BaseController
     {
     	$model = new RolesModel();
     	if($model->active($id)){
-			$this->session->setFlashData('success_message', 'Successfully restored role');
+		  $this->activityLogsModel->addLogs($_SESSION['uid'], 'Restore Role', 'admin/roles', $id);
+		  $this->session->setFlashData('success_message', 'Successfully restored role');
 		} else {
 		  $this->session->setFlashData('error_message', 'Something went wrong!');
 		}

@@ -3,11 +3,13 @@
 use App\Controllers\BaseController;
 use Modules\MaintenanceManagement\Models as MaintenanceManagement;
 use Modules\MaintenanceManagement\Models\suffixesModel;
+use Modules\MaintenanceManagement\Models\ActivityLogsModel;
 
 class Suffixes extends BaseController {
 
   function __construct(){
     $this->suffixesModel = new MaintenanceManagement\suffixesModel();
+    $this->activityLogsModel = new ActivityLogsModel;
   }
 
   public function index(){
@@ -23,6 +25,7 @@ class Suffixes extends BaseController {
     if($this->request->getMethod() === 'post'){
       if($this->validate('suffixes')){
         if($suffixesModel->add($_POST)){
+          $this->activityLogsModel->addLogs($_SESSION['uid'], 'Add suffix', 'admin/suffixes', json_encode($_POST));
           $this->session->setFlashData('success_message', 'Sucessfuly created a suffix');
         } else {
           $this->session->setFlashData('error_message', 'Something went wrong!');
@@ -47,6 +50,7 @@ class Suffixes extends BaseController {
     if($this->request->getMethod() === 'post'){
       if($this->validate('suffixes')){
         if($this->suffixesModel->edit($id, $_POST)){
+          $this->activityLogsModel->addLogs($_SESSION['uid'], 'Edit suffix', 'admin/suffixes', $id);
           $this->session->setFlashData('success_message', 'Sucessfuly edited a suffix');
         } else {
           $this->session->setFlashData('error_message', 'Something went wrong!');
@@ -63,6 +67,7 @@ class Suffixes extends BaseController {
   public function delete($id){
     $suffixesModel = new suffixesModel;
     if($suffixesModel->inactive($id)) {
+      $this->activityLogsModel->addLogs($_SESSION['uid'], 'Archive suffix', 'admin/suffixes', $id);
       $this->session->setFlashData('success_message', 'Successfully deleted suffix');
     } else {
       $this->session->setFlashData('error_message', 'Something went wrong!');
@@ -73,6 +78,7 @@ class Suffixes extends BaseController {
   public function active($id){
     $suffixesModel = new suffixesModel;
     if($suffixesModel->active($id)) {
+      $this->activityLogsModel->addLogs($_SESSION['uid'], 'Restore suffix', 'admin/suffixes', $id);
       $this->session->setFlashData('success_message', 'Successfully restored suffix');
     } else {
       $this->session->setFlashData('error_message', 'Something went wrong!');

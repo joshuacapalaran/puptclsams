@@ -3,11 +3,13 @@
 use App\Controllers\BaseController;
 use Modules\MaintenanceManagement\Models as MaintenanceManagement;
 use Modules\MaintenanceManagement\Models\schoolyearsModel;
+use Modules\MaintenanceManagement\Models\ActivityLogsModel;
 
 class Schoolyears extends BaseController {
 
   function __construct(){
     $this->schoolyearsModel = new MaintenanceManagement\schoolyearsModel();
+    $this->activityLogsModel = new ActivityLogsModel;
   }
 
   public function index(){
@@ -24,6 +26,7 @@ class Schoolyears extends BaseController {
     if($this->request->getMethod() === 'post'){
       if($this->validate('schoolyears')){
         if($schoolyears->add($_POST)){
+          $this->activityLogsModel->addLogs($_SESSION['uid'], 'Add School year', 'admin/schoolyears', json_encode($_POST));
           $this->session->setFlashData('success_message', 'Sucessfuly created a school year');
         } else {
           $this->session->setFlashData('error_message', 'Something went wrong!');
@@ -48,6 +51,7 @@ class Schoolyears extends BaseController {
     if($this->request->getMethod() === 'post'){
       if($this->validate('schoolyears')){
         if($this->schoolyearsModel->edit($id, $_POST)){
+          $this->activityLogsModel->addLogs($_SESSION['uid'], 'Edit School year', 'admin/schoolyears', $id);
           $this->session->setFlashData('success_message', 'Sucessfuly edited a school year');
         } else {
           $this->session->setFlashData('error_message', 'Something went wrong!');
@@ -71,6 +75,7 @@ class Schoolyears extends BaseController {
   public function delete($id){
     $schoolyears = new schoolyearsModel;
     if($schoolyears->inactive($id)) {
+      $this->activityLogsModel->addLogs($_SESSION['uid'], 'Archived School year', 'admin/schoolyears', $id);
       $this->session->setFlashData('success_message', 'Successfully deleted school year');
     } else {
       $this->session->setFlashData('error_message', 'Something went wrong!');
@@ -81,6 +86,7 @@ class Schoolyears extends BaseController {
   public function active($id){
     $schoolyears = new schoolyearsModel;
     if($schoolyears->active($id)) {
+      $this->activityLogsModel->addLogs($_SESSION['uid'], 'Restore School year', 'admin/schoolyears', $id);
       $this->session->setFlashData('success_message', 'Successfully restored school year');
     } else {
       $this->session->setFlashData('error_message', 'Something went wrong!');

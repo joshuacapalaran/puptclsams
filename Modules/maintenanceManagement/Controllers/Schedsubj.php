@@ -13,6 +13,7 @@ use Modules\MaintenanceManagement\Models\SchedsubjsModel;
 use Modules\MaintenanceManagement\Models\SectionsModel;
 use Modules\MaintenanceManagement\Models\StudentsModel;
 use Modules\MaintenanceManagement\Models\AttendancesModel;
+use Modules\MaintenanceManagement\Models\ActivityLogsModel;
 
 use \PhpOffice\PhpSpreadsheet\Spreadsheet;
 use \PhpOffice\PhpSpreadsheet\Writer\Xlsx;
@@ -21,7 +22,9 @@ use PhpOffice\PhpSpreadsheet\Worksheet\PageSetup;
 
 class Schedsubj extends BaseController {
 
-
+  function __construct(){
+    $this->activityLogsModel = new ActivityLogsModel;
+  }
   public function index(){
 
     
@@ -57,6 +60,7 @@ class Schedsubj extends BaseController {
     if($this->request->getMethod() === 'post'){
       if($this->validate('schedsubj')){
         if($schedsubj->add_schedsubj($_POST)){
+          $this->activityLogsModel->addLogs($_SESSION['uid'], 'Add Sched Subject', 'admin/schedsubject', json_encode($_POST));
           $this->session->setFlashData('success_message', 'Sucessfuly created a schedsubject');
         } else {
           $this->session->setFlashData('error_message', 'Something went wrong!');
@@ -102,6 +106,7 @@ class Schedsubj extends BaseController {
     if($this->request->getMethod() === 'post'){
       if($this->validate('schedsubj')){
         if($schedsubj->edit_schedsubj($id, $_POST)){
+          $this->activityLogsModel->addLogs($_SESSION['uid'], 'Edit Sched Subject', 'admin/schedsubject', $id);
           $this->session->setFlashData('success_message', 'Sucessfuly edited a schedsubject');
         } else {
           $this->session->setFlashData('error_message', 'Something went wrong!');
@@ -119,7 +124,8 @@ class Schedsubj extends BaseController {
     $schedsubj = new SchedsubjsModel;
 
     if($schedsubj->inactive($id)) {
-      $this->session->setFlashData('success_message', 'Successfully deleted schedsubject');
+          $this->activityLogsModel->addLogs($_SESSION['uid'], 'Archive Sched Subject', 'admin/schedsubject', $id);
+          $this->session->setFlashData('success_message', 'Successfully deleted schedsubject');
     } else {
       $this->session->setFlashData('error_message', 'Something went wrong!');
     }
@@ -130,7 +136,8 @@ class Schedsubj extends BaseController {
     $schedsubj = new SchedsubjsModel;
 
     if($schedsubj->active($id)) {
-      $this->session->setFlashData('success_message', 'Successfully restored schedsubject');
+          $this->activityLogsModel->addLogs($_SESSION['uid'], 'Restore Sched Subject', 'admin/schedsubject', $id);
+          $this->session->setFlashData('success_message', 'Successfully restored schedsubject');
     } else {
       $this->session->setFlashData('error_message', 'Something went wrong!');
     }

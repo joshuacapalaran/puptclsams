@@ -19,7 +19,7 @@ if (! function_exists('user_primary_links'))
 	function user_primary_links(array $array_permissions)
 	{
 		$strAdditionalUrl = '';
-
+	
 		foreach($_SESSION['appmodules'] as $module)
 		{
 			if(hasPrimary($module['id'], $array_permissions))

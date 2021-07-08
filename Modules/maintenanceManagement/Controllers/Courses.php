@@ -3,11 +3,14 @@
 use App\Controllers\BaseController;
 use Modules\MaintenanceManagement\Models as MaintenanceManagement;
 use Modules\MaintenanceManagement\Models\CoursesModel;
+use Modules\MaintenanceManagement\Models\ActivityLogsModel;
 
 class Courses extends BaseController {
 
   function __construct(){
     $this->coursesModel = new MaintenanceManagement\coursesModel();
+    $this->activityLogsModel = new ActivityLogsModel;
+
   }
 
   public function index(){
@@ -23,6 +26,7 @@ class Courses extends BaseController {
     if($this->request->getMethod() === 'post'){
       if($this->validate('courses')){
         if($courseModel->add($_POST)){
+          $this->activityLogsModel->addLogs($_SESSION['uid'], 'Add Course', 'admin/courses', json_encode($_POST));
           $this->session->setFlashData('success_message', 'Sucessfuly created a course');
         } else {
           $this->session->setFlashData('error_message', 'Something went wrong!');
@@ -47,6 +51,8 @@ class Courses extends BaseController {
     if($this->request->getMethod() === 'post'){
       if($this->validate('courses')){
         if($this->coursesModel->edit($id, $_POST)){
+          $this->activityLogsModel->addLogs($_SESSION['uid'], 'Edit Course', 'admin/courses', $id);
+
           $this->session->setFlashData('success_message', 'Sucessfuly edited a course');
         } else {
           $this->session->setFlashData('error_message', 'Something went wrong!');
@@ -64,6 +70,7 @@ class Courses extends BaseController {
     $courseModel = new CoursesModel;
 
     if($courseModel->inactive($id)) {
+      $this->activityLogsModel->addLogs($_SESSION['uid'], 'Archived Course', 'admin/courses', $id);
       $this->session->setFlashData('success_message', 'Successfully deleted course');
     } else {
       $this->session->setFlashData('error_message', 'Something went wrong!');
@@ -75,6 +82,7 @@ class Courses extends BaseController {
     $courseModel = new CoursesModel;
 
     if($courseModel->active($id)) {
+      $this->activityLogsModel->addLogs($_SESSION['uid'], 'Restore Course', 'admin/courses', $id);
       $this->session->setFlashData('success_message', 'Successfully restored course');
     } else {
       $this->session->setFlashData('error_message', 'Something went wrong!');

@@ -3,11 +3,13 @@
 use App\Controllers\BaseController;
 use Modules\MaintenanceManagement\Models as MaintenanceManagement;
 use Modules\MaintenanceManagement\Models\SectionsModel;
+use Modules\MaintenanceManagement\Models\ActivityLogsModel;
 
 class Sections extends BaseController {
 
   function __construct(){
     $this->sectionsModel = new MaintenanceManagement\sectionsModel();
+    $this->activityLogsModel = new ActivityLogsModel;
   }
 
   public function index(){
@@ -23,6 +25,7 @@ class Sections extends BaseController {
     if($this->request->getMethod() === 'post'){
       if($this->validate('sections')){
         if( $sectionModel->add($_POST)){
+          $this->activityLogsModel->addLogs($_SESSION['uid'], 'Add Sections', 'admin/sections', json_encode($_POST));
           $this->session->setFlashData('success_message', 'Sucessfuly created a section');
         } else {
           $this->session->setFlashData('error_message', 'Something went wrong!');
@@ -47,6 +50,7 @@ class Sections extends BaseController {
     if($this->request->getMethod() === 'post'){
       if($this->validate('sections')){
         if($this->sectionsModel->edit($id, $_POST)){
+          $this->activityLogsModel->addLogs($_SESSION['uid'], 'Edit Sections', 'admin/sections', $id);
           $this->session->setFlashData('success_message', 'Sucessfuly edited a section');
         } else {
           $this->session->setFlashData('error_message', 'Something went wrong!');
@@ -64,7 +68,8 @@ class Sections extends BaseController {
     $sectionModel = new SectionsModel;
 
     if( $sectionModel->inactive($id)) {
-      $this->session->setFlashData('success_message', 'Successfully deleted section');
+        $this->activityLogsModel->addLogs($_SESSION['uid'], 'Archive Sections', 'admin/sections', $id);
+        $this->session->setFlashData('success_message', 'Successfully deleted section');
     } else {
       $this->session->setFlashData('error_message', 'Something went wrong!');
     }
@@ -74,7 +79,8 @@ class Sections extends BaseController {
     $sectionModel = new SectionsModel;
 
     if( $sectionModel->active($id)) {
-      $this->session->setFlashData('success_message', 'Successfully restored section');
+        $this->activityLogsModel->addLogs($_SESSION['uid'], 'Restore Sections', 'admin/sections', $id);
+        $this->session->setFlashData('success_message', 'Successfully restored section');
     } else {
       $this->session->setFlashData('error_message', 'Something went wrong!');
     }

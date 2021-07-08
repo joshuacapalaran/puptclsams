@@ -3,11 +3,13 @@
 use App\Controllers\BaseController;
 use Modules\MaintenanceManagement\Models as MaintenanceManagement;
 use Modules\MaintenanceManagement\Models\SubjectsModel;
+use Modules\MaintenanceManagement\Models\ActivityLogsModel;
 
 class Subjects extends BaseController {
 
   function __construct(){
     $this->subjectsModel = new MaintenanceManagement\subjectsModel();
+    $this->activityLogsModel = new ActivityLogsModel;
   }
 
   public function index(){
@@ -24,6 +26,7 @@ class Subjects extends BaseController {
     if($this->request->getMethod() === 'post'){
       if($this->validate('subjects')){
         if($subjectsModel->add($_POST)){
+          $this->activityLogsModel->addLogs($_SESSION['uid'], 'Add Subject', 'admin/subjects', json_encode($_POST));
           $this->session->setFlashData('success_message', 'Sucessfuly created a subject');
         } else {
           $this->session->setFlashData('error_message', 'Something went wrong!');
@@ -48,6 +51,7 @@ class Subjects extends BaseController {
     if($this->request->getMethod() === 'post'){
       if($this->validate('subjects')){
         if($this->subjectsModel->edit($id, $_POST)){
+          $this->activityLogsModel->addLogs($_SESSION['uid'], 'Edit Subject', 'admin/subjects', $id);
           $this->session->setFlashData('success_message', 'Sucessfuly edited a subject');
         } else {
           $this->session->setFlashData('error_message', 'Something went wrong!');
@@ -64,6 +68,7 @@ class Subjects extends BaseController {
   public function delete($id){
     $subjectsModel = new SubjectsModel;
     if($subjectsModel->inactive($id)) {
+      $this->activityLogsModel->addLogs($_SESSION['uid'], 'Archive Subject', 'admin/subjects', $id);
       $this->session->setFlashData('success_message', 'Successfully deleted subject');
     } else {
       $this->session->setFlashData('error_message', 'Something went wrong!');
@@ -73,6 +78,7 @@ class Subjects extends BaseController {
   public function active($id){
     $subjectsModel = new SubjectsModel;
     if($subjectsModel->active($id)) {
+      $this->activityLogsModel->addLogs($_SESSION['uid'], 'Restore Subject', 'admin/subjects', $id);
       $this->session->setFlashData('success_message', 'Successfully restored subject');
     } else {
       $this->session->setFlashData('error_message', 'Something went wrong!');

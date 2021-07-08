@@ -3,6 +3,7 @@ namespace Modules\UserManagement\Controllers;
 
 use Modules\UserManagement\Models\RolesModel;
 use Modules\maintenanceManagement\Models\UsersModel;
+use Modules\MaintenanceManagement\Models\ActivityLogsModel;
 use App\Controllers\BaseController;
 
 class Users extends BaseController
@@ -12,6 +13,7 @@ class Users extends BaseController
 	public function __construct()
 	{
 		parent:: __construct();
+		$this->activityLogsModel = new ActivityLogsModel;
 	}
 
     public function index($offset = 0)
@@ -50,7 +52,8 @@ class Users extends BaseController
 		    {
 		        if($model->addUsers($_POST))
 		        {
-		        	$_SESSION['success'] = 'You have added a new record';
+					$this->activityLogsModel->addLogs($_SESSION['uid'], 'Add Users', 'admin/users', json_encode($_POST));
+					$_SESSION['success'] = 'You have added a new record';
 					$this->session->markAsFlashdata('success');
 		        	return redirect()->to(base_url('admin/users'));
 		        }
@@ -91,6 +94,7 @@ class Users extends BaseController
 		    {
 		    	if($model->editUsers($_POST, $id))
 		        {
+					$this->activityLogsModel->addLogs($_SESSION['uid'], 'Edit Users', 'admin/users', $id);
 		        	$_SESSION['success'] = 'You have updated a record';
 					$this->session->markAsFlashdata('success');
 		        	return redirect()->to(base_url('admin/users'));
@@ -115,7 +119,8 @@ class Users extends BaseController
     {
     	$model = new UsersModel();
     	if($model->inactive($id)){
-			$this->session->setFlashData('success_message', 'Successfully deleted user');
+		  $this->activityLogsModel->addLogs($_SESSION['uid'], 'Archive Users', 'admin/users', $id);
+		  $this->session->setFlashData('success_message', 'Successfully deleted user');
 		} else {
 		  $this->session->setFlashData('error_message', 'Something went wrong!');
 		}
@@ -126,7 +131,8 @@ class Users extends BaseController
     {
     	$model = new UsersModel();
     	if($model->active($id)){
-			$this->session->setFlashData('success_message', 'Successfully restored user');
+		  $this->activityLogsModel->addLogs($_SESSION['uid'], 'Restore Users', 'admin/users', $id);
+		  $this->session->setFlashData('success_message', 'Successfully restored user');
 		} else {
 		  $this->session->setFlashData('error_message', 'Something went wrong!');
 		}

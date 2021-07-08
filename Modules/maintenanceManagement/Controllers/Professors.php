@@ -3,12 +3,14 @@
 use App\Controllers\BaseController;
 use Modules\MaintenanceManagement\Models as MaintenanceManagement;
 use Modules\MaintenanceManagement\Models\professorsModel;
+use Modules\MaintenanceManagement\Models\ActivityLogsModel;
 
 class Professors extends BaseController {
 
   function __construct(){
     $this->professorsModel = new MaintenanceManagement\professorsModel();
     $this->suffixesModel = new MaintenanceManagement\suffixesModel();
+    $this->activityLogsModel = new ActivityLogsModel;
   }
 
   public function index(){
@@ -25,6 +27,7 @@ class Professors extends BaseController {
     if($this->request->getMethod() === 'post'){
       if($this->validate('professors')){
         if($professorsModel->add($_POST)){
+          $this->activityLogsModel->addLogs($_SESSION['uid'], 'Add professor', 'admin/professors', json_encode($_POST));
           $this->session->setFlashData('success_message', 'Sucessfuly created a professor');
         } else {
           $this->session->setFlashData('error_message', 'Something went wrong!');
@@ -50,6 +53,7 @@ class Professors extends BaseController {
     if($this->request->getMethod() === 'post'){
       if($this->validate('professors')){
         if($this->professorsModel->edit($id, $_POST)){
+          $this->activityLogsModel->addLogs($_SESSION['uid'], 'Edit professor', 'admin/professors', $id);
           $this->session->setFlashData('success_message', 'Sucessfuly edited a professor');
         } else {
           $this->session->setFlashData('error_message', 'Something went wrong!');
@@ -67,7 +71,8 @@ class Professors extends BaseController {
     $professorsModel = new professorsModel;
 
     if($professorsModel->inactive($id)) {
-      $this->session->setFlashData('success_message', 'Successfully deleted professor');
+          $this->activityLogsModel->addLogs($_SESSION['uid'], 'Archive professor', 'admin/professors', $id);
+          $this->session->setFlashData('success_message', 'Successfully deleted professor');
     } else {
       $this->session->setFlashData('error_message', 'Something went wrong!');
     }
@@ -78,7 +83,8 @@ class Professors extends BaseController {
     $professorsModel = new professorsModel;
 
     if($professorsModel->active($id)) {
-      $this->session->setFlashData('success_message', 'Successfully deleted professor');
+          $this->activityLogsModel->addLogs($_SESSION['uid'], 'Restore professor', 'admin/professors', $id);
+          $this->session->setFlashData('success_message', 'Successfully deleted professor');
     } else {
       $this->session->setFlashData('error_message', 'Something went wrong!');
     }

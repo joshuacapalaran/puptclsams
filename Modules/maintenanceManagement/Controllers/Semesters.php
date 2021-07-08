@@ -3,11 +3,13 @@
 use App\Controllers\BaseController;
 use Modules\MaintenanceManagement\Models as MaintenanceManagement;
 use Modules\MaintenanceManagement\Models\semestersModel;
+use Modules\MaintenanceManagement\Models\ActivityLogsModel;
 
 class Semesters extends BaseController {
 
   function __construct(){
     $this->semestersModel = new MaintenanceManagement\semestersModel();
+    $this->activityLogsModel = new ActivityLogsModel;
   }
 
   public function index(){
@@ -23,6 +25,7 @@ class Semesters extends BaseController {
     if($this->request->getMethod() === 'post'){
       if($this->validate('semesters')){
         if($semestersModel->add($_POST)){
+          $this->activityLogsModel->addLogs($_SESSION['uid'], 'Add School year', 'admin/semesters/add', json_encode($_POST));
           $this->session->setFlashData('success_message', 'Sucessfuly created a semester');
         } else {
           $this->session->setFlashData('error_message', 'Something went wrong!');
@@ -47,6 +50,7 @@ class Semesters extends BaseController {
     if($this->request->getMethod() === 'post'){
       if($this->validate('semesters')){
         if($this->semestersModel->edit($id, $_POST)){
+          $this->activityLogsModel->addLogs($_SESSION['uid'], 'Edit School year', 'admin/semesters/edit', $id);
           $this->session->setFlashData('success_message', 'Sucessfuly edited a semester');
         } else {
           $this->session->setFlashData('error_message', 'Something went wrong!');
@@ -64,7 +68,8 @@ class Semesters extends BaseController {
     $semestersModel = new semestersModel;
 
     if($semestersModel->inactive($id)) {
-      $this->session->setFlashData('success_message', 'Successfully deleted semester');
+          $this->activityLogsModel->addLogs($_SESSION['uid'], 'Archive School year', 'admin/semesters/delete', $id);
+          $this->session->setFlashData('success_message', 'Successfully deleted semester');
     } else {
       $this->session->setFlashData('error_message', 'Something went wrong!');
     }
@@ -75,6 +80,7 @@ class Semesters extends BaseController {
     $semestersModel = new semestersModel;
 
     if($semestersModel->active($id)) {
+      $this->activityLogsModel->addLogs($_SESSION['uid'], 'Restore School year', 'admin/semesters/active', $id);
       $this->session->setFlashData('success_message', 'Successfully restored semester');
     } else {
       $this->session->setFlashData('error_message', 'Something went wrong!');

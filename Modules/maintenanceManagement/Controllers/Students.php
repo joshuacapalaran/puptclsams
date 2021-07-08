@@ -6,11 +6,13 @@ use Modules\MaintenanceManagement\Models\StudentsModel;
 use Modules\MaintenanceManagement\Models\CoursesModel;
 use Modules\MaintenanceManagement\Models\SectionsModel;
 use Modules\MaintenanceManagement\Models\SuffixesModel;
+use Modules\MaintenanceManagement\Models\ActivityLogsModel;
 
 class Students extends BaseController {
 
   function __construct(){
     $this->studentsModel = new MaintenanceManagement\studentsModel();
+    $this->activityLogsModel = new ActivityLogsModel;
   }
 
   public function index(){
@@ -34,6 +36,7 @@ class Students extends BaseController {
     if($this->request->getMethod() === 'post'){
       if($this->validate('students')){
         if($student->add($_POST)){
+          $this->activityLogsModel->addLogs($_SESSION['uid'], 'Add Student', 'admin/students', json_encode($_POST));
           $this->session->setFlashData('success_message', 'Sucessfuly created a student');
         } else {
           $this->session->setFlashData('error_message', 'Something went wrong!');
@@ -67,6 +70,7 @@ class Students extends BaseController {
     if($this->request->getMethod() === 'post'){
       if($this->validate('students')){
         if($this->studentsModel->edit($id, $_POST)){
+          $this->activityLogsModel->addLogs($_SESSION['uid'], 'Edit Student', 'admin/students', $id);
           $this->session->setFlashData('success_message', 'Sucessfuly edited a student');
         } else {
           $this->session->setFlashData('error_message', 'Something went wrong!');
@@ -84,6 +88,7 @@ class Students extends BaseController {
     $studentsModel = new StudentsModel;
     
     if($studentsModel->inactive($id)) {
+      $this->activityLogsModel->addLogs($_SESSION['uid'], 'Archive Student', 'admin/students', $id);
       $this->session->setFlashData('success_message', 'Successfully deleted student');
     } else {
       $this->session->setFlashData('error_message', 'Something went wrong!');
@@ -95,6 +100,7 @@ class Students extends BaseController {
     $studentsModel = new StudentsModel;
     
     if($studentsModel->active($id)) {
+      $this->activityLogsModel->addLogs($_SESSION['uid'], 'Restore Student', 'admin/students', $id);
       $this->session->setFlashData('success_message', 'Successfully restored student');
     } else {
       $this->session->setFlashData('error_message', 'Something went wrong!');

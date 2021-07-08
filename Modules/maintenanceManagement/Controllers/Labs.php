@@ -3,11 +3,14 @@
 use App\Controllers\BaseController;
 use Modules\MaintenanceManagement\Models as MaintenanceManagement;
 use Modules\MaintenanceManagement\Models\LabsModel;
+use Modules\MaintenanceManagement\Models\ActivityLogsModel;
 
 class Labs extends BaseController {
 
   function __construct(){
     $this->labsModel = new MaintenanceManagement\labsModel();
+    $this->activityLogsModel = new ActivityLogsModel;
+
   }
 
   public function index(){
@@ -23,6 +26,7 @@ class Labs extends BaseController {
     if($this->request->getMethod() === 'post'){
       if($this->validate('labs')){
         if($labsModel->add($_POST)){
+          $this->activityLogsModel->addLogs($_SESSION['uid'], 'Add Lab', 'admin/labs', json_encode($_POST));
           $this->session->setFlashData('success_message', 'Sucessfuly created a lab');
         } else {
           $this->session->setFlashData('error_message', 'Something went wrong!');
@@ -47,6 +51,7 @@ class Labs extends BaseController {
     if($this->request->getMethod() === 'post'){
       if($this->validate('labs')){
         if($this->labsModel->edit($id, $_POST)){
+          $this->activityLogsModel->addLogs($_SESSION['uid'], 'Edit Lab', 'admin/labs', $id);
           $this->session->setFlashData('success_message', 'Sucessfuly edited a lab');
         } else {
           $this->session->setFlashData('error_message', 'Something went wrong!');
@@ -64,6 +69,7 @@ class Labs extends BaseController {
     $labsModel = new LabsModel;
 
     if($labsModel->inactive($id)) {
+      $this->activityLogsModel->addLogs($_SESSION['uid'], 'Archive Lab', 'admin/labs', $id);
       $this->session->setFlashData('success_message', 'Successfully deleted lab');
     } else {
       $this->session->setFlashData('error_message', 'Something went wrong!');
@@ -75,6 +81,7 @@ class Labs extends BaseController {
     $labsModel = new LabsModel;
 
     if($labsModel->active($id)) {
+      $this->activityLogsModel->addLogs($_SESSION['uid'], 'Restore Lab', 'admin/labs', $id);
       $this->session->setFlashData('success_message', 'Successfully restored lab');
     } else {
       $this->session->setFlashData('error_message', 'Something went wrong!');

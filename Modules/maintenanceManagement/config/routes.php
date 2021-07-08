@@ -168,3 +168,9 @@ $routes->group('admin/attendance', ['namespace' => 'Modules\MaintenanceManagemen
   $routes->match(['get', 'post'],'verify', 'Attendance::verify');
   $routes->match(['get', 'post'],'attendanceTimeOut', 'Attendance::attendance_time_out');
 });
+
+//Attendance
+$routes->group('admin/activity', ['namespace' => 'Modules\MaintenanceManagement\Controllers'], function($routes){
+  $routes->get('/', 'ActivityLogs::index');
+});
+

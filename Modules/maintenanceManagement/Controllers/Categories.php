@@ -3,11 +3,14 @@
 use App\Controllers\BaseController;
 use Modules\MaintenanceManagement\Models as MaintenanceManagement;
 use Modules\MaintenanceManagement\Models\categoriesModel;
+use Modules\MaintenanceManagement\Models\ActivityLogsModel;
 
 class Categories extends BaseController {
 
   function __construct(){
     $this->categoriesModel = new MaintenanceManagement\categoriesModel();
+    $this->activityLogsModel = new ActivityLogsModel;
+
   }
 
   public function index(){
@@ -23,6 +26,7 @@ class Categories extends BaseController {
     if($this->request->getMethod() === 'post'){
       if($this->validate('categories')){
         if($categoriesModel->add($_POST)){
+          $this->activityLogsModel->addLogs($_SESSION['uid'], 'Add Category', 'admin/categories/add', json_encode($_POST));
           $this->session->setFlashData('success_message', 'Sucessfuly created a category');
         } else {
           $this->session->setFlashData('error_message', 'Something went wrong!');
@@ -47,6 +51,7 @@ class Categories extends BaseController {
     if($this->request->getMethod() === 'post'){
       if($this->validate('categories')){
         if($this->categoriesModel->edit($id, $_POST)){
+          $this->activityLogsModel->addLogs($_SESSION['uid'], 'Edit Category', 'admin/categories/edit/',$id);
           $this->session->setFlashData('success_message', 'Sucessfuly edited a category');
         } else {
           $this->session->setFlashData('error_message', 'Something went wrong!');
@@ -64,6 +69,7 @@ class Categories extends BaseController {
     $categoriesModel = new categoriesModel;
 
     if($categoriesModel->inactive($id)) {
+      $this->activityLogsModel->addLogs($_SESSION['uid'], 'Archived Category', 'admin/categories/delete',$id);
       $this->session->setFlashData('success_message', 'Successfully deleted category');
     } else {
       $this->session->setFlashData('error_message', 'Something went wrong!');
@@ -75,6 +81,7 @@ class Categories extends BaseController {
     $categoriesModel = new categoriesModel;
 
     if($categoriesModel->active($id)) {
+      $this->activityLogsModel->addLogs($_SESSION['uid'], 'Restore Category', 'admin/categories/active',$id);
       $this->session->setFlashData('success_message', 'Successfully restored category');
     } else {
       $this->session->setFlashData('error_message', 'Something went wrong!');

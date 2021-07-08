@@ -3,12 +3,15 @@
 use App\Controllers\BaseController;
 use Modules\MaintenanceManagement\Models as MaintenanceManagement;
 use Modules\MaintenanceManagement\Models\capacitiesModel;
+use Modules\MaintenanceManagement\Models\ActivityLogsModel;
 
 class Capacities extends BaseController {
 
   function __construct(){
     $this->capacitiesModel = new MaintenanceManagement\capacitiesModel();
     $this->labsModel = new MaintenanceManagement\labsModel();
+    $this->activityLogsModel = new ActivityLogsModel;
+
   }
 
   public function index(){
@@ -25,6 +28,7 @@ class Capacities extends BaseController {
     if($this->request->getMethod() === 'post'){
       if($this->validate('capacities')){
         if($capacitiesModel->add($_POST)){
+          $this->activityLogsModel->addLogs($_SESSION['uid'], 'Add Capacity', 'admin/capacities/add', json_encode($_POST));
           $this->session->setFlashData('success_message', 'Sucessfuly created a capacity');
         } else {
           $this->session->setFlashData('error_message', 'Something went wrong!');
@@ -50,6 +54,7 @@ class Capacities extends BaseController {
     if($this->request->getMethod() === 'post'){
       if($this->validate('capacities')){
         if($this->capacitiesModel->edit($id, $_POST)){
+          $this->activityLogsModel->addLogs($_SESSION['uid'], 'Edit Capacity', 'admin/capacities/edit', $id);
           $this->session->setFlashData('success_message', 'Sucessfuly edited a capacity');
         } else {
           $this->session->setFlashData('error_message', 'Something went wrong!');
@@ -67,6 +72,7 @@ class Capacities extends BaseController {
     $capacitiesModel = new capacitiesModel;
 
     if($capacitiesModel->inactive($id)) {
+      $this->activityLogsModel->addLogs($_SESSION['uid'], 'Archived Capacity', 'admin/capacities/delete', $id);
       $this->session->setFlashData('success_message', 'Successfully deleted capacity');
     } else {
       $this->session->setFlashData('error_message', 'Something went wrong!');
@@ -77,6 +83,7 @@ class Capacities extends BaseController {
     $capacitiesModel = new capacitiesModel;
 
     if($capacitiesModel->active($id)) {
+      $this->activityLogsModel->addLogs($_SESSION['uid'], 'Restore Capacity', 'admin/capacities/active', $id);
       $this->session->setFlashData('success_message', 'Successfully restored capacity');
     } else {
       $this->session->setFlashData('error_message', 'Something went wrong!');
