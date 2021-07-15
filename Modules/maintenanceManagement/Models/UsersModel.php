@@ -95,7 +95,7 @@ class UsersModel extends \CodeIgniter\Model
 		$this->select('*');
 		$this->from('users u');
 		$this->join('roles r', 'u.role_id = r.id', 'inner');
-		// $this->join('permissions p', 'r.function_id = p.id', 'inner');
+		$this->join('permissions p', 'r.function_id = p.id', 'inner');
 		$this->where('r.id', $role_id);
 		$query = $this->first();
 

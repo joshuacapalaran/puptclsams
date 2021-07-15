@@ -46,7 +46,7 @@ class Schedsubj extends BaseController {
     $schedsubj = new SchedsubjsModel;
     $section = new SectionsModel;
 
-
+  
     $data['categories'] = $categories->getActiveCategories();
     $data['subjects'] = $subj->getActiveSubjects();
     $data['labs'] = $labs->getLabsByActive();
@@ -59,6 +59,10 @@ class Schedsubj extends BaseController {
     $data['view'] = 'Modules\MaintenanceManagement\Views\schedsubj\form';
     if($this->request->getMethod() === 'post'){
       if($this->validate('schedsubj')){
+        if($_POST['day']){
+           $_POST['day'] = implode(',',$_POST['day']);
+        }
+    
         if($schedsubj->add_schedsubj($_POST)){
           $this->activityLogsModel->addLogs($_SESSION['uid'], 'Add Sched Subject', 'admin/schedsubject', json_encode($_POST));
           $this->session->setFlashData('success_message', 'Sucessfuly created a schedsubject');
@@ -67,7 +71,7 @@ class Schedsubj extends BaseController {
         }
         return redirect()->to(base_url('admin/schedsubject'));
       } else {
-        $data['value'] = $_POST;
+        // $data['value'] = $_POST;
         $data['errors'] = $this->validation->getErrors();
       }
     }
@@ -170,135 +174,6 @@ class Schedsubj extends BaseController {
     $data['value'] = $schedsubj->getScheduleSubjById($id);
     return view('template/index', $data);
 
-  }
-  public function attendance($id){
-    $attendanceModel = new AttendancesModel();
-    $schedsubj = new SchedsubjsModel;
-    $data['subject'] = $schedsubj->getSubjectById($id);
-    $data['attendances'] = $attendanceModel->getAttendancesBySchedule($id);
-    $data['schedule_id'] = $id;
-    $data['view'] = 'Modules\MaintenanceManagement\Views\schedsubj\frmAttendance';
-    return view('template/index', $data);
-
-  }
-
-  	
-public function verify(){
-	$studentModel = new StudentsModel();
-	$attendanceModel = new AttendancesModel();
-	$students = $studentModel->getStudentByStudNum($_POST['student_num']);
-	if(!empty($students) ) {
-    $data['schedule_id'] = $_POST['schedule_id'];
-    $data['student_id'] = $students['id'];
-    $data['student_number'] = $_POST['student_num'];
-
-		$attendance = $attendanceModel->getAttendance($students['id']);
-
-		if (empty($attendance) && $_POST['course_id'] !== $students['course_id']) {
-			if($attendanceModel->insertAttendance($data)){
-				$_SESSION['success'] = 'You have succesfully time in!';
-				$this->session->markAsFlashdata('success');
-				return redirect()->to(base_url('admin/schedsubject/attendance/'.$_POST['schedule_id']));
-			} else {
-				$_SESSION['success'] = 'Something Went Wrong!';
-				$this->session->markAsFlashdata('error');
-				return redirect()->to(base_url('admin/schedsubject/attendance/'.$_POST['schedule_id']));
-			}
-		} else {
-			$_SESSION['error'] = 'You already time-in this day';
-			$this->session->markAsFlashdata('error');
-			return redirect()->to(base_url('admin/schedsubject/attendance/'.$_POST['schedule_id']));
-		}
-
-	} else{
-		$_SESSION['error1'] = 'Student Number Not Found';
-		$this->session->markAsFlashdata('error1');
-		return redirect()->to(base_url('admin/schedsubject/attendance/'.$_POST['schedule_id']));
-	}
-}
-
-public function attendance_time_out(){
-  $studentModel = new StudentsModel();
-	$attendanceModel = new AttendancesModel();
-  $students = $studentModel->getStudentByStudNum($_POST['student_num']);
-
-	if(!empty($students) ) {
-    $attendance = $attendanceModel->getAttendance($students['id']);
-  
-		if ($attendance[0]['timeout'] == null) {
-    
-			if ($attendanceModel->timeOut($attendance[0]['id'])) {
-				$_SESSION['success'] = 'You have succesfully time out!';
-				$this->session->markAsFlashdata('success');
-				return redirect()->to(base_url('admin/schedsubject/attendance/'.$_POST['schedule_id']));
-			} else {
-				$_SESSION['error'] = 'Something Went Wrong!';
-				$this->session->markAsFlashdata('error');
-				return redirect()->to(base_url('admin/schedsubject/attendance/'.$_POST['schedule_id']));
-			}
-		}else{
-			// if($attendanceModel->insertAttendance($data)){
-			// 	$_SESSION['success'] = 'You have succesfully time in!';
-			// 	$this->session->markAsFlashdata('success');
-			// 	return redirect()->to(base_url('attendance'));
-			// }else{
-				$_SESSION['error'] = "You cant time out again! Please Time-in on another day!";
-				$this->session->markAsFlashdata('error');
-				return redirect()->to(base_url('admin/schedsubject/attendance/'.$_POST['schedule_id']));
-			// }
-		}
-	} else{
-		$_SESSION['error1'] = 'Student Number Not Found';
-		$this->session->markAsFlashdata('error1');
-		return redirect()->to(base_url('admin/schedsubject/attendance/'.$_POST['schedule_id']));
-	}
-		
-}
-
-
-public function get_events(){
-  $sched = new SchedsubjsModel;
-  $schedsubjects = $sched->getSubjSchedules();
-  $data = [];
-  foreach($schedsubjects as $schedsubject){
-
-      $dow = [];
-      if(!empty($schedsubject['end_day'])){
-        $day = $this->getDayNumber($schedsubject['day']);
-        $end_day = $this->getDayNumber($schedsubject['end_day']);
-        $dow = [$day,$end_day];
-      }else{
-        $day = $this->getDayNumber($schedsubject['day']);
-        $dow = [$day];
-      }
-      $data[] = [
-        'title' => $schedsubject['subj_name'],
-        'daysOfWeek' => $dow,
-        'id' => $schedsubject['id'],
-        'start' => $schedsubject['start_time']
-      ];
-  }
-  echo json_encode($data);
-}
-public function getDayNumber($day){
-    switch($day){
-      case 'Sunday': return 0;
-      break;
-      case 'Monday': return 1;
-      break;
-      case 'Tuesday': return 2;
-      break;
-      case 'Wednesday': return 3;
-      break;
-      case 'Thursday': return 4;
-      break;
-      case 'Friday': return 5;
-      break;
-      case 'Saturday': return 6;
-      break;
-
-    }
-    return false;
   }
 
 public function report($id){

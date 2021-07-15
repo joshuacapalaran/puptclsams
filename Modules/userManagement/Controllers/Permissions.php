@@ -61,14 +61,14 @@ class Permissions extends BaseController
 
      		if($isUpdated == 1)
 	         {
-	         	$_SESSION['success'] = 'You have updated the permissions';
-				 $this->session->markAsFlashdata('success');
+	         	$_SESSION['success_message'] = 'You have updated the permissions';
+				 $this->session->setFlashData('success_message');
 	         	return redirect()->to(base_url('admin/permissions'));
 	         }
 	         else
 	         {
 	         	$_SESSION['error'] = 'You have an error in updating the permissions';
-				 $this->session->markAsFlashdata('error');
+				 $this->session->setFlashData('error');
 	         	return redirect()->to(base_url('admin/permissions'));
 	         }
     	}

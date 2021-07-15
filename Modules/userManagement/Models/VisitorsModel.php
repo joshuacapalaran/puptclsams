@@ -7,7 +7,7 @@ class VisitorsModel extends \CodeIgniter\Model
 {
     protected $table = 'visitors';
 
-    protected $allowedFields = ['name', 'purpose', 'lab_id', 'time_in','time_out', 'created_at','updated_at', 'deleted_at'];
+    protected $allowedFields = ['name', 'purpose', 'lab_id','event_id', 'time_in','time_out', 'created_at','updated_at', 'deleted_at'];
 
     public function getVisitorWithCondition($conditions = [])
 	{

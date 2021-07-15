@@ -15,7 +15,27 @@ class SchedlabsModel extends BaseModel {
     $this->from('schedlabs sched');
     $this->join('categories category', 'category.id = sched.category_id','inner');
     $this->join('labs','sched.lab_id = labs.id','inner');
-    // $this->where('sched.deleted_at', null);
+    return $this->findAll();
+  }
+
+  public function getCalendarLabSchedules(){
+    $this->select('sched.*, category.*, labs.*, sched.id as id, sched.status as status');
+    $this->distinct('sched');
+    $this->from('schedlabs sched');
+    $this->join('categories category', 'category.id = sched.category_id','inner');
+    $this->join('labs','sched.lab_id = labs.id','inner');
+    $this->where('sched.status', 'a');
+    return $this->findAll();
+  }
+
+  public function getEventByCurrentDate(){
+    date_default_timezone_set('Asia/Singapore');
+    $this->select('sched.*, category.*, labs.*, sched.id as id, sched.status as status');
+    $this->distinct('sched');
+    $this->from('schedlabs sched');
+    $this->join('categories category', 'category.id = sched.category_id','inner');
+    $this->join('labs','sched.lab_id = labs.id','inner');
+    $this->where('sched.date', date('Y-m-d'));
     return $this->findAll();
   }
 

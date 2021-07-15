@@ -106,19 +106,30 @@
                         <?php endif;?>
 
 
-                        <div class="form-group">
+                        <div class="form-group" id="start-time-div">
                       <label class="form-label" for="start_time">Start Time*</label>
                       <input type="time" class="form-control" value="<?=isset($value['start_time']) ? esc($value['start_time']): ''?>" placeholder="Start Time" id="start_time" name="start_time">
                     </div>
-                      <?php if(isset($errors['start_time'])):?>
+                      <!-- <?php if(isset($errors['start_time'])):?>
                         <p class="text-danger"><?=esc($errors['start_time'])?><p>
-                      <?php endif;?>
+                      <?php endif;?> -->
 
                     </div>
                     <!-- /.col -->
                     <div class="col-md-6">
-
                     <div class="form-group">
+                        <label class="form-label" for="category">Category*</label>
+                        <select name="category" id="category" class="form-control">
+                          <option selected disabled>-- Please Select Category --</option>
+                          <option value="1" <?= ( $value['category'] == 1) ? 'selected':'' ?>> Regular Class</option>
+                          <option value="2" <?= ( $value['category'] == 2) ? 'selected':'' ?>> Make-up Class</option>
+                        </select>
+                      </div>
+                      <?php if(isset($errors['category'])):?>
+                        <p class="text-danger"><?=esc($errors['category'])?><p>
+                      <?php endif;?>
+
+                      <div class="form-group">
                         <label class="form-label" for="semester_id">Semester*</label>
                         <select name="semester_id" id="semester_id" class="form-control">
                           <option selected disabled>-- Please Select Semester --</option>
@@ -128,9 +139,9 @@
                         <!--  -->
                         </select>
                       </div>
-                        <?php if(isset($errors['semester_id'])):?>
-                          <p class="text-danger"><?=esc($errors['semester_id'])?><p>
-                        <?php endif;?>
+                      <?php if(isset($errors['semester_id'])):?>
+                        <p class="text-danger"><?=esc($errors['semester_id'])?><p>
+                      <?php endif;?>
 
                         <div class="form-group">
                         <label class="form-label" for="sy_id">School Year*</label>
@@ -146,53 +157,39 @@
                           <p class="text-danger"><?=esc($errors['sy_id'])?><p>
                         <?php endif;?>
 
-                    <div class="form-group">
+
+                      <div class="form-group" id="date-div" hidden>
+                       <label class="form-label" for="date">Date*</label>
+                        <input type="date" class="form-control" value="<?=isset($value['date']) ? esc($value['date']): ''?>" placeholder="End Time" id="date" name="date">
+                      </div>
+                      <?php if(isset($errors['date'])):?>
+                        <p class="text-danger"><?=esc($errors['date'])?><p>
+                      <?php endif;?>
+
+
+                    <div class="form-group" id="day-div">
                       <label class="form-label" for="day">Day*</label>
-                      <select name="day" id="day" class="form-control">
-                          <option selected disabled>-- Please Select Day --</option>
-                          <option value="Monday" <?= ($value['day'] == 'Monday') ? 'selected':''?>> Monday </option>
-                          <option value="Tuesday" <?= ($value['day'] == 'Tuesday') ? 'selected':''?>> Tuesday </option>
-                          <option value="Wednesday"<?= ($value['day'] == 'Wednesday') ? 'selected':''?>> Wednesday </option>
-                          <option value="Thursday"<?= ($value['day'] == 'Thursday') ? 'selected':''?>> Thursday </option>
-                          <option value="Friday"<?= ($value['day'] == 'Friday') ? 'selected':''?>> Friday </option>
-                          <option value="Satutrday"<?= ($value['day'] == 'Satutrday') ? 'selected':''?>> Satutrday </option>
-                          <option value="Sunday"<?= ($value['day'] == 'Sunday') ? 'selected':''?>> Sunday </option>
-
-                        <!--  -->
-                        </select>
+                      <select name="day[]" id="day" class="form-control select2" multiple="multiple">
+                          <option value="Monday" <?= in_array('Monday', explode(',',$value['day'] )) ? 'selected':''?>> Monday </option>
+                          <option value="Tuesday" <?= in_array('Tuesday', explode(',',$value['day'] )) ? 'selected':''?>> Tuesday </option>
+                          <option value="Wednesday"<?= in_array('Wednesday', explode(',',$value['day'] )) ? 'selected':''?>> Wednesday </option>
+                          <option value="Thursday"<?= in_array('Thursday', explode(',',$value['day'] )) ? 'selected':''?>> Thursday </option>
+                          <option value="Friday"<?= in_array('Friday', explode(',',$value['day'] )) ? 'selected':''?>> Friday </option>
+                          <option value="Satutrday"<?= in_array('Satutrday', explode(',',$value['day'] )) ? 'selected':''?>> Satutrday </option>
+                          <option value="Sunday"<?= in_array('Sunday', explode(',',$value['day'] )) ? 'selected':''?>> Sunday </option>
+                      </select>
                     </div>
-                      <?php if(isset($errors['day'])):?>
+                      <!-- <?php if(isset($errors['day'])):?>
                         <p class="text-danger"><?=esc($errors['day'])?><p>
-                      <?php endif;?>
+                      <?php endif;?> -->
 
-                      <div class="form-group">
-                      <label class="form-label" for="end_day">To Day (optional)</label>
-                      <select name="end_day" id="end_day" class="form-control">
-                          <option selected disabled>-- Please Select Day --</option>
-                          <option value="Monday" <?= ($value['end_day'] == 'Monday') ? 'selected':''?>> Monday </option>
-                          <option value="Tuesday" <?= ($value['end_day'] == 'Tuesday') ? 'selected':''?>> Tuesday </option>
-                          <option value="Wednesday"<?= ($value['end_day'] == 'Wednesday') ? 'selected':''?>> Wednesday </option>
-                          <option value="Thursday"<?= ($value['end_day'] == 'Thursday') ? 'selected':''?>> Thursday </option>
-                          <option value="Friday"<?= ($value['end_day'] == 'Friday') ? 'selected':''?>> Friday </option>
-                          <option value="Saturday"<?= ($value['end_day'] == 'Saturday') ? 'selected':''?>> Saturday </option>
-                          <option value="Sunday"<?= ($value['end_day'] == 'Sunday') ? 'selected':''?>> Sunday </option>
-
-                        <!--  -->
-                        </select>
-                    </div>
-                      <?php if(isset($errors['end_day'])):?>
-                        <p class="text-danger"><?=esc($errors['end_day'])?><p>
-                      <?php endif;?>
-
-                 <!-- /.form-group -->
-
-                    <div class="form-group">
+                    <div class="form-group" id="end-time-div">
                        <label class="form-label" for="end_time">End Time*</label>
                         <input type="time" class="form-control" value="<?=isset($value['end_time']) ? esc($value['end_time']): ''?>" placeholder="End Time" id="end_time" name="end_time">
                     </div>
-                      <?php if(isset($errors['end_time'])):?>
+                      <!-- <?php if(isset($errors['end_time'])):?>
                         <p class="text-danger"><?=esc($errors['end_time'])?><p>
-                      <?php endif;?>
+                      <?php endif;?> -->
 
                     <!-- /.form-group -->
                     <div class="form-group">
@@ -211,8 +208,33 @@
         </div>
         <!-- content -->
       </div>
-
-
-
     <!-- /.content -->
   </div>
+  <script src="<?=base_url();?>/plugins/select2/js/select2.min.js"></script>
+
+
+  <script>
+  $(".select2").select2({
+    placeholder:'Please Select Day',
+    width: "100%"
+  });
+$(document).ready(function(){
+  $('#category').change(function(){
+    var category = $(this).val();
+    if(category == 2){
+      $('#day-div').prop('hidden', true);
+      $('#start-time-div').prop('hidden', true);
+      $('#end-time-div').prop('hidden', true);
+      $('#date-div').prop('hidden', false);
+
+    }else{
+      $('#day-div').prop('hidden', false);
+      $('#start-time-div').prop('hidden', false);
+      $('#end-time-div').prop('hidden', false);
+      $('#date-div').prop('hidden', true);
+    }
+
+  });
+
+});
+  </script>

@@ -2,6 +2,7 @@
 
 use Modules\maintenanceManagement\Models\UsersModel;
 use Modules\maintenanceManagement\Models\labsModel;
+use Modules\maintenanceManagement\Models\SchedlabsModel;
 
 class Security extends BaseController
 {
@@ -62,7 +63,9 @@ class Security extends BaseController
 		else
 		{
 			$labs = new labsModel();
-			$data['labs'] = $labs->getLabs();
+			$schedLabsModel = new SchedlabsModel();
+			$data['labs'] = $labs->getLabsByActive();
+			$data['events'] = $schedLabsModel->getEventByCurrentDate();
 
 			echo view('App\Views\template\header');
 			echo view('App\Views\login',$data);

@@ -39,6 +39,9 @@
             <div id="modalBody" class="modal-body">
             
             </div>
+            <div class="modal-footer">
+              <button type="submit" id="cancel-schedule" class="btn btn-success">Cancel Schedule</button>
+            </div>
         </div>
     </div>
 </div>
@@ -64,21 +67,45 @@
       eventClick: function(event) {
         // console.log(event.event.extendedProps)
         $('#fullCalModal').modal();
-        $('#modalTitle').html(event.event.title);
         
+        $('#cancel-schedule').click(function(e){
+          e.preventDefault();
+            $.ajax({
+              url:"<?= base_url('admin/schedules/cancelSchedule')?>",
+              type: "POST",
+              data: {id:event.event.id,lab_id:event.event.extendedProps.lab_id, type: event.event.extendedProps.schedule},
+              success:function(response){
+                console.log(response)
+                location.reload()
+              }
+            });
+        });
+
+        $('#modalTitle').html(event.event.title);
+
+        var months = ["January", "Febuary", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
         var html = '';
         if(event.event.extendedProps.schedule == 'event'){
             html += '<span> Class: '+ event.event.title+'</span> <br>';
             html += '<span> Course: '+ event.event.extendedProps.course+'</span> <br>';
+          if(event.event.extendedProps.time !== undefined && event.event.extendedProps.lab_day !== undefined){
             html += '<span> Time: '+ event.event.extendedProps.time+'</span><br>';
             html += '<span> Laboratory Day: '+ event.event.extendedProps.lab_day+'</span><br>';
+          }else{
+            var date = new Date(event.event.extendedProps.lab_day);
+            var month = months[date.getMonth()];
+            html += '<span> Laboratory Day: '+month+' '+date.getDate()+', '+date.getFullYear()+'</span><br>';
+          }
             html += '<span> Professor: '+ event.event.extendedProps.prof+'</span><br>';
+
         }else{
           html += '<span> Event Name: '+ event.event.title+'</span> <br>';
           html += '<span> Category: '+ event.event.extendedProps.category+'</span> <br>';
-          html += '<span> Date: '+ event.event.extendedProps.date+'</span> <br>';
+          var date = new Date(event.event.extendedProps.date);
+          var month = months[date.getMonth()];
+          html += '<span> Date: '+month+' '+date.getDate()+', '+date.getFullYear()+'</span> <br>';
           html += '<span> Time: '+ event.event.extendedProps.time+'</span> <br>';
-          html += '<span> Laboratory: '+ event.event.extendedProps.lab_name+'</span> <br>';
+          html += '<span> Laboratory: '+ event.event.extendedProps.lab+'</span> <br>';
           html += '<span> Assigned Person: '+ event.event.extendedProps.assigned_person+'</span> <br>';
           html += '<span> No. of People: '+ event.event.extendedProps.num_people+'</span> <br>';
 

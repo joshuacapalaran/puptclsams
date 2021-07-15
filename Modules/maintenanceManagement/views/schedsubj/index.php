@@ -34,6 +34,7 @@
                           <tr class="text-center">
                             <th>Subject</th>
                             <th>Course</th>
+                            <th>Category</th>
                             <th>Time</th>
                             <th>Laboratory Day</th>
                             <th>Laboratory</th>
@@ -55,8 +56,9 @@
                             <tr>
                               <td><?=esc($schedsubject['subj_name'])?></td>
                               <td><?=esc($schedsubject['course_name'])?></td>
-                              <td><?=esc(date("h:i A", strtotime($schedsubject['start_time'])).'-'.date("h:i A", strtotime($schedsubject['end_time'])))?></td>
-                              <td><?=esc($schedsubject['day'])?><?=esc((!empty($schedsubject['end_day'])) ? ' and '.$schedsubject['end_day']: ' ')?></td>
+                              <td><?=esc(($schedsubject['category'] == 1) ? 'Regular Class':'Make-Up Class' )?></td>
+                              <td><?=esc(($schedsubject['category'] == 1) ? date("h:i A", strtotime($schedsubject['start_time'])).'-'.date("h:i A", strtotime($schedsubject['end_time'])): '')?></td>
+                              <td><?=esc($schedsubject['day'])?><?=esc($schedsubject['day'] ? json_decode($schedsubject['day']):date('F d, Y',strtotime($schedsubject['date'])))?></td>
                               <td><?=esc($schedsubject['lab_name'])?></td>
                               <td><?=esc($schedsubject['first_name'])?> <?=esc($schedsubject['last_name'])?> <?=esc($schedsubject['suffix_name'])?></td>
                               <td><?=esc($schedsubject['sem'])?></td>
@@ -72,7 +74,6 @@
                                   <a class="btn btn-info btn-sm remove" onclick=" confirmUpdateStatus('<?= base_urL('admin/schedsubject/active/')?>',<?=$schedsubject['id']?>,'a')" title="activate">Restore</i></a>
                                 <?php endif;?>
                                 
-                                <!-- <a class="btn btn-primary btn-sm" href="<?=base_url('admin/schedsubject/attendance/' . esc($schedsubject['id'], 'url'))?>"> Attendance </a> -->
                               </td>
                             </tr>
                             <?php $ctr++?>

@@ -38,15 +38,8 @@ class Home extends BaseController {
     $data = [];
     foreach($schedsubjects as $schedsubject){
   
-          $dow = [];
-          if(!empty($schedsubject['end_day'])){
-            $day = $this->getDayNumber($schedsubject['day']);
-            $end_day = $this->getDayNumber($schedsubject['end_day']);
-            $dow = [$day,$end_day];
-          }else{
-            $day = $this->getDayNumber($schedsubject['day']);
-            $dow = [$day];
-          }
+          $day = $this->getDayNumber($schedsubject['day']);
+          $dow = $day;
           $data[] = [
             'title' => $schedsubject['subj_name'],
             'daysOfWeek' => $dow,
@@ -85,26 +78,30 @@ class Home extends BaseController {
     echo json_encode($data);
   }
   
-public function getDayNumber($day){
-    switch($day){
-      case 'Sunday': return 0;
-      break;
-      case 'Monday': return 1;
-      break;
-      case 'Tuesday': return 2;
-      break;
-      case 'Wednesday': return 3;
-      break;
-      case 'Thursday': return 4;
-      break;
-      case 'Friday': return 5;
-      break;
-      case 'Saturday': return 6;
-      break;
-
+  public function getDayNumber($days){
+    $sched = [];
+    foreach(explode(',',$days) as $day){
+      switch($day){
+        case 'Sunday': $sched[] = 0;
+        break;
+        case 'Monday': $sched[] = 1;
+        break;
+        case 'Tuesday': $sched[] = 2;
+        break;
+        case 'Wednesday': $sched[] = 3;
+        break;
+        case 'Thursday': $sched[] = 4;
+        break;
+        case 'Friday': $sched[] = 5;
+        break;
+        case 'Saturday': $sched[] = 6;
+        break;
+  
+      }
     }
-    return false;
-  }
+
+  return $sched;
+}
 
   public function add(){
     $subj = new SubjectsModel;

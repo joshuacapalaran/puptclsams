@@ -94,8 +94,22 @@
                     <!--  -->
                     </select>
                     </div>
-                    <?php if(isset($errors['purpose'])):?>
-                        <p class="text-danger"><?=esc($errors['purpose'])?><p>
+                    <?php if(isset($errors['lab_id'])):?>
+                        <p class="text-danger"><?=esc($errors['lab_id'])?><p>
+                    <?php endif;?>
+
+                    <div class="form-group">
+                    <label>Event</label>
+                    <select name="event_id" id="event_id" class="form-control">
+                      <option selected disabled>-- Please Select Event --</option>
+                      <?php foreach($events as $event): ?>
+                      <option value="<?= $event['id'] ?>" <?=   ($event['id'] == $value['event_id']) ? 'selected':'' ?>><?= ucwords($event['event_name']) ?></option>
+                      <?php endforeach; ?>
+                    <!--  -->
+                    </select>
+                    </div>
+                    <?php if(isset($errors['event_id'])):?>
+                        <p class="text-danger"><?=esc($errors['event_id'])?><p>
                     <?php endif;?>
                     <!-- /.form-group -->
                     </div>

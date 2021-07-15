@@ -22,7 +22,6 @@ public function index(){
     
     $schedlab = new SchedlabsModel;
     $sched = new SchedsubjsModel;
-    $schedsubj = $sched->getSubjSchedules();
 
     $data['schedsubjects'] = $schedsubj;
     $data['view'] = 'Modules\MaintenanceManagement\Views\schedules\index';
@@ -32,36 +31,63 @@ public function get_events(){
   $schedlabsModel = new SchedlabsModel;
   $schedModel = new SchedsubjsModel;
 
-  $schedsubjects = $schedModel->getSubjSchedules();
-  $schedlabs = $schedlabsModel->getLabSchedules();
+  $schedsubjects = $schedModel->getCalendarSubjSchedules();
+  $schedlabs = $schedlabsModel->getCalendarLabSchedules();
 
   $data = [];
   foreach($schedsubjects as $schedsubject){
 
-        $dow = [];
-        if(!empty($schedsubject['end_day'])){
+        if($schedsubject['day'] !== null){
           $day = $this->getDayNumber($schedsubject['day']);
-          $end_day = $this->getDayNumber($schedsubject['end_day']);
-          $dow = [$day,$end_day];
-        }else{
-          $day = $this->getDayNumber($schedsubject['day']);
-          $dow = [$day];
+          $dow = $day;
+          $data[] = [
+            'title' => $schedsubject['subj_name'],
+            'id' => $schedsubject['id'],
+            'daysOfWeek' => $dow,
+            'start' => $schedsubject['start_time'],
+            'extendedProps' => [
+              'course' => $schedsubject['course_name'],
+              'time' => date("h:i A", strtotime($schedsubject['start_time'])).'-'.date("h:i A", strtotime($schedsubject['end_time'])),
+              'lab_day' => ($schedsubject['end_day']) ? $schedsubject['day'].' and '.$schedsubject['end_day']:$schedsubject['day'],
+              'lab' => $schedsubject['lab_name'],
+              'prof' => $schedsubject['first_name'].' '.$schedsubject['last_name'].' '.$schedsubject['suffix_name'] ,
+              'sem' => $schedsubject['sem'],
+              'sy' => $schedsubject['start_sy'].' - '.$schedsubject['end_sy'],
+              'schedule' => 'event',
+            ] 
+          ];
         }
+        
+        if($schedsubject['date'] !== null){
+          $date = $schedsubject['date'];
+
+          $data[] = [
+            'title' => $schedsubject['subj_name'],
+            'id' => $schedsubject['id'],
+            'date' => $date,
+            'extendedProps' => [
+              'course' => $schedsubject['course_name'],
+              'lab' => $schedsubject['lab_name'],
+              'lab_day' => $schedsubject['date'],
+              'prof' => $schedsubject['first_name'].' '.$schedsubject['last_name'].' '.$schedsubject['suffix_name'] ,
+              'sem' => $schedsubject['sem'],
+              'sy' => $schedsubject['start_sy'].' - '.$schedsubject['end_sy'],
+              'schedule' => 'event',
+            ] 
+            
+          ];
+        }
+        
         $data[] = [
-          'title' => $schedsubject['subj_name'],
-          'daysOfWeek' => $dow,
-          'id' => $schedsubject['id'],
-          'start' => $schedsubject['start_time'],
           'extendedProps' => [
             'course' => $schedsubject['course_name'],
-            'time' => date("h:i A", strtotime($schedsubject['start_time'])).'-'.date("h:i A", strtotime($schedsubject['end_time'])),
-            'lab_day' => ($schedsubject['end_day']) ? $schedsubject['day'].' and '.$schedsubject['end_day']:$schedsubject['day'],
             'lab' => $schedsubject['lab_name'],
             'prof' => $schedsubject['first_name'].' '.$schedsubject['last_name'].' '.$schedsubject['suffix_name'] ,
             'sem' => $schedsubject['sem'],
             'sy' => $schedsubject['start_sy'].' - '.$schedsubject['end_sy'],
             'schedule' => 'event',
           ] 
+          
         ];
        
   }
@@ -70,8 +96,8 @@ public function get_events(){
     $data[] = [
       'title' => $schedlab['event_name'],
       'start' => $schedlab['date'],
-      'id' => $schedlab['id'],
       'extendedProps' => [
+        'lab_id' => $schedlab['id'],
         'category' => $schedlab['category'],
         'time' => date("h:i A", strtotime($schedlab['start_time'])).'-'.date("h:i A", strtotime($schedlab['end_time'])),
         'date' => $schedlab['date'],
@@ -85,26 +111,43 @@ public function get_events(){
   echo json_encode($data);
 }
 
+public function cancelSchedule(){
+  
+  $schedlabsModel = new SchedlabsModel;
+  $schedModel = new SchedsubjsModel;
+  $id = $_POST['id'];
+  $lab_id = $_POST['lab_id'];
+  if($_POST['type'] == 'event'){
+    $schedModel->inactive($id);
+  }else if($_POST['type'] == 'lab'){
+    $schedlabsModel->inactive($lab_id);
+  }
 
-public function getDayNumber($day){
-    switch($day){
-      case 'Sunday': return 0;
-      break;
-      case 'Monday': return 1;
-      break;
-      case 'Tuesday': return 2;
-      break;
-      case 'Wednesday': return 3;
-      break;
-      case 'Thursday': return 4;
-      break;
-      case 'Friday': return 5;
-      break;
-      case 'Saturday': return 6;
-      break;
+}
 
-    }
-    return false;
+public function getDayNumber($days){
+      $sched = [];
+      foreach(explode(',',$days) as $day){
+        switch($day){
+          case 'Sunday': $sched[] = 0;
+          break;
+          case 'Monday': $sched[] = 1;
+          break;
+          case 'Tuesday': $sched[] = 2;
+          break;
+          case 'Wednesday': $sched[] = 3;
+          break;
+          case 'Thursday': $sched[] = 4;
+          break;
+          case 'Friday': $sched[] = 5;
+          break;
+          case 'Saturday': $sched[] = 6;
+          break;
+    
+        }
+      }
+  
+    return $sched;
   }
 
 }

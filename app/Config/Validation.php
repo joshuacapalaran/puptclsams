@@ -457,6 +457,11 @@ class Validation
 			'label' => 'Professor',
 			'errors' => ['required' => 'Professor is required.']
 		],
+		'category' => [
+			'rules' => 'required',
+			'label' => 'Category',
+			'errors' => ['required' => 'Category is required.']
+		],
 		'semester_id' => [
 			'rules' => 'required',
 			'label' => 'Semester',
@@ -467,25 +472,8 @@ class Validation
 			'label' => 'School Year',
 			'errors' => ['required' => 'School Year is required.']
 		],
-		'day' => [
-			'rules' => 'required',
-			'label' => 'Day',
-			'errors' => ['required' => 'Day is required.']
-		],
-
-		'start_time' => [
-			'rules' => 'required',
-			'label' => 'Start Time',
-			'errors' => [
-								'required' => 'Start Time is required.']
-		],
-
-		'end_time' => [
-			'rules' => 'required',
-			'label' => 'End Time',
-			'errors' => [
-								'required' => 'End Time is required.']
-		],
+		
+	
 	];
 
 	public $visitor = [
@@ -503,6 +491,11 @@ class Validation
 			'rules' => '',
 			'label' => 'Laboratory',
 			'errors' => ['required' => 'Laboratory is required.']
+		],
+		'event_id' => [
+			'rules' => '',
+			'label' => 'Event',
+			'errors' => ['required' => 'Event is required.']
 		],
 	];
 

@@ -158,6 +158,7 @@ $routes->group('admin/home', ['namespace' => 'Modules\MaintenanceManagement\Cont
 $routes->group('admin/schedules', ['namespace' => 'Modules\MaintenanceManagement\Controllers'], function($routes){
   $routes->get('/', 'Schedules::index');
   $routes->match(['get', 'post'],'events', 'Schedules::get_events');
+  $routes->match(['get', 'post'],'cancelSchedule', 'Schedules::cancelSchedule');
   $routes->match(['get', 'post'],'details', 'Schedules::get_event_details');
 });
 
