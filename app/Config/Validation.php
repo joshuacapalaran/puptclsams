@@ -492,11 +492,6 @@ class Validation
 			'label' => 'Laboratory',
 			'errors' => ['required' => 'Laboratory is required.']
 		],
-		'event_id' => [
-			'rules' => '',
-			'label' => 'Event',
-			'errors' => ['required' => 'Event is required.']
-		],
 	];
 
 	public $users = [

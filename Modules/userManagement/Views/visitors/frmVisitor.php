@@ -38,7 +38,7 @@
             </div>
           </div>
           <!-- /.card-header -->
-        <form action="<?= base_url('admin/visitors')?>/<?= $edit ? 'edit/'.esc($id): 'add'?>" method="post" accept-charset="utf-8">
+        <form action="<?= base_url('admin/visitor')?>/<?= $edit ? 'edit/'.esc($id): 'add'?>" method="post" accept-charset="utf-8">
           <div class="card-body">
            
             <div class="row">

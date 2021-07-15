@@ -68,7 +68,7 @@
                   <div class="col-md-9">
                     <div class="form-group">
                       <label>Name</label>
-                      <input type="text" class="form-control" value="<?=isset($value['name']) ? esc($value['name']): ''?>" placeholder="Year" id="name" name="name" required>
+                      <input type="text" class="form-control" value="<?=isset($value['name']) ? esc($value['name']): ''?>" placeholder="Name" id="name" name="name" required>
                     </div>
                     <?php if(isset($errors['name'])):?>
                     <p class="text-danger"><?=esc($errors['name'])?><p>
@@ -77,7 +77,7 @@
                     
                     <div class="form-group">
                     <label>Purpose</label>
-                      <input type="text" class="form-control" value="<?=isset($value['purpose']) ? esc($value['purpose']): ''?>" placeholder="Section" id="purpose" name="purpose">
+                      <input type="text" class="form-control" value="<?=isset($value['purpose']) ? esc($value['purpose']): ''?>" placeholder="Purpose" id="purpose" name="purpose">
                     </div>
                     <?php if(isset($errors['purpose'])):?>
                         <p class="text-danger"><?=esc($errors['purpose'])?><p>
@@ -99,18 +99,20 @@
                     <?php endif;?>
 
                     <div class="form-group">
-                    <label>Event</label>
-                    <select name="event_id" id="event_id" class="form-control">
-                      <option selected disabled>-- Please Select Event --</option>
-                      <?php foreach($events as $event): ?>
-                      <option value="<?= $event['id'] ?>" <?=   ($event['id'] == $value['event_id']) ? 'selected':'' ?>><?= ucwords($event['event_name']) ?></option>
-                      <?php endforeach; ?>
-                    <!--  -->
-                    </select>
+                      <label>Event</label>
+                      <select name="event_id" id="event_id" class="form-control">
+                        <option selected disabled>-- Please Select Event --</option>
+                        <?php foreach($events as $event): ?>
+                        <option value="<?= $event['id'] ?>" <?=   ($event['id'] == $value['event_id']) ? 'selected':'' ?>><?= ucwords($event['event_name']) ?></option>
+                        <?php endforeach; ?>
+                      <!--  -->
+                      </select>
                     </div>
-                    <?php if(isset($errors['event_id'])):?>
-                        <p class="text-danger"><?=esc($errors['event_id'])?><p>
-                    <?php endif;?>
+
+                    <div class="form-group">
+                      <label>Others</label>
+                          <input type="text" class="form-control" value="<?=isset($value['others']) ? esc($value['others']): ''?>" placeholder="Others" id="others" name="others">
+                    </div>
                     <!-- /.form-group -->
                     </div>
                   <!-- /.col -->
