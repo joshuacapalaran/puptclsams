@@ -39,7 +39,7 @@
                     <div class="col-sm-12">
                         <div id="" class="form-group">
                             <label>Student Number*</label>
-                            <input placeholder="####-#####-TG-#" type="text" class="form-control" name="student_num">
+                            <input placeholder="####-#####-TG-#" type="text" class="form-control" name="student_num" id="student_num">
                         </div>
                     </div>
 
@@ -64,6 +64,21 @@
                         </div>
                     </div>
 
+                    <div class="col-md-6">
+                      <div class="form-group">
+                        <label class="form-label" for="suffix_id">Suffix </label>
+                        <select class="form-control select" aria-label="Default select example" name="suffix_id">
+                          <option value='0'> -- Select Suffix --</option>
+                          <?php foreach($suffixes as $suffix):?>
+                              <option value="<?=$suffix['id'] ?>"><?=$suffix['suffix_name'] ?></option>
+                          <?php endforeach; ?>
+                        </select>
+                      </div>
+                      <?php if(isset($errors['suffix_id'])):?>
+                        <p class="text-danger"><?=esc($errors['suffix_id'])?><p>
+                        <?php endif;?>
+                    </div>
+
                     <div class="col-sm-6">
                       <div class="form-group">
                           <label class="form-label" for="course_id" >Course*</label>
@@ -81,13 +96,6 @@
                     </div>
                    
                     <div class="col-sm-6">
-                        <div id="" class="form-group">
-                            <label>Username*</label>
-                            <input placeholder="Username" type="text" class="form-control" name="username">
-                        </div>
-                    </div>
-
-                    <div class="col-sm-6">
                       <div class="form-group">
                           <label class="form-label" for="section_id">Section*</label>
                           <select name="section_id" id="section_id" class="form-control">
@@ -102,18 +110,32 @@
                           <p class="text-danger"><?=esc($errors['section_id'])?><p>
                         <?php endif;?>
                     </div>
+
+
+                    <!-- <div class="col-sm-6">
+                        <div id="" class="form-group">
+                            <label>Username*</label>
+                            <input placeholder="Username" type="text" class="form-control" name="username">
+                        </div>
+                    </div> -->
+
+                  
        
                     <div class="col-sm-6">
                         <div id="" class="form-group">
                             <label>Password*</label>
-                            <input placeholder="Password" type="password" class="form-control" name="password">
+                            <input placeholder="Password" type="password" class="form-control" name="password" id="password"> 
+                            <div class="form-check">
+                              <input type="checkbox" class="form-check-input" id="exampleCheck1" onclick="myFunction()">
+                              <label class="form-check-label" for="exampleCheck1">Show Password</label>
+                            </div>
                         </div>
                     </div>
 
                     <div class="col-sm-6">
                         <div id="" class="form-group">
                             <label>Re-type Password*</label>
-                            <input placeholder="Re-type Password" type="password" class="form-control" name="password_retype">
+                            <input placeholder="Re-type Password" type="password" class="form-control" name="password_retype" id="password-retype">
                         </div>
                     </div>
 
@@ -128,12 +150,40 @@
       </div>
     </div>
   </body>
-
+  <script src="<?=base_url();?>/plugins/jquery/jquery.min.js"></script>
+  <script src="<?=base_url();?>/plugins/inputmask/inputmask.min.js"></script>
+  <script src="<?=base_url();?>/plugins/inputmask/inputmask.extensions.min.js"></script>
   <script type="text/javascript">
     $(function(){
+      var inputmask = new Inputmask("9999-99999-TG-9");
+          inputmask.mask($('[id*=student_num]'));
+          
+      $('[id*=student_num]').on('keypress', function (e) {
+          var number = $(this).val();
+          if (number.length == 2) {
+              $(this).val($(this).val() + '-');
+          }
+          else if (number.length == 7) {
+              $(this).val($(this).val() + '-');
+          }
+      });
+
+
       setTimeout(function(){
         $('.alert').hide();
       },5000);
     });
+
+    function myFunction() {
+      var x = document.getElementById("password");
+      var retype = document.getElementById("password-retype");
+      if (x.type === "password" || retype.type == "password") {
+        x.type = "text";
+        retype.type = "text";
+      } else {
+        x.type = "password";
+        retype.type = "password";
+      }
+    }
   </script>
 </html>

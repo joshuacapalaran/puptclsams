@@ -22,6 +22,7 @@
         <div class="row">
           <div class="col-12">
             <div class="card">
+            <?php if($_SESSION['rid'] == '2'):?>
                 <div class="card-header">
                   <div class="form-group col-md-6 offset-md-3">
                       
@@ -35,6 +36,8 @@
                   <button id="time_in" class="btn btn-success m-3">TIME IN</button>
                   <button id="time_out" class="btn btn-success m-3"> TIME OUT</button>
                 </center>
+            <?php endif;?>
+
               </div>
                 </div>
                   <!-- /.card-header -->
@@ -44,6 +47,7 @@
                       <tr class="text-center">
                         <th>Student Number</th>
                         <th>Name</th>
+                        <th>Subject/Event</th>
                         <th>Time in</th>
                         <th>Time out</th>
                         <th>Remarks</th>
@@ -60,6 +64,7 @@
                         <tr>
                           <td><?=esc($attendance['student_num'])?></td>
                           <td><?=esc($attendance['last_name'])?>, <?=esc($attendance['first_name'])?> <?=esc($attendance['m_initial'])?></td>
+                          <td><?=esc($attendance['subj_name'] ? 'Subject: '.$attendance['subj_name']: 'Event: '.$attendance['event_name'])?></td>
                           <td><?=esc(date('H:i:s A', strtotime($attendance['time_in'])))?></td>
                           <td><?=esc(($attendance['time_out']) ? date('H:i:s A', strtotime($attendance['time_out'])):' ')?></td>
                           <td><?=esc($attendance['remarks'])?></td>
@@ -91,8 +96,13 @@ $(function(){
       "responsive": true,
       dom: 'frtipB',
       buttons: [
-      'excel'
-      ]
+        {
+            text: 'Export',
+            action: function ( e, dt, node, config ) {
+                location.href = "<?= base_url('admin/attendance/pdf') ?>";
+            }
+        }
+      ],
   });
 });
 
@@ -119,8 +129,9 @@ $('#time_out').on('click', function(e){
       data: {student_num :student_num},
       success: function(response){
         console.log(response)
-        location.reload();
+        location.reload(); 
       }
   });
 });
+
 </script>

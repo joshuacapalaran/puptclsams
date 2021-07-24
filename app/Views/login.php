@@ -27,7 +27,10 @@
           <?php endif; ?>
           <input type="text" name="username" class="form-control" placeholder="Your Username" id="username" required>
           <input type="password" name="password" class="form-control" placeholder="Your Password" id="password"required>
-
+          <div class="form-check">
+            <input type="checkbox" class="form-check-input" id="exampleCheck1" onclick="myFunction()">
+            <label class="form-check-label" for="exampleCheck1">Show Password</label>
+          </div>
           <button type="submit" value="Sign In" >Sign In</button>
           <!-- <input type="submit" value="Sign In" class="btn btn-block btn-dark" style="background-color:#E1AD01;"> -->
           </form>
@@ -137,11 +140,20 @@
 	</script>
 <?php endif; ?>
   <script type="text/javascript">
-    $(function(){
-      setTimeout(function(){
-        $('.alert').hide();
-      },5000);
-    });
+    // $(function(){
+    //   setTimeout(function(){
+    //     $('.alert').hide();
+    //   },5000);
+    // });
+
+    function myFunction() {
+  var x = document.getElementById("password");
+  if (x.type === "password") {
+    x.type = "text";
+  } else {
+    x.type = "password";
+  }
+}
   </script>
 
 

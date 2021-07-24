@@ -65,7 +65,15 @@ class UsersModel extends \CodeIgniter\Model
 
 		$val_array['updated_at'] = (new \DateTime())->format('Y-m-d H:i:s');
 		$val_array['status'] = 'a';
-		$val_array['password'] = password_hash($val_array['password'], PASSWORD_DEFAULT);
+		if(empty($val_array['password']))
+		{
+			$val_array['password'] = $user['password'];
+		}
+		else
+		{
+			$val_array['password'] = password_hash($val_array['password'], PASSWORD_DEFAULT);
+		}
+
 	
 		return $this->update($id, $val_array);
 	}
@@ -82,7 +90,7 @@ class UsersModel extends \CodeIgniter\Model
 
 	public function addStudentAccount($val_array = [])
 	{
-		unset($val_array['stud_num']);
+		$val_array['username'] = $val_array['student_num'];
 		$val_array['created_at'] = (new \DateTime())->format('Y-m-d H:i:s');
 		$val_array['status'] = 'a';
 		$val_array['role_id'] = 3;

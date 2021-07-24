@@ -13,37 +13,56 @@ use Modules\MaintenanceManagement\Models\SchedsubjsModel;
 use Modules\MaintenanceManagement\Models\SectionsModel;
 use Modules\MaintenanceManagement\Models\StudentsModel;
 use Modules\MaintenanceManagement\Models\AttendancesModel;
+use Modules\MaintenanceManagement\Models\HolidayModel;
 
 class Home extends BaseController {
+
 
 
   public function index(){
 
     
-    $schedlab = new SchedlabsModel;
-    $sched = new SchedsubjsModel;
-    $schedsubj = $sched->getSubjSchedules();
-
-    $data['schedsubjects'] = $schedsubj;
-    $data['view'] = 'Modules\MaintenanceManagement\Views\home\index';
-    return view('template/index', $data);
-  }
-  public function get_events(){
     $schedlabsModel = new SchedlabsModel;
-    $schedModel = new SchedsubjsModel;
+    $sched = new SchedsubjsModel;
+    $holidayModel = new HolidayModel;
+
+    $holidays = $holidayModel->getCancelDates();
+    $schedlabs = $schedlabsModel->getCalendarLabSchedules();
+    $holi = [];
+
+    foreach($holidays as $holiday){
+        $holi[] = [
+          'date' => $holiday['date'],
+          'schedlab_id' => $holiday['schedlab_id'],
+          'schedsubj_id' => $holiday['schedsubj_id'],
+        ];
+    }
+
+ 
+    $data['schedsubjects'] = $schedsubj;
+    $data['holidays'] = $holi;
+    $data['view'] = 'Modules\MaintenanceManagement\Views\schedules\index';
+    return view('template/index', $data);
+}
+public function get_events(){
+  $schedlabsModel = new SchedlabsModel;
+  $schedModel = new SchedsubjsModel;
+  $holidayModel = new HolidayModel;
+
+  $schedsubjects = $schedModel->getCalendarSubjSchedules();
+  $schedlabs = $schedlabsModel->getCalendarLabSchedules();
   
-    $schedsubjects = $schedModel->getSubjSchedules();
-    $schedlabs = $schedlabsModel->getLabSchedules();
-  
-    $data = [];
-    foreach($schedsubjects as $schedsubject){
-  
+
+  $data = [];
+  foreach($schedsubjects as $schedsubject){
+
+        if($schedsubject['day'] !== null){
           $day = $this->getDayNumber($schedsubject['day']);
           $dow = $day;
           $data[] = [
             'title' => $schedsubject['subj_name'],
-            'daysOfWeek' => $dow,
             'id' => $schedsubject['id'],
+            'daysOfWeek' => $dow,
             'start' => $schedsubject['start_time'],
             'extendedProps' => [
               'course' => $schedsubject['course_name'],
@@ -56,15 +75,51 @@ class Home extends BaseController {
               'schedule' => 'event',
             ] 
           ];
-         
-    }
+        }
+        
+        if($schedsubject['date'] !== null){
+          $date = $schedsubject['date'];
+
+          $data[] = [
+            'title' => $schedsubject['subj_name'],
+            'id' => $schedsubject['id'],
+            'date' => $date,
+            'extendedProps' => [
+              'course' => $schedsubject['course_name'],
+              'lab' => $schedsubject['lab_name'],
+              'lab_day' => $schedsubject['date'],
+              'prof' => $schedsubject['first_name'].' '.$schedsubject['last_name'].' '.$schedsubject['suffix_name'] ,
+              'sem' => $schedsubject['sem'],
+              'sy' => $schedsubject['start_sy'].' - '.$schedsubject['end_sy'],
+              'schedule' => 'event',
+            ] 
+            
+          ];
+        }
+        
+        $data[] = [
+          'extendedProps' => [
+            'course' => $schedsubject['course_name'],
+            'lab' => $schedsubject['lab_name'],
+            'prof' => $schedsubject['first_name'].' '.$schedsubject['last_name'].' '.$schedsubject['suffix_name'] ,
+            'sem' => $schedsubject['sem'],
+            'sy' => $schedsubject['start_sy'].' - '.$schedsubject['end_sy'],
+            'schedule' => 'event',
+          ] 
+          
+        ];
+       
+  }
+
   
-    foreach($schedlabs as $schedlab){
+  foreach($schedlabs as $schedlab){
+
       $data[] = [
         'title' => $schedlab['event_name'],
         'start' => $schedlab['date'],
         'id' => $schedlab['id'],
         'extendedProps' => [
+          'lab_id' => $schedlab['id'],
           'category' => $schedlab['category'],
           'time' => date("h:i A", strtotime($schedlab['start_time'])).'-'.date("h:i A", strtotime($schedlab['end_time'])),
           'date' => $schedlab['date'],
@@ -73,122 +128,69 @@ class Home extends BaseController {
           'num_people' => $schedlab['num_people'],
           'schedule' => 'lab',
         ] 
+     
       ];
-    }
-    echo json_encode($data);
+    
   }
-  
-  public function getDayNumber($days){
-    $sched = [];
-    foreach(explode(',',$days) as $day){
-      switch($day){
-        case 'Sunday': $sched[] = 0;
-        break;
-        case 'Monday': $sched[] = 1;
-        break;
-        case 'Tuesday': $sched[] = 2;
-        break;
-        case 'Wednesday': $sched[] = 3;
-        break;
-        case 'Thursday': $sched[] = 4;
-        break;
-        case 'Friday': $sched[] = 5;
-        break;
-        case 'Saturday': $sched[] = 6;
-        break;
-  
-      }
-    }
-
-  return $sched;
+  echo json_encode($data);
 }
 
-  public function add(){
-    $subj = new SubjectsModel;
-    $course = new CoursesModel;
-    $categories = new CategoriesModel;
-    $prof = new ProfessorsModel;
-    $labs = new LabsModel;
-    $sems = new SemestersModel;
-    $schoolyear = new SchoolyearsModel;
-    $schedsubj = new SchedsubjsModel;
-    $section = new SectionsModel;
+public function cancelSchedule(){
+  
+  $schedlabsModel = new SchedlabsModel;
+  $schedModel = new SchedsubjsModel;
+  $holidayModel = new HolidayModel;
 
+  $id = $_POST['id'];
+  $lab_id = $_POST['lab_id'];
+  $date = $_POST['date'];
 
-    $data['categories'] = $categories->getCategories();
-    $data['subjects'] = $subj->getSubjects();
-    $data['labs'] = $labs->getLabs();
-    $data['courses'] = $course->getCourse();
-    $data['professor'] = $prof->getProfessors();
-    $data['semesters'] = $sems->getSemesters();
-    $data['schoolyears'] = $schoolyear->getSchoolYears();
-    $data['sections'] = $section->getSections();
-    $data['edit'] = false;
-    $data['view'] = 'Modules\MaintenanceManagement\Views\schedsubj\form';
-    if($this->request->getMethod() === 'post'){
-      if($this->validate('schedsubj')){
-        if($schedsubj->add_schedsubj($_POST)){
-          $this->session->setFlashData('success_message', 'Sucessfuly created a schedsubject');
-        } else {
-          $this->session->setFlashData('error_message', 'Something went wrong!');
-        }
-        return redirect()->to(base_url('admin/schedsubject'));
-      } else {
-        $data['value'] = $_POST;
-        $data['errors'] = $this->validation->getErrors();
-      }
-    }
-    return view('template/index', $data);
+  if($_POST['type'] == 'event'){
+    $data = [
+      'name' => 'cancel class',
+      'schedsubj_id' => $id,
+      'date' => $date,
+      'status' => 'c',
+    ];
+    $holidayModel->cancel($data);
+  }else if($_POST['type'] == 'lab'){
+    
+    $data = [
+      'name' => 'cancel class',
+      'schedlab_id' => $lab_id,
+      'date' => $date,
+      'status' => 'c',
+    ];
+    $holidayModel->cancel($data);
+
   }
 
-  public function edit($id){
+}
 
-    $subj = new SubjectsModel;
-    $course = new CoursesModel;
-    $categories = new CategoriesModel;
-    $prof = new ProfessorsModel;
-    $labs = new LabsModel;
-    $sems = new SemestersModel;
-    $schoolyear = new SchoolyearsModel;
-    $schedsubj = new SchedsubjsModel;
-    $section = new SectionsModel;
-
-
-    $data['categories'] = $categories->getCategories();
-    $data['subjects'] = $subj->getSubjects();
-    $data['labs'] = $labs->getLabs();
-    $data['courses'] = $course->getCourse();
-    $data['professor'] = $prof->getProfessors();
-    $data['semesters'] = $sems->getSemesters();
-    $data['schoolyears'] = $schoolyear->getSchoolYears();
-    $data['sections'] = $section->getSections();
-
-    $data['edit'] = true;
-    $data['view'] = 'Modules\MaintenanceManagement\Views\schedsubj\form';
-    $data['id'] = $id;
-    $data['value'] = $schedsubj->getScheduleSubjById($id);
-    if(empty($data['value'])){
-      die('Some Error Code Here (No Record)');
-    }
-    if($this->request->getMethod() === 'post'){
-      if($this->validate('schedsubj')){
-        if($schedsubj->edit_schedsubj($id, $_POST)){
-          $this->session->setFlashData('success_message', 'Sucessfuly edited a schedsubject');
-        } else {
-          $this->session->setFlashData('error_message', 'Something went wrong!');
+public function getDayNumber($days){
+      $sched = [];
+      foreach(explode(',',$days) as $day){
+        switch($day){
+          case 'Sunday': $sched[] = 0;
+          break;
+          case 'Monday': $sched[] = 1;
+          break;
+          case 'Tuesday': $sched[] = 2;
+          break;
+          case 'Wednesday': $sched[] = 3;
+          break;
+          case 'Thursday': $sched[] = 4;
+          break;
+          case 'Friday': $sched[] = 5;
+          break;
+          case 'Saturday': $sched[] = 6;
+          break;
+    
         }
-        return redirect()->to(base_url('admin/schedsubject'));
-      } else {
-        $data['value'] = $_POST;
-        $data['errors'] = $this->validation->getErrors();
       }
-    }
-    return view('template/index', $data);
+  
+    return $sched;
   }
-
-
-		
-
 
 
 }

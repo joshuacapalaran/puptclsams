@@ -76,18 +76,18 @@
 </script>
 
 <script>
-    let dateDropdown = document.getElementById('Year');
+    // let dateDropdown = document.getElementById('Year');
 
-    let currentYear = new Date().getFullYear();
-    let earliestYear = 2010;
+    // let currentYear = new Date().getFullYear();
+    // let earliestYear = 2010;
 
-    while (currentYear >= earliestYear) {
-      let dateOption = document.createElement('option');
-      dateOption.text = currentYear;
-      dateOption.value = currentYear;
-      dateDropdown.add(dateOption);
-      currentYear -= 1;
-    }
+    // while (currentYear >= earliestYear) {
+    //   let dateOption = document.createElement('option');
+    //   dateOption.text = currentYear;
+    //   dateOption.value = currentYear;
+    //   dateDropdown.add(dateOption);
+    //   currentYear -= 1;
+    // }
   </script>
 
 <!-- time -->

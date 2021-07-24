@@ -64,7 +64,7 @@
                           <p class="text-danger"><?=esc($errors['course_id'])?><p>
                         <?php endif;?>
                         <div class="form-group">
-                        <label class="form-label" for="section_id">Section*</label>
+                        <label class="form-label" for="section_id"> Year & Section*</label>
                         <select name="section_id" id="section_id" class="form-control">
                           <option selected disabled>-- Please Select Section --</option>
                           <?php foreach($sections as $section): ?>

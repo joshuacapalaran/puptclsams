@@ -38,8 +38,10 @@
               <div class="col-md-6">
                 <div class="form-group">
                   <label>Start Year*</label>
-                  <select id="Year" class="form-control" value="<?=isset($value['start_sy']) ? esc($value['start_sy']): ''?>" placeholder="Start Year" id="start_sy" name="start_sy">
-                  </select>
+                  <!-- <select id="Year" class="form-control" value="<?=isset($value['start_sy']) ? esc($value['start_sy']): ''?>" placeholder="Start Year" id="start_sy" name="start_sy">
+                  </select> -->
+                  <input type="number" class="form-control" value="<?=isset($value['start_sy']) ? esc($value['start_sy']): ''?>" placeholder="Start Year" id="start_sy" name="start_sy">
+
                 </div>
                 <?php if(isset($errors['start_sy'])):?>
                       <p class="text-danger"><?=esc($errors['start_sy'])?><p>

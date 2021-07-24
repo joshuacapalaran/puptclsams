@@ -3,6 +3,7 @@
 use Modules\maintenanceManagement\Models\UsersModel;
 use Modules\maintenanceManagement\Models\labsModel;
 use Modules\maintenanceManagement\Models\SchedlabsModel;
+use Modules\maintenanceManagement\Models\SuffixesModel;
 
 class Security extends BaseController
 {
@@ -34,8 +35,8 @@ class Security extends BaseController
 			else
 			{
 
-				$_SESSION['error_login'] = 'Cannot Find Username';
-				$this->session->markAsFlashdata('error_login');
+				$_SESSION['error'] = 'Cannot Find Username';
+				$this->session->markAsFlashdata('error');
 	        	return redirect()->to(base_url());
 			}
 
@@ -55,8 +56,8 @@ class Security extends BaseController
 			else
 			{
 				//die('error login');
-				$_SESSION['error_login'] = 'Username and Password mismatch!';
-				$this->session->markAsFlashdata('error_login');
+				$_SESSION['error'] = 'Username and Password mismatch!';
+				$this->session->markAsFlashdata('error');
 	        	return redirect()->to(base_url());
 			}
 		}
@@ -64,7 +65,9 @@ class Security extends BaseController
 		{
 			$labs = new labsModel();
 			$schedLabsModel = new SchedlabsModel();
+			$suffixes = new SuffixesModel();
 			$data['labs'] = $labs->getLabsByActive();
+			$data['suffixes'] = $suffixes->getSuffixes();
 			$data['events'] = $schedLabsModel->getEventByCurrentDate();
 
 			echo view('App\Views\template\header');
@@ -76,7 +79,7 @@ class Security extends BaseController
 
 	public function logout()
 	{
-		session_destroy();
+		$this->session->destroy();
 		$_SESSION['success'] = 'Thank you. Come Again!';
 		$this->session->markAsFlashdata('success');
     	return redirect()->to(base_url());

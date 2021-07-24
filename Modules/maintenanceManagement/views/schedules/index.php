@@ -41,6 +41,7 @@
             </div>
             <div class="modal-footer">
               <button type="submit" id="cancel-schedule" class="btn btn-success">Cancel Schedule</button>
+              <button type="submit" id="attendance" class="btn btn-primary">Attendance</button>
             </div>
         </div>
     </div>
@@ -49,6 +50,7 @@
 <link href='https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.13.1/css/all.css' rel='stylesheet'>
 <script>
 
+var holidays = JSON.parse('<?= json_encode($holidays); ?>');
 
   document.addEventListener('DOMContentLoaded', function() {
     var calendarEl = document.getElementById('calendar');
@@ -65,7 +67,7 @@
         end: 'dayGridMonth,dayGridWeek,dayGridDay,dayGridlist'
       },
       eventClick: function(event) {
-        // console.log(event.event.extendedProps)
+        var eventDate = moment(event.event.start).format('YYYY-MM-DD');
         $('#fullCalModal').modal();
         
         $('#cancel-schedule').click(function(e){
@@ -73,12 +75,16 @@
             $.ajax({
               url:"<?= base_url('admin/schedules/cancelSchedule')?>",
               type: "POST",
-              data: {id:event.event.id,lab_id:event.event.extendedProps.lab_id, type: event.event.extendedProps.schedule},
+              data: {id:event.event.id,lab_id:event.event.extendedProps.lab_id, type: event.event.extendedProps.schedule, date: eventDate},
               success:function(response){
                 console.log(response)
                 location.reload()
               }
             });
+        });
+
+        $('#attendance').click(function(e){
+            window.location.href = "<?= base_url('admin/schedules/attendance') ?>?id="+event.event.id+"&type="+event.event.extendedProps.schedule+"&date="+eventDate;
         });
 
         $('#modalTitle').html(event.event.title);
@@ -113,7 +119,32 @@
           
         $('#modalBody').html(html);
       },
+      eventDidMount: function(arg) {
+        var eventDate = moment(arg.event.start).format('YYYY-MM-DD');
+        var eventId = arg.event._def.publicId;
 
+        if(arg.event.extendedProps.schedule == 'event'){
+
+          $.each(holidays,function(index,val){
+            if(val.schedsubj_id == eventId && val.date == eventDate){
+              // console.log(val.schedsubj_id)
+              $(arg.el).hide();
+
+            }
+          });
+
+        }
+        else if(arg.event.extendedProps.schedule == 'lab'){
+
+          $.each(holidays,function(index,val){
+            if(val.schedlab_id == eventId && val.date == eventDate){
+              // console.log(val.schedsubj_id)
+              $(arg.el).hide();
+            }
+          });
+        }
+    
+      },
       failure: function() {
       alert('there was an error while fetching events!');
       },
