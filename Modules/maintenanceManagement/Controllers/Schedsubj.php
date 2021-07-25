@@ -109,6 +109,9 @@ class Schedsubj extends BaseController {
     }
     if($this->request->getMethod() === 'post'){
       if($this->validate('schedsubj')){
+        if($_POST['day']){
+            $_POST['day'] = implode(',',$_POST['day']);
+        }
         if($schedsubj->edit_schedsubj($id, $_POST)){
           $this->activityLogsModel->addLogs($_SESSION['uid'], 'Edit Sched Subject', 'admin/schedsubject', $id);
           $this->session->setFlashData('success_message', 'Sucessfuly edited a schedsubject');

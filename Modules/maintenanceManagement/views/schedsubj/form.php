@@ -63,13 +63,12 @@
                         <?php if(isset($errors['course_id'])):?>
                           <p class="text-danger"><?=esc($errors['course_id'])?><p>
                         <?php endif;?>
-
-                      <div class="form-group">
-                        <label class="form-label" for="semester_id">Semester*</label>
-                        <select name="semester_id" id="semester_id" class="form-control">
-                          <option selected disabled>-- Please Select Semester --</option>
-                          <?php foreach($semesters as $semester): ?>
-                          <option value="<?= $semester['id'] ?>" <?=   ($semester['id'] == $value['semester_id']) ? 'selected':'' ?>><?= ucwords($semester['sem']) ?></option>
+                        <div class="form-group">
+                        <label class="form-label" for="section_id"> Year & Section*</label>
+                        <select name="section_id" id="section_id" class="form-control">
+                          <option selected disabled>-- Please Select Section --</option>
+                          <?php foreach($sections as $section): ?>
+                          <option value="<?= $section['id'] ?>" <?=   ($section['id'] == $value['section_id']) ? 'selected':'' ?>><?= ucwords($section['year']) ?> - <?= ucwords($section['section']) ?></option>
                           <?php endforeach; ?>
                         <!--  -->
                         </select>
@@ -98,7 +97,7 @@
                       <!-- <?php if(isset($errors['start_time'])):?>
                         <p class="text-danger"><?=esc($errors['start_time'])?><p>
                       <?php endif;?> -->
-                      
+
                       <div class="form-group">
                         <label class="form-label" for="professor_id">Professor*</label>
                         <select name="professor_id" id="professor_id" class="form-control">
@@ -140,7 +139,7 @@
                         <?php if(isset($errors['section_id'])):?>
                           <p class="text-danger"><?=esc($errors['section_id'])?><p>
                         <?php endif;?>
-                      
+
 
                       <div class="form-group">
                         <label class="form-label" for="sy_id">School Year*</label>

@@ -39,6 +39,34 @@ class SchedlabsModel extends BaseModel {
     return $this->findAll();
   }
 
+  public function checkEvent($course_id, $section_id,$current_day,$current_time){
+    $this->where('course_id', $course_id);
+    $this->where('section_id', $section_id);
+    // $this->where('end_time <=',$current_time);
+    // $this->where('start_time >=',$current_time);
+    $this->where('end_time >=','13:17:00');
+    $this->where('start_time <=',' 13:17:00');
+    $this->like('day', '%Wednesday%');
+
+    return $this->first();
+  }
+
+  public function getScheduleLabById($id){
+    $this->where('id', $id);
+    return $this->first();
+  }
+
+  
+  public function getLabScheduleById($id){
+    $this->select('sched.*, category.*,labs.lab_name, sched.id as id, sched.status as status');
+    $this->distinct('sched');
+    $this->from('schedlabs sched');
+    $this->join('categories category', 'category.id = sched.category_id','inner');
+    $this->join('labs','sched.lab_id = labs.id');
+    $this->where('sched.id', $id);
+
+    return $this->first();
+  }
   public function add($val_array){
     $val_array['status'] = 'a';
     return $this->save($val_array);

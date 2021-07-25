@@ -160,6 +160,12 @@ $routes->group('admin/schedules', ['namespace' => 'Modules\MaintenanceManagement
   $routes->match(['get', 'post'],'events', 'Schedules::get_events');
   $routes->match(['get', 'post'],'cancelSchedule', 'Schedules::cancelSchedule');
   $routes->match(['get', 'post'],'details', 'Schedules::get_event_details');
+  $routes->match(['get', 'post'],'attendance', 'Schedules::attendance');
+  $routes->match(['get', 'post'],'verify', 'Schedules::verify');
+  $routes->match(['get', 'post'],'attendanceTimeOut', 'Schedules::attendance_time_out');
+  $routes->match(['get', 'post'],'pdf', 'Schedules::pdf');
+
+
 });
 
 
@@ -168,10 +174,28 @@ $routes->group('admin/attendance', ['namespace' => 'Modules\MaintenanceManagemen
   $routes->get('/', 'Attendance::index');
   $routes->match(['get', 'post'],'verify', 'Attendance::verify');
   $routes->match(['get', 'post'],'attendanceTimeOut', 'Attendance::attendance_time_out');
+  $routes->match(['get', 'post'],'pdf', 'Attendance::pdf');
 });
 
-//Attendance
+//activity logs
 $routes->group('admin/activity', ['namespace' => 'Modules\MaintenanceManagement\Controllers'], function($routes){
   $routes->get('/', 'ActivityLogs::index');
 });
+
+//holiday
+$routes->group('admin/holiday', ['namespace' => 'Modules\MaintenanceManagement\Controllers'], function($routes){
+  $routes->get('/', 'Holiday::index');
+  $routes->match(['get', 'post'], 'add', 'Holiday::add');
+  $routes->match(['get', 'post'], 'edit/(:num)', 'Holiday::edit/$1');
+  $routes->match(['get', 'post'], 'view/(:num)', 'Holiday::view/$1');
+  $routes->get('delete/(:num)', 'Holiday::delete/$1');
+  $routes->get('active/(:num)', 'Holiday::active/$1');
+});
+
+//profile
+$routes->group('admin/profile', ['namespace' => 'Modules\MaintenanceManagement\Controllers'], function($routes){
+  $routes->get('/', 'Profile::index');
+  $routes->match(['get', 'post'], 'edit/(:num)', 'Profile::edit/$1');
+});
+
 

@@ -21,17 +21,15 @@
               <div class="card-header">
                 <h3 class="card-title">Time in / Time out</h3>
 
-                <div class="card-tools">
-                  <button type="button" class="btn btn-tool" data-card-widget="collapse">
-                    <i class="fas fa-minus"></i>
-                  </button>
-                </div>
-                <!-- /.card-tools -->
-              </div>
-              <!-- /.card-header -->
-              <div class="card-body">
-              <div class="form-group col-md-6 offset-md-3">
-                      
+  <section class="content">
+      <div class="container-fluid">
+        <div class="row">
+          <div class="col-12">
+            <div class="card">
+            <?php if($_SESSION['rid'] == '2'):?>
+                <div class="card-header">
+                  <div class="form-group col-md-6 offset-md-3">
+
                       <label for="stud_num" class="form-label">Student Number</label>
                       <br>
                       <input name="stud_num" class="form-control" type="text" autocomplete="on" id="stud_num" placeholder="Student Number" required>
@@ -42,13 +40,15 @@
                   <button id="time_in" class="btn btn-success m-3">TIME IN</button>
                   <button id="time_out" class="btn btn-danger m-3"> TIME OUT</button>
                 </center>
+            <?php endif;?>
+
               </div>
               </div>
               <!-- /.card-body -->
             </div>
             <!-- /.card -->
       </div>
-       
+
   <section class="content">
       <div class="container-fluid">
         <div class="row">
@@ -64,6 +64,7 @@
                       <tr class="text-center">
                         <th>Student Number</th>
                         <th>Name</th>
+                        <th>Subject/Event</th>
                         <th>Time in</th>
                         <th>Time out</th>
                         <th>Remarks</th>
@@ -80,6 +81,7 @@
                         <tr>
                           <td><?=esc($attendance['student_num'])?></td>
                           <td><?=esc($attendance['last_name'])?>, <?=esc($attendance['first_name'])?> <?=esc($attendance['m_initial'])?></td>
+                          <td><?=esc($attendance['subj_name'] ? 'Subject: '.$attendance['subj_name']: 'Event: '.$attendance['event_name'])?></td>
                           <td><?=esc(date('H:i:s A', strtotime($attendance['time_in'])))?></td>
                           <td><?=esc(($attendance['time_out']) ? date('H:i:s A', strtotime($attendance['time_out'])):' ')?></td>
                           <td><?=esc($attendance['remarks'])?></td>
@@ -88,18 +90,18 @@
                       <?php endforeach; ?>
                     <?php endif; ?>
                       </tbody>
-                    
+
                     </table>
                   </div>
               <!-- /.card-body -->
             </div>
           </div>
       </div>
-      
+
   </section>
 </div>
 
-<script>  
+<script>
 $(function(){
   $('#attendance').DataTable({
       "paging": true,
@@ -111,8 +113,13 @@ $(function(){
       "responsive": true,
       dom: 'frtipB',
       buttons: [
-      'excel'
-      ]
+        {
+            text: 'Export',
+            action: function ( e, dt, node, config ) {
+                location.href = "<?= base_url('admin/attendance/pdf') ?>";
+            }
+        }
+      ],
   });
 });
 
@@ -143,4 +150,5 @@ $('#time_out').on('click', function(e){
       }
   });
 });
+
 </script>

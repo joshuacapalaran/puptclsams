@@ -4,6 +4,7 @@ use Modules\maintenanceManagement\Models\UsersModel;
 use Modules\maintenanceManagement\Models\StudentsModel;
 use Modules\MaintenanceManagement\Models\CoursesModel;
 use Modules\MaintenanceManagement\Models\SectionsModel;
+use Modules\MaintenanceManagement\Models\SuffixesModel;
 
 class Registration extends BaseController
 {
@@ -11,6 +12,8 @@ class Registration extends BaseController
 	{
         $course = new CoursesModel;
         $section = new SectionsModel;
+        $suffixes = new SuffixesModel();
+        $data['suffixes'] = $suffixes->getSuffixes();
         $data['courses'] = $course->getActiveCourse();
         $data['sections'] = $section->getActiveSections();
     

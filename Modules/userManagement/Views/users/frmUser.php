@@ -79,6 +79,10 @@
                     <div class="form-group">
                       <label for="password">Password*</label>
                       <input name="password" type="password" value="<?= isset($rec['password']) ? $rec['password'] : set_value('password') ?>" class="form-control <?= isset($errors['password']) ? 'is-invalid':' '  ?>" id="password" placeholder="Password">
+                      <div class="form-check">
+                        <input type="checkbox" class="form-check-input" id="exampleCheck1" onclick="myFunction()">
+                        <label class="form-check-label" for="exampleCheck1">Show Password</label>
+                      </div>
                       <?php if(isset($errors['password'])):?>
                         <p class="text-danger"><?=esc($errors['password'])?><p>
                       <?php endif;?>  
@@ -117,3 +121,36 @@
 
     <!-- /.content -->
 </div>
+
+<script src="<?=base_url();?>/plugins/inputmask/inputmask.min.js"></script>
+  <script src="<?=base_url();?>/plugins/inputmask/inputmask.extensions.min.js"></script>
+  <script type="text/javascript">
+    $(function(){
+      var inputmask = new Inputmask("9999-99999-TG-9");
+          inputmask.mask($('[id*=username]'));
+          
+      $('[id*=username]').on('keypress', function (e) {
+          var number = $(this).val();
+          if (number.length == 2) {
+              $(this).val($(this).val() + '-');
+          }
+          else if (number.length == 7) {
+              $(this).val($(this).val() + '-');
+          }
+      });
+
+
+      setTimeout(function(){
+        $('.alert').hide();
+      },5000);
+    });
+
+    function myFunction() {
+      var x = document.getElementById("password");
+      if (x.type === "password" ) {
+        x.type = "text";
+      } else {
+        x.type = "password";
+      }
+    }
+  </script>

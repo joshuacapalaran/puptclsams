@@ -76,7 +76,7 @@ class Users extends BaseController
 
     public function edit($id)
     {
-    	helper(['form', 'url']);
+		helper(['form', 'url', 'html']);
 		$model = new UsersModel();
 		$roleModel = new RolesModel();
 		$data['roles'] = $roleModel->getRoles();

@@ -20,30 +20,66 @@
       <div class="row" >
         <!-- Sign Up -->
 
+      <div class="bg order-1 order-md-2" style="background-image: url('public/images/cover.jpg'); opacity:100%;"></div>
+      <div>
+        <div class="container">
+          <div class="align-items-center">
+            <div class="col-md-12">
+              <center>
+                <!-- <img src="<?= base_url() ?>/public/img/logooff.png" style="position: static; height: 13%; width: 13%; padding-bottom: 5%;"> -->
+                <h3>Sign Up to <strong>PUPT-CLSAMS</strong></h3>
+                <?php if(isset($_SESSION['error_login'])): ?>
+                  <div class="alert alert-danger"><?= $_SESSION['error_login']; ?></div>
+                <?php endif; ?>
+              </center>
+              <form action="<?= base_url("Registration") ?>" method="post">
+                <div class="row">
+                    <div class="col-sm-12">
+                        <div id="" class="form-group">
+                            <label>Student Number*</label>
+                            <input placeholder="####-#####-TG-#" type="text" class="form-control" name="student_num" id="student_num">
+                        </div>
+                    </div>
 
-         <div class="col align-center flex-col sign-up">
-         <!-- <h5>Sign Up to <strong>PUPT-CLSAMS</strong></h5> -->
-          <div class="form-wrapper align-center">
-            <form class="form sign-up" action="<?= base_url("Registration") ?>" method="post">
-             <div class="form-group">
-                <i class="bx bxs-user"></i>
-                <input placeholder="Student Number" type="text" class="form-control" name="student_num">
-              </div>
-             <div class="form-group">
-                <i class="bx bxs-user"></i>
-                <input placeholder="First Name" type="text" class="form-control" name="first_name">
-              </div>
-             <div class="form-group">
-                <i class="bx bxs-user"></i>
-                <input placeholder="Middle Initial" type="text" class="form-control" name="m_initial">
-              </div>
-              <div class="form-group">
-                <i class="bx bxs-user"></i>
-                <input placeholder="Last Name" type="text" class="form-control" name="last_name">
-              </div>
-              <div class="input-group">
-                <i class="bx bxs-user"></i>
-                <label class="form-label" for="course_id" >Course*</label>
+                    <div class="col-sm-6">
+                        <div id="" class="form-group">
+                            <label>First Name*</label>
+                            <input placeholder="First Name" type="text" class="form-control" name="first_name">
+                        </div>
+                    </div>
+
+                    <div class="col-sm-6">
+                        <div id="" class="form-group">
+                            <label>Middle Initial*</label>
+                            <input placeholder="Last Name" type="text" class="form-control" name="m_initial">
+                        </div>
+                    </div>
+
+                    <div class="col-sm-6">
+                        <div id="" class="form-group">
+                            <label>Last Name*</label>
+                            <input placeholder="Last Name" type="text" class="form-control" name="last_name">
+                        </div>
+                    </div>
+
+                    <div class="col-md-6">
+                      <div class="form-group">
+                        <label class="form-label" for="suffix_id">Suffix </label>
+                        <select class="form-control select" aria-label="Default select example" name="suffix_id">
+                          <option value='0'> -- Select Suffix --</option>
+                          <?php foreach($suffixes as $suffix):?>
+                              <option value="<?=$suffix['id'] ?>"><?=$suffix['suffix_name'] ?></option>
+                          <?php endforeach; ?>
+                        </select>
+                      </div>
+                      <?php if(isset($errors['suffix_id'])):?>
+                        <p class="text-danger"><?=esc($errors['suffix_id'])?><p>
+                        <?php endif;?>
+                    </div>
+
+                    <div class="col-sm-6">
+                      <div class="form-group">
+                          <label class="form-label" for="course_id" >Course*</label>
                           <select name="course_id" id="course_id" class="form-control">
                             <option selected disabled>-- Please Select Course --</option>
                             <?php foreach($courses as $course): ?>
@@ -56,9 +92,11 @@
                         <?php if(isset($errors['course_id'])):?>
                           <p class="text-danger"><?=esc($errors['course_id'])?><p>
                         <?php endif;?>
-              <div class="input-group">
-                <i class="bx bxs-user"></i>
-                <label class="form-label" for="section_id">Section*</label>
+                    </div>
+
+                    <div class="col-sm-6">
+                      <div class="form-group">
+                          <label class="form-label" for="section_id">Section*</label>
                           <select name="section_id" id="section_id" class="form-control">
                             <option selected disabled>-- Please Select Section --</option>
                             <?php foreach($sections as $section): ?>
@@ -70,52 +108,35 @@
                         <?php if(isset($errors['section_id'])):?>
                           <p class="text-danger"><?=esc($errors['section_id'])?><p>
                         <?php endif;?>
-              <div class="form-group">
-                <i class="bx bxs-user"></i>
-                <input placeholder="Username" type="text" class="form-control" name="username">
-              </div>
+                    </div>
 
-              <div class="form-group">
-                <i class="bx bxs-lock-alt"></i>
-                <input placeholder="Password" type="password" class="form-control" name="password">
-              </div>
-              <div class="form-group">
-                <i class="bx bxs-lock-alt"></i>
-                <input placeholder="Re-type Password" type="password" class="form-control" name="password_retype">
-              </div>
-              <button type="submit" value="Sign Up" class="btn btn-sm btn-dark" style="background-color:rgb(68,68,68)">Sign up</button>
-              <p>
-                <span>Already have an account?</span>
-                <a id="sign-in" href="http://localhost:8080/">Sign in here</a>
-              </p>
-            </form>
-          </div>
-        </div>
-        <!-- End Sign Up -->
-        <!-- Sign In -->
-        <div class="col align-center flex-col sign-in">
-          <div class="form-wrapper align-center">
-          <form action="<?= base_url() ?> " method="post">
-            <div class="form sign-in">
-              <div class="input-group">
-                <i class="bx bxs-user"></i>
-                <input type="text" name="username" class="form-control" placeholder="Your Username" id="username" required>
-              </div>
-              <div class="input-group">
-                <i class="bx bxs-lock-alt"></i>
-                <input type="password" name="password" class="form-control" placeholder="Your Password" id="password"required>
-              </div>
-          </form>
-              <button type="submit" value="Sign In" >Sign In</button>
-              <p>
-                <b>Forgot password?</b>
-              </p>
-              <p>
-                <span> Don't have an account? </span>
-                <b id="sign-up">Sign up here</b>
-              </p>
-            </div>
-          </div>
+
+                    <!-- <div class="col-sm-6">
+                        <div id="" class="form-group">
+                            <label>Username*</label>
+                            <input placeholder="Username" type="text" class="form-control" name="username">
+                        </div>
+                    </div> -->
+
+
+
+                    <div class="col-sm-6">
+                        <div id="" class="form-group">
+                            <label>Password*</label>
+                            <input placeholder="Password" type="password" class="form-control" name="password" id="password">
+                            <div class="form-check">
+                              <input type="checkbox" class="form-check-input" id="exampleCheck1" onclick="myFunction()">
+                              <label class="form-check-label" for="exampleCheck1">Show Password</label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-sm-6">
+                        <div id="" class="form-group">
+                            <label>Re-type Password*</label>
+                            <input placeholder="Re-type Password" type="password" class="form-control" name="password_retype" id="password-retype">
+                        </div>
+                    </div>
 
           <div class="form-wrapper">
             <div class="social-list align-center sign-in">
@@ -169,26 +190,41 @@
         </div>
       </div>
     </div>
-    <!-- End Container -->
-
-    <!-- Script -->
-    <script>
-      const container = document.getElementById("container");
-      const signIn = document.getElementById("sign-up");
-      // const signUp = document.getElementById("sign-in");
-
-      setTimeout(() => {
-        container.classList.add("sign-up");
-      }, 200);
-
-      const toggle = () => {
-        container.classList.toggle("sign-up");
-        // container.classList.toggle("sign-in");
-      };
-
-      signIn.addEventListener("click", toggle);
-      signUp.addEventListener("click", toggle);
-
-    </script>
   </body>
+  <script src="<?=base_url();?>/plugins/jquery/jquery.min.js"></script>
+  <script src="<?=base_url();?>/plugins/inputmask/inputmask.min.js"></script>
+  <script src="<?=base_url();?>/plugins/inputmask/inputmask.extensions.min.js"></script>
+  <script type="text/javascript">
+    $(function(){
+      var inputmask = new Inputmask("9999-99999-TG-9");
+          inputmask.mask($('[id*=student_num]'));
+
+      $('[id*=student_num]').on('keypress', function (e) {
+          var number = $(this).val();
+          if (number.length == 2) {
+              $(this).val($(this).val() + '-');
+          }
+          else if (number.length == 7) {
+              $(this).val($(this).val() + '-');
+          }
+      });
+
+
+      setTimeout(function(){
+        $('.alert').hide();
+      },5000);
+    });
+
+    function myFunction() {
+      var x = document.getElementById("password");
+      var retype = document.getElementById("password-retype");
+      if (x.type === "password" || retype.type == "password") {
+        x.type = "text";
+        retype.type = "text";
+      } else {
+        x.type = "password";
+        retype.type = "password";
+      }
+    }
+  </script>
 </html>

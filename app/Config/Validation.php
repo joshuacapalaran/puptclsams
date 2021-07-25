@@ -526,4 +526,20 @@ class Validation
 			'errors' => ['required' => 'Role is required.']
 		],
 	];
+
+
+	public $holiday = [
+		'name' => [
+			'rules' => 'required',
+			'label' => 'Name',
+			'errors' => ['required' => 'Name is required.']
+		],
+		'date' => [
+			'rules' => 'required',
+			'label' => 'Date',
+			'errors' => ['required' => 'Date is required.']
+		],
+		
+	];
+
 }

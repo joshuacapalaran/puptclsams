@@ -7,7 +7,7 @@ class SchedsubjsModel extends \CodeIgniter\Model {
 
   protected $table = 'schedsubjs';
 
-  protected $allowedFields = ['subject_id', 'course_id','category','section_id','professor_id','date','day','end_day','lab_id','semester_id','sy_id', 'start_time', 'end_time','status','created_at','updated_at', 'deleted_at'];
+  protected $allowedFields = ['subject_id', 'course_id','category','section_id','professor_id','date','day','lab_id','semester_id','sy_id', 'start_time', 'end_time','status','created_at','updated_at', 'deleted_at'];
 
 
   public function getSubjSchedules(){
@@ -65,9 +65,15 @@ class SchedsubjsModel extends \CodeIgniter\Model {
   public function checkSchedule($course_id, $section_id){
     $this->where('course_id', $course_id);
     $this->where('section_id', $section_id);
-    // $this->where('start_time >=','22:30:00');
-    // $this->where('end_time', '<','22:35:00');
-    // $this->where('day', 'Monday');
+    // $this->where('end_time <=',$current_time);
+    // $this->where('start_time >=',$current_time);
+    // $this->like('day', '%'.$current_day.'%');
+    // $this->where('status', 'a');
+    // $this->where('category', '1');
+    // $this->where('end_time >=','13:18:00');
+    // $this->where('start_time <=',' 13:18:00');
+    // $this->like('day', '%Wednesday%');
+
     return $this->first();
   }
 
@@ -76,6 +82,13 @@ class SchedsubjsModel extends \CodeIgniter\Model {
     return $this->first();
   }
 
+  
+  public function getAllSchedule($day, $current_time){
+    $this->like('day', '%'.$day.'%');
+    $this->where('end_time <=',$current_time);
+    $this->where('start_time >=',$current_time);
+    return $this->findAll();
+  }
   public function add_schedsubj($val_array = [])
 	{
 		$val_array['created_at'] = (new \DateTime())->format('Y-m-d H:i:s');
@@ -97,7 +110,7 @@ class SchedsubjsModel extends \CodeIgniter\Model {
   public function edit_schedsubj($id,$val_array)
 	{
 		$val_array['updated_at'] = (new \DateTime())->format('Y-m-d H:i:s');
-		$val_array['status'] = 'a';
+    $val_array['status'] = 'a';
 		return $this->update($id, $val_array);
 	}
 
