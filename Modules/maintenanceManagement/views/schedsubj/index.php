@@ -4,12 +4,12 @@
       <div class="container-fluid ">
         <div class="row mb-2">
           <div class="col-sm-6">
-            <h2 class="m-0">Schedule Subjects</h2>
+            <h2 class="m-0">Schedule Class</h2>
           </div><!-- /.col -->
           <div class="col-sm-6">
             <ol class="breadcrumb float-sm-right">
               <li class="breadcrumb-item"><a href="#">Home</a></li>
-              <li class="breadcrumb-item active">Schedule Subjects</li>
+              <li class="breadcrumb-item active">Schedule Class</li>
             </ol>
           </div><!-- /.col -->
         </div><!-- /.row -->
@@ -23,13 +23,13 @@
       <div class="container-fluid">
         <div class="row">
           <div class="col-12">
-            <div class="card">
+            <div class="card card-outline card-secondary">
                       <div class="card-header">
-                         <a href="<?=base_url('admin/schedsubject/add')?>" class="btn btn-sm btn-success">+Add</a>
+                         <a href="<?=base_url('admin/schedsubject/add')?>" class="btn btn-sm btn-primary">+Add</a>
                       </div>
                       <!-- /.card-header -->
                       <div class="card-body">
-                        <table id="example2" class="table table-bordered table-striped">
+                        <table id="example1" class="table table-bordered table-striped">
                           <thead>
                           <tr class="text-center">
                             <th>Subject</th>
@@ -71,7 +71,7 @@
                                 <?php if($schedsubject['status'] == 'a'):?>
                                   <a class="btn btn-danger btn-sm remove" onclick=" confirmUpdateStatus('<?= base_urL('admin/schedsubject/delete/')?>',<?=$schedsubject['id']?>,'d')" title="deactivate">Delete</i></a>
                                 <?php else:?>
-                                  <a class="btn btn-info btn-sm remove" onclick=" confirmUpdateStatus('<?= base_urL('admin/schedsubject/active/')?>',<?=$schedsubject['id']?>,'a')" title="activate">Restore</i></a>
+                                  <a class="btn btn-success btn-sm remove" onclick=" confirmUpdateStatus('<?= base_urL('admin/schedsubject/active/')?>',<?=$schedsubject['id']?>,'a')" title="activate">Restore</i></a>
                                 <?php endif;?>
                                 
                               </td>

@@ -129,8 +129,3 @@
         </div>
         </div>
       </div>
-
-
-    <!-- /.content -->
-  </div>
-  

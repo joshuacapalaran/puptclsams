@@ -21,9 +21,9 @@
     <!-- Main content -->
       <div class="content">
         <div class="container-fluid">
-          <div class="card card-default">
+          <div class="card card-outline card-info">
               <div class="card-header">
-                <!-- <h3 class="card-title">Select2 (Default Theme)</h3> -->
+                <h3 class="card-title">Note: Please fill all data field.</h3>
 
                   <div class="card-tools">
                       <!-- <?= \Config\Services::validation()->listErrors(); ?> -->
@@ -63,19 +63,20 @@
                         <?php if(isset($errors['course_id'])):?>
                           <p class="text-danger"><?=esc($errors['course_id'])?><p>
                         <?php endif;?>
-                        <div class="form-group">
-                        <label class="form-label" for="section_id">Section*</label>
-                        <select name="section_id" id="section_id" class="form-control">
-                          <option selected disabled>-- Please Select Section --</option>
-                          <?php foreach($sections as $section): ?>
-                          <option value="<?= $section['id'] ?>" <?=   ($section['id'] == $value['section_id']) ? 'selected':'' ?>><?= ucwords($section['year']) ?> - <?= ucwords($section['section']) ?></option>
+
+                      <div class="form-group">
+                        <label class="form-label" for="semester_id">Semester*</label>
+                        <select name="semester_id" id="semester_id" class="form-control">
+                          <option selected disabled>-- Please Select Semester --</option>
+                          <?php foreach($semesters as $semester): ?>
+                          <option value="<?= $semester['id'] ?>" <?=   ($semester['id'] == $value['semester_id']) ? 'selected':'' ?>><?= ucwords($semester['sem']) ?></option>
                           <?php endforeach; ?>
                         <!--  -->
                         </select>
-                    </div>
-                        <?php if(isset($errors['section_id'])):?>
-                          <p class="text-danger"><?=esc($errors['section_id'])?><p>
-                        <?php endif;?>
+                      </div>
+                      <?php if(isset($errors['semester_id'])):?>
+                        <p class="text-danger"><?=esc($errors['semester_id'])?><p>
+                      <?php endif;?>
                     <div class="form-group">
                         <label class="form-label" for="lab_id">Laboratory*</label>
                         <select name="lab_id" id="lab_id" class="form-control">
@@ -90,8 +91,15 @@
                           <p class="text-danger"><?=esc($errors['lab_id'])?><p>
                         <?php endif;?>
 
-
-                        <div class="form-group">
+                        <div class="form-group" id="start-time-div">
+                      <label class="form-label" for="start_time">Start Time*</label>
+                      <input type="time" class="form-control" value="<?=isset($value['start_time']) ? esc($value['start_time']): ''?>" placeholder="Start Time" id="start_time" name="start_time">
+                    </div>
+                      <!-- <?php if(isset($errors['start_time'])):?>
+                        <p class="text-danger"><?=esc($errors['start_time'])?><p>
+                      <?php endif;?> -->
+                      
+                      <div class="form-group">
                         <label class="form-label" for="professor_id">Professor*</label>
                         <select name="professor_id" id="professor_id" class="form-control">
                           <option selected disabled>-- Please Select Professor --</option>
@@ -104,15 +112,6 @@
                         <?php if(isset($errors['professor_id'])):?>
                           <p class="text-danger"><?=esc($errors['professor_id'])?><p>
                         <?php endif;?>
-
-
-                        <div class="form-group" id="start-time-div">
-                      <label class="form-label" for="start_time">Start Time*</label>
-                      <input type="time" class="form-control" value="<?=isset($value['start_time']) ? esc($value['start_time']): ''?>" placeholder="Start Time" id="start_time" name="start_time">
-                    </div>
-                      <!-- <?php if(isset($errors['start_time'])):?>
-                        <p class="text-danger"><?=esc($errors['start_time'])?><p>
-                      <?php endif;?> -->
 
                     </div>
                     <!-- /.col -->
@@ -128,22 +127,22 @@
                       <?php if(isset($errors['category'])):?>
                         <p class="text-danger"><?=esc($errors['category'])?><p>
                       <?php endif;?>
-
                       <div class="form-group">
-                        <label class="form-label" for="semester_id">Semester*</label>
-                        <select name="semester_id" id="semester_id" class="form-control">
-                          <option selected disabled>-- Please Select Semester --</option>
-                          <?php foreach($semesters as $semester): ?>
-                          <option value="<?= $semester['id'] ?>" <?=   ($semester['id'] == $value['semester_id']) ? 'selected':'' ?>><?= ucwords($semester['sem']) ?></option>
+                        <label class="form-label" for="section_id">Section*</label>
+                        <select name="section_id" id="section_id" class="form-control">
+                          <option selected disabled>-- Please Select Section --</option>
+                          <?php foreach($sections as $section): ?>
+                          <option value="<?= $section['id'] ?>" <?=   ($section['id'] == $value['section_id']) ? 'selected':'' ?>><?= ucwords($section['year']) ?> - <?= ucwords($section['section']) ?></option>
                           <?php endforeach; ?>
                         <!--  -->
                         </select>
                       </div>
-                      <?php if(isset($errors['semester_id'])):?>
-                        <p class="text-danger"><?=esc($errors['semester_id'])?><p>
-                      <?php endif;?>
+                        <?php if(isset($errors['section_id'])):?>
+                          <p class="text-danger"><?=esc($errors['section_id'])?><p>
+                        <?php endif;?>
+                      
 
-                        <div class="form-group">
+                      <div class="form-group">
                         <label class="form-label" for="sy_id">School Year*</label>
                         <select name="sy_id" id="sy_id" class="form-control">
                           <option selected disabled>-- Please Select School Year --</option>

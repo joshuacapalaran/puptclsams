@@ -5,7 +5,7 @@
       <div class="container-fluid ">
         <div class="row mb-2">
           <div class="col-sm-6">
-            <h2 class="m-0"><?= $edit ? 'Editing': 'Adding'?>Permission</h2>
+            <h2 class="m-0"><?= $edit ? 'Editing': 'Adding'?> Permission</h2>
           </div><!-- /.col -->
           <div class="col-sm-6">
             <ol class="breadcrumb float-sm-right">
@@ -17,13 +17,31 @@
       </div><!-- /.container-fluid -->
     </div>
     <!-- /.content-header -->
+    <div class="col">
+      <div class="card card-outline card-warning shadow-sm">
+              <div class="card-header">
+                <h4 class="card-title">Warning : Changes affects users permission to access each transactions.</h4>
+
+                <div class="card-tools">
+                  <button type="button" class="btn btn-tool" data-card-widget="remove"><i class="fas fa-times"></i>
+                  </button>
+                </div>
+                <!-- /.card-tools -->
+              </div>
+              <!-- /.card-header -->
+       </div>
+            <!-- /.card -->
+    </div>
 
     <!-- Main content -->
       <div class="content">
         <div class="container-fluid">
-          <div class="card card-default">
+          <div class="card card-outline card-info">
           <div class="card-header">
             <!-- <h3 class="card-title">Select2 (Default Theme)</h3> -->
+              <div class="col-md-2 offset-md-10">
+                  <a href="<?= base_url("Permission/edit_permission") ?>" class="btn btn-sm btn-primary btn-block float-right">Edit Permissions</a>
+              </div>
             
           
             <div class="card-tools">
@@ -33,10 +51,6 @@
           </div>
           <div class="card-body">
             <div class="row">
-              <div class="col-md-2 offset-md-10">
-
-                  <a href="<?= base_url("Permission/edit_permission") ?>" class="btn btn-sm btn-primary btn-block float-right">Edit Permissions</a>
-              </div>
             </div>
             <br>
             <?php foreach($modules as $module): ?>

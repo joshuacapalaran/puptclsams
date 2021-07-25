@@ -25,9 +25,9 @@
           <!-- form -->
 
           <div class="col-12">
-            <div class="card">
+            <div class="card card-outline card-secondary">
                       <div class="card-header">
-                         <a href="<?=base_url('admin/schoolyears/add')?>" class="btn btn-sm btn-success">+Add</a>
+                         <a href="<?=base_url('admin/schoolyears/add')?>" class="btn btn-sm btn-primary">+Add</a>
                          <!-- <h4>List of School Year</h4> -->
                       </div>
                       <!-- /.card-header -->
@@ -57,11 +57,11 @@
                               <td>
                               
                                <a class="btn btn-secondary btn-sm" href="<?=base_url('admin/schoolyears/view/' . esc($schoolyear['id'], 'url'))?>"> View</a>
-                               <a class="btn btn-outline-info btn-sm" href="<?=base_url('admin/schoolyears/edit/' . esc($schoolyear['id'], 'url'))?>"> Edit </a>
+                               <a class="btn btn-outline-info btn-sm" href="<?=base_url('admin/schoolyears/edit/' . esc($schoolyear['id'], 'url'))?>"> Edit</a>
                                 <?php if($schoolyear['status'] == 'a'):?>
-                                  <a class="btn btn-danger btn-sm remove" onclick=" confirmUpdateStatus('<?= base_urL('admin/schoolyears/delete/')?>',<?=$schoolyear['id']?>,'d')" title="deactivate">Delete</i></a>
+                                  <a class="btn btn-danger btn-sm" onclick=" confirmUpdateStatus('<?= base_urL('admin/schoolyears/delete/')?>',<?=$schoolyear['id']?>,'d')" title="deactivate"> Delete</i></a>
                                 <?php else:?>
-                                  <a class="btn btn-info btn-sm remove" onclick=" confirmUpdateStatus('<?= base_urL('admin/schoolyears/active/')?>',<?=$schoolyear['id']?>,'a')" title="activate">Restore</i></a>
+                                  <a class="btn btn-success btn-sm remove" onclick=" confirmUpdateStatus('<?= base_urL('admin/schoolyears/active/')?>',<?=$schoolyear['id']?>,'a')" title="activate">Restore</i></a>
                                 <?php endif;?>
                               </td>
                             </tr>

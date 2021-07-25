@@ -21,7 +21,7 @@
     <!-- Main content -->
       <div class="content">
         <div class="container-fluid">
-          <div class="card card-default">
+          <div class="card card-outline card-info">
           <div class="card-header">
             <!-- <h3 class="card-title">Select2 (Default Theme)</h3> -->
 
@@ -62,8 +62,8 @@
 
               </div>
               <!-- /.col -->
-              <div class="col-md-6">
-
+            <div class="col-md-6">  
+            
                 <div class="form-group">
                 <label>Last Name*</label>
                  <input type="text" class="form-control" value="<?=isset($value['last_name']) ? esc($value['last_name']): ''?>" placeholder="Lastname" id="last_name" name="last_name" required>
@@ -72,7 +72,7 @@
                     <p class="text-danger"><?=esc($errors['last_name'])?><p>
                 <?php endif;?>
                 <!-- /.form-group -->
-
+             
                 <div class="form-group">
                   <label>Middle Name*</label>
                  <input type="text" class="form-control" value="<?=isset($value['m_initial']) ? esc($value['m_initial']): ''?>" placeholder="Middle Initial" id="m_initial" name="m_initial" required>
@@ -96,12 +96,15 @@
                     <?php if(isset($errors['suffix_id'])):?>
                       <p class="text-danger"><?=esc($errors['suffix_id'])?><p>
                       <?php endif;?>
-                  </div>
+                    </div>
                 </div>
+                  <div class="row-md-12 text-right" >
+                      <div class="form-group">
+                        <button type="submit" class="btn btn-success">Save</button>
+                      </div>
+                    </div>
+                
 
-                <div class="form-group">
-                  <button type="submit" class="btn btn-success">Save</button>
-                </div>
               </div>
               <!-- /.col -->
             </div>

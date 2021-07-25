@@ -16,14 +16,21 @@
       </div><!-- /.container-fluid -->
     </div>
     <!-- /.content-header -->
+    <div class="col-md-12">
+            <div class="card card-secondary">
+              <div class="card-header">
+                <h3 class="card-title">Time in / Time out</h3>
 
-  <section class="content">
-      <div class="container-fluid">
-        <div class="row">
-          <div class="col-12">
-            <div class="card">
-                <div class="card-header">
-                  <div class="form-group col-md-6 offset-md-3">
+                <div class="card-tools">
+                  <button type="button" class="btn btn-tool" data-card-widget="collapse">
+                    <i class="fas fa-minus"></i>
+                  </button>
+                </div>
+                <!-- /.card-tools -->
+              </div>
+              <!-- /.card-header -->
+              <div class="card-body">
+              <div class="form-group col-md-6 offset-md-3">
                       
                       <label for="stud_num" class="form-label">Student Number</label>
                       <br>
@@ -33,13 +40,26 @@
 
                 <center>
                   <button id="time_in" class="btn btn-success m-3">TIME IN</button>
-                  <button id="time_out" class="btn btn-success m-3"> TIME OUT</button>
+                  <button id="time_out" class="btn btn-danger m-3"> TIME OUT</button>
                 </center>
               </div>
+              </div>
+              <!-- /.card-body -->
+            </div>
+            <!-- /.card -->
+      </div>
+       
+  <section class="content">
+      <div class="container-fluid">
+        <div class="row">
+          <div class="col-12">
+            <div class="card card-outline card-secondary">
+                <div class="card-header">
+                  <h3>List of Attendance</h3>
                 </div>
                   <!-- /.card-header -->
                   <div class="card-body">
-                    <table id="attendance" class="table table-bordered table-striped">
+                    <table id="example1" class="table table-bordered table-striped">
                       <thead>
                       <tr class="text-center">
                         <th>Student Number</th>

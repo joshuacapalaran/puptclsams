@@ -13,48 +13,122 @@
 </head>
 
 <body>
-<div class="login-logo" >
-    <a href="" style= "color: WHITE"><b>Welcome</b>LTE</a>
-  </div>
-      <div class="container" id="container">
-        <div class="form-container sign-in-container center">
-          <!-- login -->
-          <form action="<?= base_url() ?> " method="post">
-            <h1>Sign In</h1>
-          <span>use your account</span>
-          <?php if(isset($_SESSION['error_login'])): ?>
-                  <div class="alert alert-danger"><?= $_SESSION['error_login']; ?></div>
-          <?php endif; ?>
-          <input type="text" name="username" class="form-control" placeholder="Your Username" id="username" required>
-          <input type="password" name="password" class="form-control" placeholder="Your Password" id="password"required>
+    <!-- Container -->
+    <div class="container" id="container">
+      <!-- Row -->
+      <div class="row">
+        <!-- Sign Up -->
+        <div class="col align-center flex-col sign-up">
+          <div class="form-wrapper align-center">
+            <form class="form sign-up">
+              <div class="input-group">
+                <i class="bx bxs-user"></i>
+                <input type="text" placeholder="Username" />
+              </div>
+              <div class="input-group">
+                <i class="bx bx-mail-send"></i>
+                <input type="email" placeholder="Email" />
+              </div>
+              <div class="input-group">
+                <i class="bx bxs-lock-alt"></i>
+                <input type="password" placeholder="Password" />
+              </div>
+              <div class="input-group">
+                <i class="bx bxs-lock-alt"></i>
+                <input type="password" placeholder="Confirm password" />
+              </div>
+              <button>Sign up</button>
+              <p>
+                <span>Already have an account?</span>
+                <b id="sign-in">Sign in here</b>
+              </p>
+            </form>
+          </div>
 
-          <button type="submit" value="Sign In" >Sign In</button>
-          <!-- <input type="submit" value="Sign In" class="btn btn-block btn-dark" style="background-color:#E1AD01;"> -->
-          </form>
-          <!-- log in -->
-        </div>
-        <div class="overlay-container">
-          <div class="overlay">
-            <div class="overlay-panel overlay-left">
-              <h1>Welcome Back!</h1>
-              <p>To keep connected with us please login with your personal info</p>
-              <button class="ghost" id="signIn">Sign In</button>
-            </div>
-            <div class="overlay-panel overlay-right">
-              <img src="<?= base_url() ?>/stemp/img/puplogo.ico" style="width: 120px; height: 120px">
-              <h1>C.L.S.A.M.S</h1>
-              <p>Enter your details and start journey with us</p>
-              <button class="ghost" >
-              <a href="<?php echo base_url('Registration') ?>" style="color: #E1AD01">Create account</a></button>
-              <br>
-              <button class="ghost" data-toggle="modal" data-target="#modal-edit" > For Visitors</a></button>
+          <div class="form-wrapper">
+            <div class="social-list align-center sign-up">
+              <div class="align-center facebook-bg">
+                <i class="bx bxl-facebook"></i>
+              </div>
+              <div class="align-center google-bg">
+                <i class="bx bxl-google"></i>
+              </div>
+              <div class="align-center twitter-bg">
+                <i class="bx bxl-twitter"></i>
+              </div>
+              <div class="align-center insta-bg">
+                <i class="bx bxl-instagram-alt"></i>
+              </div>
             </div>
           </div>
         </div>
-      </div>
+        <!-- End Sign Up -->
+        <!-- Sign In -->
+        <div class="col align-center flex-col sign-in">
+          <div class="form-wrapper align-center">
+          <form action="<?= base_url() ?> " method="post">
+              <?php if(isset($_SESSION['error_login'])): ?>
+                      <div class="alert alert-danger"><?= $_SESSION['error_login']; ?></div>
+              <?php endif; ?>
+            <div class="form sign-in">
+              <div class="form-group">
+                <i class="bxs-user"></i>
+                <input type="text" name="username" class="form-control" placeholder="Your Username" id="username" required>
+              </div>
+              <div class="form-group">
+                <i class="bx bxs-lock-alt"></i>
+                <input type="password" name="password" class="form-control" placeholder="Your Password" id="password"required>
+              </div>
+          </form>
+              <button type="submit" value="Sign In" class="btn btn-sm btn-dark" style="background-color:rgb(68,68,68)">Sign In</button>
+              <p>
+                <span> Are you visitor? </span>
+                <a data-toggle="modal" data-target="#modal-edit">Click here</a>
+              </p>
+              <p>
+                <span> Don't have an account? </span>
+                <a id="sign-up" href="<?php echo base_url('Registration') ?>">Sign up here</a>
+              </p>
+            </div>
+          </div>
 
-      <div class="modal fade" id="modal-edit">
-        <div class="modal-dialog modal-lg">
+        </div>
+        <!-- End Sign In -->
+      </div>
+      <!-- End Row -->
+      <!-- Content Section -->
+      <div class="row content-row">
+        <!-- Sign In Content -->
+        <div class="col align-items flex-col">
+          <div class="text sign-in">
+            <h2>Welcome Back</h2>
+            <p>
+              Computer Laboratory Scheduling, Attendance, and Monitoring System.
+            </p>
+          </div>
+          <div class="img sign-in">
+            <img src="<?= base_url() ?>/stemp/img/taguig.svg" alt="" />
+          </div>
+        </div>
+
+        <!-- Sign Up Content -->
+        <div class="col align-items flex-col">
+          <div class="img sign-up">
+            <img src="<?= base_url() ?>/stemp/img/taguig.svg" alt="" />
+          </div>
+          <div class="text sign-up">
+            <h2>Join with us</h2>
+            <p>
+              Enter your details and start your journey with us.
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- End Container -->
+    <!-- modal -->
+    <div class="modal fade" id="modal-edit">
+        <div class="modal-dialog modal-md">
           <div class="modal-content">
             <div class="modal-header">
               <h4 class="modal-title">Edit Information</h4>
@@ -64,8 +138,8 @@
             </div>
             <div class="card-body">
               <form action="<?= base_url('admin/visitors/add')?>" method="post" accept-charset="utf-8">
-           
-                  <div class="col-md-9">
+
+                  <div class="col-md-12">
                     <div class="form-group">
                       <label>Name</label>
                       <input type="text" class="form-control" value="<?=isset($value['name']) ? esc($value['name']): ''?>" placeholder="Name" id="name" name="name" required>
@@ -74,7 +148,7 @@
                     <p class="text-danger"><?=esc($errors['name'])?><p>
                     <?php endif;?>
 
-                    
+
                     <div class="form-group">
                     <label>Purpose</label>
                       <input type="text" class="form-control" value="<?=isset($value['purpose']) ? esc($value['purpose']): ''?>" placeholder="Purpose" id="purpose" name="purpose">
@@ -118,7 +192,7 @@
                   <!-- /.col -->
                   </div>
                 <!-- /.row -->
- 
+
            <!-- /.row -->
             <div class="modal-footer justify-content-between">
               <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
@@ -131,19 +205,25 @@
         </div>
         <!-- /.modal-dialog -->
       </div>
-<?php if(isset($_SESSION["success_registered"])): ?>
-	<script type="text/javascript">
-	    alert_success('<?= $_SESSION["success_registered"]; ?>');
-	</script>
-<?php endif; ?>
-  <script type="text/javascript">
-    $(function(){
-      setTimeout(function(){
-        $('.alert').hide();
-      },5000);
-    });
-  </script>
 
+    <!-- Script -->
+    <script>
+      const container = document.getElementById("container");
+      const signIn = document.getElementById("sign-in");
+      // const signUp = document.getElementById("sign-up");
 
-</body>
+      setTimeout(() => {
+        container.classList.add("sign-in");
+      }, 200);
+
+      const toggle = () => {
+        container.classList.toggle("sign-in");
+        // container.classList.toggle("sign-up");
+      };
+
+      signIn.addEventListener("click", toggle);
+      signUp.addEventListener("click", toggle);
+
+    </script>
+  </body>
 </html>

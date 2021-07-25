@@ -4,12 +4,12 @@
       <div class="container-fluid ">
         <div class="row mb-2">
           <div class="col-sm-6">
-            <h2 class="m-0">Lab Schedule</h2>
+            <h2 class="m-0">Schedule Event</h2>
           </div><!-- /.col -->
           <div class="col-sm-6">
             <ol class="breadcrumb float-sm-right">
               <li class="breadcrumb-item"><a href="#">Home</a></li>
-              <li class="breadcrumb-item active">Lab Schedule</li>
+              <li class="breadcrumb-item active">Schedule</li>
             </ol>
           </div><!-- /.col -->
         </div><!-- /.row -->
@@ -21,13 +21,13 @@
       <div class="container-fluid">
         <div class="row">
           <div class="col-12">
-            <div class="card">
+            <div class="card card-outline card-secondary">
                       <div class="card-header">
-                         <a href="<?=base_url('admin/schedlabs/add')?>" class="btn btn-sm btn-success">+Add</a>
+                         <a href="<?=base_url('admin/schedlabs/add')?>" class="btn btn-sm btn-primary">+Add</a>
                       </div>
                       <!-- /.card-header -->
                       <div class="card-body">
-                        <table id="example2" class="table table-bordered table-striped">
+                        <table id="example1" class="table table-bordered table-striped">
                           <thead>
                           <tr class="text-center">
                             <th>#</th>
@@ -61,12 +61,12 @@
                               <td><?=esc($schedlab['num_people'])?></td>
                               <td><?=esc(($schedlab['status'] == 'a') ? 'Active':'Inactive')?></td>
                               <td>
-                               <a class="btn btn-secondary btn-sm" href="<?=base_url('admin/schedlabs/view/' . esc($schedlab['id'], 'url'))?>"> View</a>
-                                <a class="btn btn-outline-info btn-sm" href="<?=base_url('admin/schedlabs/edit/' . esc($schedlab['id'], 'url'))?>"> Edit </a>
+                               <a class="btn btn-secondary btn-sm fas fa-eye" href="<?=base_url('admin/schedlabs/view/' . esc($schedlab['id'], 'url'))?>"> </a>
+                                <a class="btn btn-outline-info btn-sm fas fa-edit" href="<?=base_url('admin/schedlabs/edit/' . esc($schedlab['id'], 'url'))?>">  </a>
                                 <?php if($schedlab['status'] == 'a'):?>
-                                  <a class="btn btn-danger btn-sm remove" onclick=" confirmUpdateStatus('<?= base_urL('admin/schedlabs/delete/')?>',<?=$schedlab['id']?>,'d')" title="deactivate">Delete</i></a>
+                                  <a class="btn btn-danger btn-sm fas fa-trash-alt" onclick=" confirmUpdateStatus('<?= base_urL('admin/schedlabs/delete/')?>',<?=$schedlab['id']?>,'d')" title="deactivate"> </i></a>
                                 <?php else:?>
-                                  <a class="btn btn-info btn-sm remove" onclick=" confirmUpdateStatus('<?= base_urL('admin/schedlabs/active/')?>',<?=$schedlab['id']?>,'a')" title="activate">Restore</i></a>
+                                  <a class="btn btn-success btn-sm remove" onclick=" confirmUpdateStatus('<?= base_urL('admin/schedlabs/active/')?>',<?=$schedlab['id']?>,'a')" title="activate">Restore</i></a>
                                 <?php endif;?>
                               </td>
                             </tr>

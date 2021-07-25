@@ -21,10 +21,9 @@
     <!-- Main content -->
       <div class="content">
         <div class="container-fluid">
-          <div class="card card-default">
+          <div class="card card-outline card-info">
           <div class="card-header">
-            <!-- <h3 class="card-title">Select2 (Default Theme)</h3> -->
-            
+            <h3 class="card-title">Note: Please input Roman Numerals on Year only.</h3>
           
             <div class="card-tools">
               <!-- <button type="button" class="btn btn-tool" data-card-widget="collapse">
@@ -45,7 +44,7 @@
               <div class="col-md-6">
                 <div class="form-group">
                   <label>Year*</label>
-                  <input type="text" class="form-control" value="<?=isset($value['year']) ? esc($value['year']): ''?>" placeholder="Year" id="year" name="year" required>
+                  <input type="text" class="form-control" value="<?=isset($value['year']) ? esc($value['year']): ''?>" placeholder="Example: IV" id="year" name="year" required>
                 </div>
                 <?php if(isset($errors['year'])):?>
                 <p class="text-danger"><?=esc($errors['year'])?><p>

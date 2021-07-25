@@ -21,12 +21,13 @@
       <div class="container-fluid">
         <div class="row">
           <div class="col-12">
-            <div class="card">
+            <div class="card card-outline card-secondary">
                       <div class="card-header">
+                        <h5>Note: These are the users history of transactions.</h5>
                       </div>
                       <!-- /.card-header -->
                       <div class="card-body">
-                        <table id="example2" class="table table-bordered table-striped">
+                        <table id="example1" class="table table-bordered table-striped">
                           <thead>
                           <tr class="text-center">
                             <th>#</th>

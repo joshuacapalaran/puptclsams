@@ -22,9 +22,9 @@
       <div class="container-fluid">
         <div class="row">
           <div class="col-12">
-            <div class="card">
+            <div class="card card-outline card-secondary">
                       <div class="card-header">
-                         <a href="<?=base_url('admin/suffixes/add')?>" class="btn btn-sm btn-success">+Add</a>
+                         <a href="<?=base_url('admin/suffixes/add')?>" class="btn btn-sm btn-primary">+Add</a>
                       </div>
                       <!-- /.card-header -->
                       <div class="card-body">
@@ -51,11 +51,11 @@
                                 <td><?=esc(($suffix['status'] == 'a') ? 'Active':'Inactive')?></td>
                                 <td>
                                   <a class="btn btn-secondary btn-sm" href="<?=base_url('admin/suffixes/view/' . esc($suffix['id'], 'url'))?>"> View</a>
-                                  <a class="btn btn-primary btn-sm" href="<?=base_url('admin/suffixes/edit/' . esc($suffix['id'], 'url'))?>"> Edit </a>
+                                  <a class="btn btn-outline-info btn-sm" href="<?=base_url('admin/suffixes/edit/' . esc($suffix['id'], 'url'))?>"> Edit </a>
                                   <?php if($suffix['status'] == 'a'):?>
                                   <a class="btn btn-danger btn-sm remove" onclick=" confirmUpdateStatus('<?= base_urL('admin/suffixes/delete/')?>',<?=$suffix['id']?>,'d')" title="deactivate">Delete</i></a>
                                   <?php else:?>
-                                    <a class="btn btn-info btn-sm remove" onclick=" confirmUpdateStatus('<?= base_urL('admin/suffixes/active/')?>',<?=$suffix['id']?>,'a')" title="activate">Restore</i></a>
+                                    <a class="btn btn-success btn-sm remove" onclick=" confirmUpdateStatus('<?= base_urL('admin/suffixes/active/')?>',<?=$suffix['id']?>,'a')" title="activate">Restore</i></a>
                                   <?php endif;?>
                               </td>                                </td>
                               </tr>

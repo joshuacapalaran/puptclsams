@@ -23,14 +23,14 @@
       <div class="container-fluid">
         <div class="row">
           <div class="col-12">
-            <div class="card">
+            <div class="card card-outline card-secondary">
                       <div class="card-header">
-                         <a href="<?=base_url('admin/categories/add')?>" class="btn btn-sm btn-success">+Add</a>
+                         <a href="<?=base_url('admin/categories/add')?>" class="btn btn-sm btn-primary">+Add</a>
                          <!-- <h4>List of Categories</h4> -->
                       </div>
                       <!-- /.card-header -->
                       <div class="card-body">
-                        <table id="example2" class="table table-bordered table-striped">
+                        <table id="example1" class="table table-bordered table-striped">
                           <thead>
                           <tr class="text-center">
                             <th>#</th>
@@ -51,14 +51,13 @@
                               <td><?=esc($ctr)?></td>
                               <td><?=esc($category['category'])?></td>
                               <td><?=esc(($category['status'] == 'a') ? 'Active':'Inactive')?></td>
-t
                               <td>
                                <a class="btn btn-secondary btn-sm" href="<?=base_url('admin/categories/view/' . esc($category['id'], 'url'))?>"> View</a>
                                 <a class="btn btn-outline-info btn-sm" href="<?=base_url('admin/categories/edit/' . esc($category['id'], 'url'))?>"> Edit </a>
                                 <?php if($category['status'] == 'a'):?>
                                   <a class="btn btn-danger btn-sm remove" onclick=" confirmUpdateStatus('<?= base_urL('admin/categories/delete/')?>',<?=$category['id']?>,'d')" title="deactivate">Delete</i></a>
                                 <?php else:?>
-                                  <a class="btn btn-info btn-sm remove" onclick=" confirmUpdateStatus('<?= base_urL('admin/categories/active/')?>',<?=$category['id']?>,'a')" title="activate">Restore</i></a>
+                                  <a class="btn btn-success btn-sm remove" onclick=" confirmUpdateStatus('<?= base_urL('admin/categories/active/')?>',<?=$category['id']?>,'a')" title="activate">Restore</i></a>
                                 <?php endif;?>
                               </td>
                               </td>

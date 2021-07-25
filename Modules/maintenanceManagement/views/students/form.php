@@ -21,7 +21,7 @@
     <!-- Main content -->
       <div class="content">
         <div class="container-fluid">
-          <div class="card card-default">
+          <div class="card card-outline card-primary">
           <div class="card-header">
             <!-- <h3 class="card-title">Select2 (Default Theme)</h3> -->
             
@@ -133,8 +133,3 @@
         </div>
         </div>
       </div>
-
-
-    <!-- /.content -->
-  </div>
-  

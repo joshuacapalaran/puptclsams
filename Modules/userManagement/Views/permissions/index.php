@@ -24,7 +24,7 @@
       <div class="container-fluid">
         <div class="row">
           <div class="col-12">
-            <div class="card">
+            <div class="card card-outline card-secondary">
                 <div class="card-header">
                     <a href="<?= base_url('admin/permissions/edit');  ?>" class="btn btn-sm btn-primary float-right">Edit Permissions</a>
 

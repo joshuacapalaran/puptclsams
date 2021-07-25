@@ -22,14 +22,14 @@
       <div class="container-fluid">
         <div class="row">
           <div class="col-12">
-            <div class="card">
+            <div class="card card-outline card-secondary">
                       <div class="card-header">
-                         <a href="<?=base_url('admin/subjects/add')?>" class="btn btn-sm btn-success">+Add</a>
+                         <a href="<?=base_url('admin/subjects/add')?>" class="btn btn-sm btn-primary">+Add</a>
 
                       </div>
                       <!-- /.card-header -->
                       <div class="card-body">
-                        <table id="example2" class="table table-bordered table-striped">
+                        <table id="example1" class="table table-bordered table-striped">
                           <thead>
                           <tr class="text-center">
                             <th>#</th>
@@ -59,7 +59,7 @@
                               <?php if($subject['status'] == 'a'):?>
                                   <a class="btn btn-danger btn-sm remove" onclick=" confirmUpdateStatus('<?= base_urL('admin/subjects/delete/')?>',<?=$subject['id']?>,'d')" title="deactivate">Delete</i></a>
                                 <?php else:?>
-                                  <a class="btn btn-info btn-sm remove" onclick=" confirmUpdateStatus('<?= base_urL('admin/subjects/active/')?>',<?=$subject['id']?>,'a')" title="activate">Restore</i></a>
+                                  <a class="btn btn-success btn-sm remove" onclick=" confirmUpdateStatus('<?= base_urL('admin/subjects/active/')?>',<?=$subject['id']?>,'a')" title="activate">Restore</i></a>
                                 <?php endif;?>
                               </td>
                             </tr>

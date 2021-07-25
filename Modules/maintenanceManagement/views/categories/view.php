@@ -21,7 +21,7 @@
     <div class="row">
       <div class="col-md-6">
         <div class="container">
-          <div class="card card-default">
+          <div class="card card-outline card-secondary">
           <div class="card-header">
           
           

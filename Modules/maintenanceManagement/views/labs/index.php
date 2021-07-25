@@ -25,9 +25,9 @@
           <!-- form -->
 
           <div class="col-12">
-            <div class="card">
+            <div class="card card-outline card-secondary">
                       <div class="card-header">
-                         <a href="<?=base_url('admin/labs/add')?>" class="btn btn-sm btn-success">+Add</a>
+                         <a href="<?=base_url('admin/labs/add')?>" class="btn btn-sm btn-primary">+Add</a>
                         <!--  <h4>List of Laboratory</h4> -->
                       </div>
                       <!-- /.card-header -->
@@ -60,7 +60,7 @@
                                <?php if($lab['status'] == 'a'):?>
                                   <a class="btn btn-danger btn-sm remove" onclick=" confirmUpdateStatus('<?= base_urL('admin/labs/delete/')?>',<?=$lab['id']?>,'d')" title="deactivate">Delete</i></a>
                                 <?php else:?>
-                                  <a class="btn btn-info btn-sm remove" onclick=" confirmUpdateStatus('<?= base_urL('admin/labs/active/')?>',<?=$lab['id']?>,'a')" title="activate">Restore</i></a>
+                                  <a class="btn btn-success btn-sm remove" onclick=" confirmUpdateStatus('<?= base_urL('admin/labs/active/')?>',<?=$lab['id']?>,'a')" title="activate">Restore</i></a>
                                 <?php endif;?>
                               </td>
                             </tr>

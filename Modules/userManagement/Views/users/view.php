@@ -21,7 +21,7 @@
   <!-- Main content -->
   <div class="content">
     <div class="container-fluid">
-      <div class="card card-default">
+      <div class="card card-outline card-secondary">
        
             <div class="card-body">
                 <div class="row">

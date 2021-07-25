@@ -22,13 +22,13 @@
       <div class="container-fluid">
         <div class="row">
           <div class="col-12">
-            <div class="card">
+            <div class="card card-outline card-secondary">
                       <div class="card-header">
-                         <a href="<?=base_url('admin/courses/add')?>" class="btn btn-sm btn-success">+Add</a>
+                         <a href="<?=base_url('admin/courses/add')?>" class="btn btn-sm btn-primary">+Add</a>
                       </div>
                       <!-- /.card-header -->
                       <div class="card-body">
-                        <table id="example2" class="table table-bordered table-striped">
+                        <table id="example1" class="table table-bordered table-striped">
                           <thead>
                           <tr class="text-center">
                             <th>#</th>
@@ -53,12 +53,12 @@
                               <td><?=esc(($course['status'] == 'a') ? 'Active':'Inactive')?></td>
 
                               <td>
-                               <a class="btn btn-secondary btn-sm" href="<?=base_url('admin/courses/view/' . esc($course['id'], 'url'))?>"> View</a>
-                               <a class="btn btn-outline-info btn-sm" href="<?=base_url('admin/courses/edit/' . esc($course['id'], 'url'))?>"> Edit </a>
+                               <a class="btn btn-outline-secondary btn-sm fas fa-eye" href="<?=base_url('admin/courses/view/' . esc($course['id'], 'url'))?>"> </a>
+                               <a class="btn btn-outline-info btn-sm fas fa-edit" href="<?=base_url('admin/courses/edit/' . esc($course['id'], 'url'))?>"> </a>
                                <?php if($course['status'] == 'a'):?>
-                                  <a class="btn btn-danger btn-sm remove" onclick=" confirmUpdateStatus('<?= base_urL('admin/courses/delete/')?>',<?=$course['id']?>,'d')" title="deactivate">Delete</i></a>
-                                <?php else:?>
-                                  <a class="btn btn-info btn-sm remove" onclick=" confirmUpdateStatus('<?= base_urL('admin/courses/active/')?>',<?=$course['id']?>,'a')" title="activate">Restore</i></a>
+                                  <a class="btn btn-outline-danger btn-sm fas fa-trash-alt" onclick=" confirmUpdateStatus('<?= base_urL('admin/courses/delete/')?>',<?=$course['id']?>,'d')" title="deactivate"> </i></a>
+                                <?php else:?> 
+                                  <a class="btn btn-success btn-sm" onclick=" confirmUpdateStatus('<?= base_urL('admin/courses/active/')?>',<?=$course['id']?>,'a')" title="activate"> Restore</i></a>
                                 <?php endif;?>
                               </td>
                             </tr>

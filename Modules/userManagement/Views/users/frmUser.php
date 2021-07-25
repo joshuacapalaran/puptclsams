@@ -21,7 +21,7 @@
   <!-- Main content -->
   <div class="content">
     <div class="container-fluid">
-      <div class="card card-default">
+      <div class="card card-outline card-info">
        
           <form action="<?= base_url("admin/users")?>/<?= isset($rec) ? 'edit/'.esc($rec['id']): 'add'?>" method="post" accept-charset="utf-8">
             <div class="card-body">
@@ -103,7 +103,7 @@
                   
                 </div>
                 <div class="row">
-                  <div class="col-md-6 offset-md-5">
+                  <div class="col-md-6 offset-md-6">
                     <button type="submit" class="btn btn-primary float-right">Submit</button>
                   </div>
                 </div>

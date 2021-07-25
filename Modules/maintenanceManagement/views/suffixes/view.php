@@ -23,7 +23,7 @@
       
       <div class="col-md-5">
         <div class="container">
-          <div class="card card-default">
+          <div class="card card-outline card-secondary">
           <div class="card-header">
             
             <div class="card-tools">
