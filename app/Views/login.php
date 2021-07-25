@@ -67,23 +67,28 @@
         <div class="col align-center flex-col sign-in">
           <div class="form-wrapper align-center">
           <form action="<?= base_url() ?> " method="post">
-            <h1>Sign In</h1>
-          <span>use your account</span>
-          <?php if(isset($_SESSION['error_login'])): ?>
-                  <div class="alert alert-danger"><?= $_SESSION['error_login']; ?></div>
-          <?php endif; ?>
-          <input type="text" name="username" class="form-control" placeholder="Your Username" id="username" required>
-          <input type="password" name="password" class="form-control" placeholder="Your Password" id="password"required>
-          <div class="form-check">
-            <input type="checkbox" class="form-check-input" id="exampleCheck1" onclick="myFunction()">
-            <label class="form-check-label" for="exampleCheck1">Show Password</label>
-          </div>
-          <button type="submit" value="Sign In" >Sign In</button>
-          <!-- <input type="submit" value="Sign In" class="btn btn-block btn-dark" style="background-color:#E1AD01;"> -->
+              <?php if(isset($_SESSION['error_login'])): ?>
+                      <div class="alert alert-danger"><?= $_SESSION['error_login']; ?></div>
+              <?php endif; ?>
+            <div class="form sign-in">
+              <div class="form-group">
+                <i class="bxs-user"></i>
+                <input type="text" name="username" class="form-control" placeholder="Your Username" id="username" required>
+              </div>
+              <div class="form-group">
+                <i class="bx bxs-lock-alt"></i>
+                <input type="password" name="password" class="form-control" placeholder="Your Password" id="password"required>
+              </div>
+              <div style="position : left "class="form-check" >
+                <input type="checkbox" class="form-check-input" id="exampleCheck1" onclick="myFunction()">
+                <a>
+                <label class="form-check-label" for="exampleCheck1">Show Password</label>
+                </a>
+              </div>
           </form>
-              <!-- <button type="submit" value="Sign In" class="btn btn-sm btn-dark" style="background-color:rgb(68,68,68)">Sign In</button> -->
+              <button type="submit" value="Sign In" class="btn btn-sm btn-dark" style="background-color:rgb(68,68,68)">Sign In</button>
               <p>
-                <span> Are you visitor? </span>
+                <span><a> Are you visitor? </a></span>
                 <a data-toggle="modal" data-target="#modal-edit">Click here</a>
               </p>
               <p>
@@ -132,7 +137,7 @@
         <div class="modal-dialog modal-md">
           <div class="modal-content">
             <div class="modal-header">
-              <h4 class="modal-title">Edit Information</h4>
+              <h4 class="modal-title">Visitor's Log</h4>
               <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                 <span aria-hidden="true">&times;</span>
               </button>
@@ -206,29 +211,30 @@
         </div>
         <!-- /.modal-dialog -->
       </div>
-<?php if(isset($_SESSION["success_registered"])): ?>
-	<script type="text/javascript">
-	    alert_success('<?= $_SESSION["success_registered"]; ?>');
-	</script>
-<?php endif; ?>
-  <script type="text/javascript">
-    // $(function(){
-    //   setTimeout(function(){
-    //     $('.alert').hide();
-    //   },5000);
-    // });
+      <?php if(isset($_SESSION["success_registered"])): ?>
+        <script type="text/javascript">
+            alert_success('<?= $_SESSION["success_registered"]; ?>');
+        </script>
+      <?php endif; ?>
+        <script type="text/javascript">
+          // $(function(){
+          //   setTimeout(function(){
+          //     $('.alert').hide();
+          //   },5000);
+          // });
 
-    function myFunction() {
-  var x = document.getElementById("password");
-  if (x.type === "password") {
-    x.type = "text";
-  } else {
-    x.type = "password";
-  }
-}
-  </script>
+          function myFunction() {
+        var x = document.getElementById("password");
+        if (x.type === "password") {
+          x.type = "text";
+        } else {
+          x.type = "password";
+        }
+      }
+        </script>
 
-  <script>
+    <!-- Script -->
+    <script>
       const container = document.getElementById("container");
       const signIn = document.getElementById("sign-in");
       // const signUp = document.getElementById("sign-up");
@@ -246,5 +252,5 @@
       signUp.addEventListener("click", toggle);
 
     </script>
-</body>
+  </body>
 </html>
