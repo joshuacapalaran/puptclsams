@@ -92,11 +92,17 @@
                         <?php if(isset($errors['course_id'])):?>
                           <p class="text-danger"><?=esc($errors['course_id'])?><p>
                         <?php endif;?>
+<<<<<<< HEAD
+              <div class="input-group">
+                <i class="bx bxs-user"></i>
+                <label class="form-label" for="section_id">Section*</label>
+=======
                     </div>
 
                     <div class="col-sm-6">
                       <div class="form-group">
                           <label class="form-label" for="section_id">Section*</label>
+>>>>>>> 63d1016e7f2137101100db83f187cc5f433cc466
                           <select name="section_id" id="section_id" class="form-control">
                             <option selected disabled>-- Please Select Section --</option>
                             <?php foreach($sections as $section): ?>
@@ -190,6 +196,24 @@
         </div>
       </div>
     </div>
+    <script>
+      const container = document.getElementById("container");
+      const signIn = document.getElementById("sign-up");
+      // const signUp = document.getElementById("sign-in");
+
+      setTimeout(() => {
+        container.classList.add("sign-up");
+      }, 200);
+
+      const toggle = () => {
+        container.classList.toggle("sign-up");
+        // container.classList.toggle("sign-in");
+      };
+
+      signIn.addEventListener("click", toggle);
+      signUp.addEventListener("click", toggle);
+
+    </script>
   </body>
   <script src="<?=base_url();?>/plugins/jquery/jquery.min.js"></script>
   <script src="<?=base_url();?>/plugins/inputmask/inputmask.min.js"></script>

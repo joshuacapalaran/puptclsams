@@ -19,7 +19,7 @@ if (! function_exists('user_primary_links'))
 	function user_primary_links(array $array_permissions)
 	{
 		$strAdditionalUrl = '';
-	
+
 		foreach($_SESSION['appmodules'] as $module)
 		{
 			if(hasPrimary($module['id'], $array_permissions))
@@ -27,15 +27,15 @@ if (! function_exists('user_primary_links'))
 				if($module['module_name'] !== 'Users' && $module['is_dropdown'] == 0){
 					echo '<li class="nav-item">';
 						echo '<a href="'.base_url().'/'.$module['route'].'" class="nav-link '.( (uri_string() == $module['route']) ? "active":" ").'"> ';
-						echo $module['module_icon'];	
+						echo $module['module_icon'];
 						echo ' <p>';
-						echo $module['module_name'];	
-						echo '  </p>';
+						echo $module['module_name'];
+						echo '</p>';
 						echo '</a>';
 					echo '</li>';
 				}
 				else if ($module['module_name'] !== 'Users'  && $module['is_dropdown'] == 1)
-				{	
+				{
 					echo '<li class="nav-item">';
 						echo '<a href="#" class="nav-link">';
 						echo getIcon($module['id'], $_SESSION['appmodules'], false);
@@ -74,9 +74,9 @@ if (! function_exists('user_primary_links'))
 						{
 							echo '<li class="nav-item  ">';
 							echo '<a href="'.base_url().'/'.$permission['table_name'].'" class="nav-link '.( (uri_string() == $permission['table_name']) ? "active":" ").'">';
-							echo getIcon($permission['id'], $_SESSION['userPermmissions']);	
+							echo getIcon($permission['id'], $_SESSION['userPermmissions']);
 							echo ' <p>';
-							echo ucwords($permission['function_name']);	
+							echo ucwords($permission['function_name']);
 							echo '  </p>';
 							echo '</a>';
 							echo '</li>';
@@ -84,7 +84,7 @@ if (! function_exists('user_primary_links'))
 					}
 				}
 
-				
+
 			}
 		}
 	}

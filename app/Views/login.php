@@ -81,7 +81,7 @@
           <button type="submit" value="Sign In" >Sign In</button>
           <!-- <input type="submit" value="Sign In" class="btn btn-block btn-dark" style="background-color:#E1AD01;"> -->
           </form>
-              <button type="submit" value="Sign In" class="btn btn-sm btn-dark" style="background-color:rgb(68,68,68)">Sign In</button>
+              <!-- <button type="submit" value="Sign In" class="btn btn-sm btn-dark" style="background-color:rgb(68,68,68)">Sign In</button> -->
               <p>
                 <span> Are you visitor? </span>
                 <a data-toggle="modal" data-target="#modal-edit">Click here</a>
@@ -228,6 +228,23 @@
 }
   </script>
 
+  <script>
+      const container = document.getElementById("container");
+      const signIn = document.getElementById("sign-in");
+      // const signUp = document.getElementById("sign-up");
 
+      setTimeout(() => {
+        container.classList.add("sign-in");
+      }, 200);
+
+      const toggle = () => {
+        container.classList.toggle("sign-in");
+        // container.classList.toggle("sign-up");
+      };
+
+      signIn.addEventListener("click", toggle);
+      signUp.addEventListener("click", toggle);
+
+    </script>
 </body>
 </html>
