@@ -27,7 +27,7 @@
             <form class="form sign-up" action="<?= base_url("Registration") ?>" method="post">
              <div class="form-group">
                 <i class="bx bxs-user"></i>
-                <input placeholder="Student Number" type="text" class="form-control" name="student_num">
+                <input placeholder="Student Number" type="text" class="form-control" name="student_num" id="student_num">
               </div>
              <div class="form-group">
                 <i class="bx bxs-user"></i>
@@ -43,37 +43,30 @@
               </div>
               <div class="input-group">
                 <i class="bx bxs-user"></i>
-                <label class="form-label" for="course_id" >Course*</label>
-                          <select name="course_id" id="course_id" class="form-control">
-                            <option selected disabled>-- Please Select Course --</option>
-                            <?php foreach($courses as $course): ?>
-                            <option value="<?= $course['id'] ?>" <?=   ($course['id'] == $value['course_id']) ? 'selected':'' ?>><?= ucwords($course['course_abbrev']) ?> - <?= ucwords($course['course_name']) ?></option>
-                            <?php endforeach; ?>
-                          <!--  -->
-                          </select>
-                          
+                <select name="course_id" id="course_id" class="form-control">
+                  <option selected disabled>-- Please Select Course --</option>
+                  <?php foreach($courses as $course): ?>
+                  <option value="<?= $course['id'] ?>" <?=   ($course['id'] == $value['course_id']) ? 'selected':'' ?>><?= ucwords($course['course_abbrev']) ?> - <?= ucwords($course['course_name']) ?></option>
+                  <?php endforeach; ?>
+                <!--  -->
+                </select>
               </div>
-                        <?php if(isset($errors['course_id'])):?>
-                          <p class="text-danger"><?=esc($errors['course_id'])?><p>
-                        <?php endif;?>
+              <?php if(isset($errors['course_id'])):?>
+                <p class="text-danger"><?=esc($errors['course_id'])?><p>
+              <?php endif;?>
               <div class="input-group">
                 <i class="bx bxs-user"></i>
-                <label class="form-label" for="section_id">Section*</label>
-                          <select name="section_id" id="section_id" class="form-control">
-                            <option selected disabled>-- Please Select Section --</option>
-                            <?php foreach($sections as $section): ?>
-                            <option value="<?= $section['id'] ?>" <?=   ($section['id'] == $value['section_id']) ? 'selected':'' ?>><?= ucwords($section['year']) ?> - <?= ucwords($section['section']) ?></option>
-                            <?php endforeach; ?>
-                          <!--  -->
-                          </select>
+                <select name="section_id" id="section_id" class="form-control">
+                  <option selected disabled>-- Please Select Section --</option>
+                  <?php foreach($sections as $section): ?>
+                  <option value="<?= $section['id'] ?>" <?=   ($section['id'] == $value['section_id']) ? 'selected':'' ?>><?= ucwords($section['year']) ?> - <?= ucwords($section['section']) ?></option>
+                  <?php endforeach; ?>
+                <!--  -->
+                </select>
               </div>
-                        <?php if(isset($errors['section_id'])):?>
-                          <p class="text-danger"><?=esc($errors['section_id'])?><p>
-                        <?php endif;?>
-              <div class="form-group">
-                <i class="bx bxs-user"></i>
-                <input placeholder="Username" type="text" class="form-control" name="username">
-              </div>
+              <?php if(isset($errors['section_id'])):?>
+                <p class="text-danger"><?=esc($errors['section_id'])?><p>
+              <?php endif;?>
             
               <div class="form-group">
                 <i class="bx bxs-lock-alt"></i>

@@ -55,6 +55,7 @@ class UsersModel extends \CodeIgniter\Model
 		$val_array['created_at'] = (new \DateTime())->format('Y-m-d H:i:s');
 		$val_array['status'] = 'a';
 		$val_array['password'] = password_hash($val_array['password'], PASSWORD_DEFAULT);
+		// $val_array['password'] = $this->encrypting($val_array['password']);
 
 	    return $this->save($val_array);
 	}
@@ -72,6 +73,7 @@ class UsersModel extends \CodeIgniter\Model
 		else
 		{
 			$val_array['password'] = password_hash($val_array['password'], PASSWORD_DEFAULT);
+			// $val_array['password'] = $this->encrypting($val_array['password']);
 		}
 
 	
@@ -108,5 +110,17 @@ class UsersModel extends \CodeIgniter\Model
 		$query = $this->first();
 
 		return $query;
+	}
+
+	function encrypting($string)
+	{
+		$encrypt_method = "AES-256-CBC";
+		$secret_key = 'AA74CDCC2BBRT935136HH7B63C27'; // user define private key
+		$secret_iv = '5fgf5HJ5g27'; // user define secret key
+		$key = hash('sha256', $secret_key);
+		$iv = substr(hash('sha256', $secret_iv), 0, 16); // sha256 is hash_hmac_algo
+		$output = openssl_encrypt($string, $encrypt_method, $key, 0, $iv);
+		$output = base64_encode($output);
+		return $output;
 	}
 }

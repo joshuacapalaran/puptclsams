@@ -70,6 +70,44 @@
       "responsive": true,
     });
   });
+
+  
+  $("#schedulesubjTable").DataTable({
+      "responsive": true, "lengthChange": false, "autoWidth": false,
+      
+      "buttons": [
+      {
+          extend: 'print',
+          text: 'Generate PDF',
+          title: 'Schedules',
+          exportOptions: {
+            columns: [0,1,2,3,4,5,6,7,8],
+          },
+          customize: function ( win ) {
+          
+          }
+        }
+    ]
+    }).buttons().container().appendTo('#schedulesubjTable_wrapper .col-md-6:eq(0)');
+
+
+    $("#schedlabTable").DataTable({
+      "responsive": true, "lengthChange": false, "autoWidth": false,
+      "buttons": [
+      {
+          extend: 'print',
+          text: 'Generate PDF',
+          title: 'Events',
+          exportOptions: {
+            columns: [0,1,2,3,4,5,6,7],
+          },
+          customize: function ( win ) {
+          
+          }
+        }
+    ]
+    }).buttons().container().appendTo('#schedlabTable_wrapper .col-md-6:eq(0)');
+
 </script>
 
 <script>
@@ -97,6 +135,23 @@
      $(function(){
        setInterval(updateTime, 1000);
       });
+
+      
+
+
+setInterval(function(){get_fb();}, 1000);
+function get_fb(){
+    $.ajax({
+        type: "POST",
+        url: "<?= base_url('admin/schedules/penalty'); ?>",
+        async: false,
+        success: function(response){
+          // console.log(response)
+        }
+    });
+    // $('div.feedback-box').html(feedback);
+}
+
   </script>
 
 

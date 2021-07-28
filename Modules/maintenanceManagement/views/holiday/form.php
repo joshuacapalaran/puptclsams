@@ -49,7 +49,7 @@
 
                 <div class="form-group">
                 <label>Date*</label>
-                <input type="date" class="form-control" value="<?=isset($value['date']) ? esc($value['date']): ''?>" placeholder="Date" id="date" name="date">
+                <input type="text" class="form-control" value="<?=isset($value['date']) ? esc($value['date']): ''?>" placeholder="Date" id="datepicker1"  name="date">
                 
                 </div>
                 <?php if(isset($errors['date'])):?>
@@ -76,4 +76,20 @@
 
     <!-- /.content -->
   </div>
-  
+  <script src="<?=base_url();?>/plugins/bootstrap-datepicker/bootstrap-datepicker.js"></script>
+  <link href="<?=base_url();?>/plugins/bootstrap-datepicker/bootstrap-datepicker.css" rel="stylesheet"/>
+
+  <script>
+
+$(function() { 
+});
+$.fn.datepicker.dates.en.titleFormat="MM";
+$("#datepicker1").datepicker( {
+    format: 'mm-dd',
+    autoclose: true,
+      startView: 1,
+      maxViewMode: "months",
+      orientation: "bottom left",        
+});
+
+  </script>

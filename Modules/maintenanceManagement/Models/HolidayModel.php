@@ -13,7 +13,7 @@ class HolidayModel extends BaseModel {
     return $this->where('status','a')->findAll();
   }
   public function getCancelDates(){
-    return $this->select('schedlab_id , schedsubj_id, date')->findAll();
+    return $this->select('schedlab_id , schedsubj_id, date, status')->findAll();
   }
 
   public function getHolidays(){

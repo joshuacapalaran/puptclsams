@@ -61,7 +61,7 @@
 
                   <div class="col-md-6">
                     <div class="form-group">
-                      <label for="username">User Name*</label>
+                      <label for="username">User Name* (Student Number / Professor Number)</label>
                       <input name="username" type="text" value="<?= isset($rec['username']) ? $rec['username'] : set_value('username') ?>" class="form-control <?= isset($errors['username']) ? 'is-invalid':' '  ?>" id="username" placeholder="User name">
                       <?php if(isset($errors['username'])):?>
                         <p class="text-danger"><?=esc($errors['username'])?><p>
@@ -95,7 +95,9 @@
                       <select name="role_id" class="form-control <?= isset($errors['role_id']) ? 'is-invalid':' ' ?>">
                       <option selected disabled >Please select role</option>
                       <?php foreach($roles as $role): ?>
+                      <?php if($role['id'] !== '1'): ?>
                         <option value="<?= $role['id'] ?>" <?= ($role['id'] == $rec['role_id'] ? 'selected':'')?>><?= ucwords($role['role_name']) ?></option>
+                      <?php endif;?>
                       <?php endforeach; ?>
                     </select>
                       <?php if(isset($errors['role_id'])):?>
@@ -126,18 +128,18 @@
   <script src="<?=base_url();?>/plugins/inputmask/inputmask.extensions.min.js"></script>
   <script type="text/javascript">
     $(function(){
-      var inputmask = new Inputmask("9999-99999-TG-9");
-          inputmask.mask($('[id*=username]'));
+      // var inputmask = new Inputmask("9999-99999-TG-9");
+      //     inputmask.mask($('[id*=username]'));
           
-      $('[id*=username]').on('keypress', function (e) {
-          var number = $(this).val();
-          if (number.length == 2) {
-              $(this).val($(this).val() + '-');
-          }
-          else if (number.length == 7) {
-              $(this).val($(this).val() + '-');
-          }
-      });
+      // $('[id*=username]').on('keypress', function (e) {
+      //     var number = $(this).val();
+      //     if (number.length == 2) {
+      //         $(this).val($(this).val() + '-');
+      //     }
+      //     else if (number.length == 7) {
+      //         $(this).val($(this).val() + '-');
+      //     }
+      // });
 
 
       setTimeout(function(){

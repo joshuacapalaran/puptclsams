@@ -70,7 +70,7 @@
 
                     <div class="form-group">
                       <label class="form-label" for="num_people">No. of People*</label>
-                        <input type="number" class="form-control" value="<?=isset($value['num_people']) ? esc($value['num_people']): ''?>" placeholder="No. of People" id="num_people" name="num_people">
+                        <input type="number" class="form-control" value="<?=isset($value['num_people']) ? esc($value['num_people']): ''?>" placeholder="No. of People" id="num_people" name="num_people" readonly>
                       </div>
                         <?php if(isset($errors['num_people'])):?>
                           <p class="text-danger"><?=esc($errors['num_people'])?><p>
@@ -141,4 +141,16 @@
 
     <!-- /.content -->
   </div>
+  <script>
+    var capacities = JSON.parse('<?= json_encode($capacities); ?>');
+    // console.log(capacities);
+      $('#lab_id').on('change', function(){
   
+        id = this.value;
+        $.each(capacities,function(key,data){
+          if(data.id == id){
+            $('#num_people').val(data.capacity);
+          }
+        });
+      });
+  </script>

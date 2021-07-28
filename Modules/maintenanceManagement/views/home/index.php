@@ -27,7 +27,7 @@
             <!-- small card -->
             <div class="small-box bg-info">
               <div class="inner">
-                <h3>150</h3>
+                <h3><?= $attendance;?></h3>
 
                 <p>Time-in</p>
               </div>
@@ -44,7 +44,7 @@
             <!-- small card -->
             <div class="small-box bg-success">
               <div class="inner">
-                <h3>53<sup style="font-size: 20px">%</sup></h3>
+                <h3><?= $total_capacities;?></sup></h3>
 
                 <p>Room Capacity</p>
               </div>
@@ -61,7 +61,7 @@
             <!-- small card -->
             <div class="small-box bg-warning">
               <div class="inner">
-                <h3>44</h3>
+                <h3><?= $total_registered;?></h3>
 
                 <p>User Registrations</p>
               </div>
@@ -78,7 +78,7 @@
             <!-- small card -->
             <div class="small-box bg-danger">
               <div class="inner">
-                <h3>65</h3>
+                <h3><?= $visitors;?></h3>
 
                 <p>Visitors</p>
               </div>
@@ -95,7 +95,7 @@
         <!-- /.row -->
 
         <!-- Main row -->
-        <div class="row">
+        <!-- <div class="row">
           <div class="col-md-12">
             <div class="card">
               <div class="card-header">
@@ -122,7 +122,6 @@
                   </button>
                 </div>
               </div>
-              <!-- /.card-header -->
               <div class="card-body">
                 <div class="row">
                   <div class="col-md-8">
@@ -131,12 +130,9 @@
                     </p>
 
                     <div class="chart">
-                      <!-- Sales Chart Canvas -->
                       <canvas id="salesChart" height="180" style="height: 180px;"></canvas>
                     </div>
-                    <!-- /.chart-responsive -->
                   </div>
-                  <!-- /.col -->
                   <div class="col-md-4">
                     <p class="text-center">
                       <strong>Goal Completion</strong>
@@ -149,7 +145,6 @@
                         <div class="progress-bar bg-primary" style="width: 80%"></div>
                       </div>
                     </div>
-                    <!-- /.progress-group -->
 
                     <div class="progress-group">
                       Complete Purchase
@@ -159,7 +154,6 @@
                       </div>
                     </div>
 
-                    <!-- /.progress-group -->
                     <div class="progress-group">
                       <span class="progress-text">Visit Premium Page</span>
                       <span class="float-right"><b>480</b>/800</span>
@@ -168,7 +162,6 @@
                       </div>
                     </div>
 
-                    <!-- /.progress-group -->
                     <div class="progress-group">
                       Send Inquiries
                       <span class="float-right"><b>250</b>/500</span>
@@ -176,20 +169,12 @@
                         <div class="progress-bar bg-warning" style="width: 50%"></div>
                       </div>
                     </div>
-                    <!-- /.progress-group -->
                   </div>
-                  <!-- /.col -->
                 </div>
-                <!-- /.row -->
               </div>
-              <!-- ./card-body -->
             </div>
-            <!-- /.card -->
           </div>
-          <!-- /.col -->
-        </div>
-        <!-- /.row -->
-        <!--  -->
+        </div> -->
       </div>
    </section>
 
@@ -228,11 +213,9 @@
               <div class="card-body p-0">
                 <div id="calendar"></div>
               </div>
-              <!-- /.card-body -->
             </div>
         </div>
         </div>
-      </div>
   </section>
     <!-- /.content -->
   </div>
@@ -244,7 +227,11 @@
                 <h4 id="modalTitle" class="modal-title"></h4>
             </div>
             <div id="modalBody" class="modal-body">
-            
+
+            </div>
+            <div class="modal-footer">
+              <button type="submit" id="cancel-schedule" class="btn btn-success">Cancel Schedule</button>
+              <button type="submit" id="attendance" class="btn btn-primary">Attendance</button>
             </div>
         </div>
     </div>
@@ -252,7 +239,6 @@
   <link href='https://cdn.jsdelivr.net/npm/bootstrap@4.5.0/dist/css/bootstrap.css' rel='stylesheet' />
 <link href='https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.13.1/css/all.css' rel='stylesheet'>
 <script>
-
 
 var holidays = JSON.parse('<?= json_encode($holidays); ?>');
 
@@ -263,7 +249,7 @@ var holidays = JSON.parse('<?= json_encode($holidays); ?>');
       events: {
         url: "<?= base_url('admin/schedules/events')?>",
         timeZone: 'H:mm',
-     
+
       },
       headerToolbar: {
         start: 'prev,next today',
@@ -273,7 +259,12 @@ var holidays = JSON.parse('<?= json_encode($holidays); ?>');
       eventClick: function(event) {
         var eventDate = moment(event.event.start).format('YYYY-MM-DD');
         $('#fullCalModal').modal();
-        
+        if(event.event.extendedProps.time !== undefined && event.event.extendedProps.lab_day !== undefined){
+          $('#attendance').show();
+        }else{
+          $('#attendance').hide();
+
+        }
         $('#cancel-schedule').click(function(e){
           e.preventDefault();
             $.ajax({
@@ -285,6 +276,10 @@ var holidays = JSON.parse('<?= json_encode($holidays); ?>');
                 location.reload()
               }
             });
+        });
+        
+        $('#attendance').click(function(e){
+            window.location.href = "<?= base_url('admin/schedules/attendance') ?>?id="+event.event.id+"&type="+event.event.extendedProps.schedule+"&date="+eventDate;
         });
 
         $('#modalTitle').html(event.event.title);
@@ -316,7 +311,7 @@ var holidays = JSON.parse('<?= json_encode($holidays); ?>');
           html += '<span> No. of People: '+ event.event.extendedProps.num_people+'</span> <br>';
 
         }
-          
+
         $('#modalBody').html(html);
       },
       eventDidMount: function(arg) {
@@ -327,7 +322,7 @@ var holidays = JSON.parse('<?= json_encode($holidays); ?>');
 
           $.each(holidays,function(index,val){
             if(val.schedsubj_id == eventId && val.date == eventDate){
-              console.log(val.schedsubj_id)
+              // console.log(val.schedsubj_id)
               $(arg.el).hide();
 
             }
@@ -338,17 +333,17 @@ var holidays = JSON.parse('<?= json_encode($holidays); ?>');
 
           $.each(holidays,function(index,val){
             if(val.schedlab_id == eventId && val.date == eventDate){
-              console.log(val.schedsubj_id)
+              // console.log(val.schedsubj_id)
               $(arg.el).hide();
             }
           });
         }
-    
+
       },
       failure: function() {
       alert('there was an error while fetching events!');
       },
-     
+
     });
     calendar.render();
   });

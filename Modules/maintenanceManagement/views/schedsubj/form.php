@@ -219,7 +219,16 @@
     width: "100%"
   });
 $(document).ready(function(){
-  $('#category').change(function(){
+    var dropdown = $('#category').find(':selected').val();
+  if(dropdown == 2){
+      $('#day-div').prop('hidden', true);
+      $('#start-time-div').prop('hidden', true);
+      $('#end-time-div').prop('hidden', true);
+      $('#date-div').prop('hidden', false);
+
+    }
+
+  $(document).on('change','#category',function(){
     var category = $(this).val();
     if(category == 2){
       $('#day-div').prop('hidden', true);

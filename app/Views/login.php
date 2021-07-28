@@ -89,7 +89,7 @@
               <button type="submit" value="Sign In" class="btn btn-sm btn-dark" style="background-color:rgb(68,68,68)">Sign In</button>
               <p>
                 <span><a> Are you visitor? </a></span>
-                <a data-toggle="modal" data-target="#modal-edit">Click here</a>
+                <a type="button" class="btn btn-sm btn-primary" data-toggle="modal" data-target="#modal-edit">Click here</a>
               </p>
               <p>
                 <span> Don't have an account? </span>
@@ -148,7 +148,7 @@
                   <div class="col-md-12">
                     <div class="form-group">
                       <label>Name</label>
-                      <input type="text" class="form-control" value="<?=isset($value['name']) ? esc($value['name']): ''?>" placeholder="Name" id="name" name="name" required>
+                      <input type="text" class="form-control" placeholder="Name" id="name" name="name" required>
                     </div>
                     <?php if(isset($errors['name'])):?>
                     <p class="text-danger"><?=esc($errors['name'])?><p>
@@ -157,7 +157,7 @@
 
                     <div class="form-group">
                     <label>Purpose</label>
-                      <input type="text" class="form-control" value="<?=isset($value['purpose']) ? esc($value['purpose']): ''?>" placeholder="Purpose" id="purpose" name="purpose">
+                      <input type="text" class="form-control" placeholder="Purpose" id="purpose" name="purpose">
                     </div>
                     <?php if(isset($errors['purpose'])):?>
                         <p class="text-danger"><?=esc($errors['purpose'])?><p>
@@ -169,7 +169,7 @@
                     <select name="lab_id" id="lab_id" class="form-control">
                       <option selected disabled>-- Please Select Laboratory --</option>
                       <?php foreach($labs as $lab): ?>
-                      <option value="<?= $lab['id'] ?>" <?=   ($lab['id'] == $value['lab_id']) ? 'selected':'' ?>><?= ucwords($lab['lab_name']) ?></option>
+                      <option value="<?= $lab['id'] ?>"><?= ucwords($lab['lab_name']) ?></option>
                       <?php endforeach; ?>
                     <!--  -->
                     </select>
@@ -183,7 +183,7 @@
                       <select name="event_id" id="event_id" class="form-control">
                         <option selected disabled>-- Please Select Event --</option>
                         <?php foreach($events as $event): ?>
-                        <option value="<?= $event['id'] ?>" <?=   ($event['id'] == $value['event_id']) ? 'selected':'' ?>><?= ucwords($event['event_name']) ?></option>
+                        <option value="<?= $event['id'] ?>" ><?= ucwords($event['event_name']) ?></option>
                         <?php endforeach; ?>
                       <!--  -->
                       </select>
@@ -191,7 +191,7 @@
 
                     <div class="form-group">
                       <label>Others</label>
-                          <input type="text" class="form-control" value="<?=isset($value['others']) ? esc($value['others']): ''?>" placeholder="Others" id="others" name="others">
+                          <input type="text" class="form-control" placeholder="Others" id="others" name="others">
                     </div>
                     <!-- /.form-group -->
                     </div>
@@ -216,6 +216,8 @@
             alert_success('<?= $_SESSION["success_registered"]; ?>');
         </script>
       <?php endif; ?>
+
+      
         <script type="text/javascript">
           // $(function(){
           //   setTimeout(function(){

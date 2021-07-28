@@ -17,7 +17,48 @@
       </div><!-- /.container-fluid -->
     </div>
     <!-- /.content-header -->
+<section class="content"> 
+  <div class="container-fluid">
+  <div class="col-12">
+    <div class="card card-outline card-secondary">
+        <div class="card-header">
+          <div class="row">
+            <div class="col-md-12">
+              <form action="<?= base_url("admin/visitors") ?>" method="post">
+                <div class="row">
+                  <div class="col-md-6">
+                    <div class="form-group">
+                      <label for="schyear_id">Date</label>
+                      <input type="date" value="<?= isset($rec['date']) ? $rec['date']:''?>"class="form-control" name="date">
+                    </div>
+                  </div>
+                  <div class="col-md-6">
+                    <div class="form-group">
+                      <label for="attendee">Attendee</label>
+                      <select id="attendee" class="form-control" name="attendee" >
+                        <option value="all">All</option>
+                        <?php foreach($schedlabs as $sched):?>
+                          <option value="<?= $sched['id'];?>" <?= ($sched['id'] == $rec['attendee']) ? 'selected':''?>><?= $sched['event_name'];?> </option>
+                        <?php endforeach;?>                      
+                        <option value="others" <?= ($rec['attendee'] == 'others') ? 'selected':''?>>Others</option>
 
+                      </select>
+                    </div>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col-md-5">
+                    <button type="submit" class="btn btn-success">Submit</button>
+                  </div>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+    </div>
+  </div>
+  </div>
+</section>
     <!-- Main content -->
     <section class="content">
       <div class="container-fluid">
@@ -31,7 +72,7 @@
                 <!-- /.card-header -->
                 <div class="card-body">
                 
-                  <table id="example1" class="table table-bordered table-striped">
+                  <table id="visitorTable" class="table table-bordered table-striped">
                     <thead>
                     <tr class="text-center">
                       <th>#</th>
@@ -83,50 +124,64 @@
     <!-- /.content -->
   </div>
   <!-- /.content-wrapper -->
-  <!-- EDIT MODAL -->
-    <div class="modal fade" id="modal-edit">
-        <div class="modal-dialog modal-lg">
-          <div class="modal-content">
-            <div class="modal-header">
-              <h4 class="modal-title">Edit Information</h4>
-              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                <span aria-hidden="true">&times;</span>
-              </button>
-            </div>
-            <div class="modal-body">
-              <p>One fine body&hellip;</p>
-            </div>
-            <div class="modal-footer justify-content-between">
-              <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-              <button type="button" class="btn btn-primary">Save changes</button>
-            </div>
-          </div>
-          <!-- /.modal-content -->
-        </div>
-        <!-- /.modal-dialog -->
-      </div>
-      <!-- /.modal -->
-      <!-- DELETE MODAL -->
-      <div class="modal fade" id="modal-delete">
-        <div class="modal-dialog modal-sm">
-          <div class="modal-content">
-            <div class="modal-header">
-              <h4 class="modal-title">Do you want to delete the data?</h4>
-              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                <span aria-hidden="true">&times;</span>
-              </button>
-            </div>
-            <div class="modal-body">
-              <p>Select "Yes" below if you are ready to delete this data.</p>
-            </div>
-            <div class="modal-footer justify-content-between">
-              <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-              <!-- <button type="button" class="btn btn-primary">Save changes</button> -->
-              <a class="btn btn-danger" href="<?=base_url('admin/labs/delete/' . esc($lab['id'], 'url'))?>"> Yes </a>
-            </div>
-          </div>
-          <!-- /.modal-content -->
-        </div>
-        <!-- /.modal-dialog -->
-      </div>
-      <!-- /.modal -->
+  <script src="<?= base_url();?>public/js/jquery-3.2.1.min.js" type="text/javascript"></script>
+<script type="text/javascript" charset="utf8" src="<?= base_url();?>\public\plugins\datatables-buttons\js/dataTables.buttons.min.js"></script>
+<script type="text/javascript" charset="utf8" src="<?= base_url();?>\public\plugins\datatables-buttons\js/buttons.html5.min.js"></script>
+<script type="text/javascript" src="<?= base_url();?>\public\plugins\datatables-buttons\js/pdfmake.min.js"></script>
+<script type="text/javascript" src="<?= base_url();?>\public\plugins\datatables-buttons\js/vfs_fonts.js"></script>
+
+<script>
+	$(document).ready( function () {
+		var conceptName = $('#schyear_id').find(":selected").text();
+		$('#visitorTable').DataTable({
+			"bInfo": false,
+			dom: 'lft<"#space">Bip',
+			buttons: [
+				// 'csvHtml5',
+				// 'excelHtml5',
+				{
+					extend: 'pdfHtml5',
+					text: 'To PDF',
+					className: 'btn btn-sm btn-primary rounded-pill px-3 mb-3 mb-sm-0',
+					messageTop: ' ',
+					download: 'open',
+					orientation: 'landscape',
+					title: ' List of NSTP Graduates \n S.Y '+conceptName,
+					customize: function ( doc, btn, tbl ) {
+
+						pdfMake.tableLayouts = {
+							exampleLayout: {
+							hLineWidth: function (i) {
+								return 0.5;
+							},
+							vLineWidth: function (i) {
+								return 0.5;
+							},
+							hLineColor: function (i) {
+								return 'black';
+							},
+							vLineColor: function (i) {
+								return 'black';
+							},
+							paddingLeft: function (i) {
+							 return i === 0 ? 0 : 50;
+							},
+							paddingRight: function (i, node) {
+							 return (i === node.table.widths.length - 1) ? 0 : 50;
+							}
+							}
+						};
+						
+						doc.content[2].layout = 'exampleLayout';
+
+						
+						
+					}
+					// pageSize: 'LEGAL'
+            	}
+			]
+		});
+	});
+
+
+</script>

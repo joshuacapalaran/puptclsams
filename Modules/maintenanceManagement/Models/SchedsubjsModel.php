@@ -44,6 +44,8 @@ class SchedsubjsModel extends \CodeIgniter\Model {
 
   public function getSubjectById($id){
     $this->join('subjects', 'schedsubjs.subject_id = subjects.id');
+    $this->join('courses','schedsubjs.course_id = courses.id');
+    $this->join('sections','schedsubjs.section_id = sections.id','inner');
     $this->where('schedsubjs.id',$id);
     return $this->first();
 
@@ -62,19 +64,30 @@ class SchedsubjsModel extends \CodeIgniter\Model {
     $this->where('sched.id', $id);
     return $this->first();
   }
-  public function checkSchedule($course_id, $section_id){
-    $this->where('course_id', $course_id);
-    $this->where('section_id', $section_id);
-    // $this->where('end_time <=',$current_time);
-    // $this->where('start_time >=',$current_time);
+  public function checkSchedule($current_day,$current_time){
+    // $this->where('end_time >=',$current_time);
+    // $this->where('start_time <=',$current_time);
     // $this->like('day', '%'.$current_day.'%');
     // $this->where('status', 'a');
     // $this->where('category', '1');
+    $this->where('end_time >=','13:18:00');
+    $this->where('start_time <=',' 13:18:00');
+    $this->like('day', '%Wednesday%');
+    return $this->findAll();
+  }
+
+  public function getStudentSchedule($course_id, $section_id,$current_day,$current_time){
+    $this->where('course_id', $course_id);
+    $this->where('section_id', $section_id);
+    $this->where('end_time >=',$current_time);
+    $this->where('start_time <=',$current_time);
+    $this->like('day', '%'.$current_day.'%');
+    $this->where('status', 'a');
+    $this->where('category', '1');
     // $this->where('end_time >=','13:18:00');
     // $this->where('start_time <=',' 13:18:00');
     // $this->like('day', '%Wednesday%');
-
-    return $this->first();
+    return $this->findAll();
   }
 
   public function getScheduleSubjById($id){

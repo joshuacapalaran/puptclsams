@@ -75,13 +75,37 @@
             <div id="modalBody" class="modal-body">
 
             </div>
+            <?php if($_SESSION['rid'] == '1'):?>
             <div class="modal-footer">
-              <button type="submit" id="cancel-schedule" class="btn btn-success">Cancel Schedule</button>
+              <button type="submit"  class="btn btn-success" data-toggle="modal" data-target="#modal-schedule">Cancel Schedule</button>
               <button type="submit" id="attendance" class="btn btn-primary">Attendance</button>
             </div>
+            <?php endif;?>
         </div>
     </div>
 </div>
+<div class="modal fade" id="modal-schedule">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h4 class="modal-title">Log-out</h4>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body">
+              <p>Are you sure do you want to cancel schedule</p>
+            </div>
+            <div class="modal-footer justify-content-between">
+              <button type="button"  class="btn btn-default" data-dismiss="modal">Close</button>
+                <a class="btn btn-primary" id="cancel-schedule" >Yes</a>
+            </div>
+          </div>
+          <!-- /.modal-content -->
+        </div>
+        <!-- /.modal-dialog -->
+      </div>
+
   <link href='https://cdn.jsdelivr.net/npm/bootstrap@4.5.0/dist/css/bootstrap.css' rel='stylesheet' />
 <link href='https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.13.1/css/all.css' rel='stylesheet'>
 <script>
@@ -105,7 +129,12 @@ var holidays = JSON.parse('<?= json_encode($holidays); ?>');
       eventClick: function(event) {
         var eventDate = moment(event.event.start).format('YYYY-MM-DD');
         $('#fullCalModal').modal();
+        if(event.event.extendedProps.time !== undefined && event.event.extendedProps.lab_day !== undefined){
+          $('#attendance').show();
+        }else{
+          $('#attendance').hide();
 
+        }
         $('#cancel-schedule').click(function(e){
           e.preventDefault();
             $.ajax({
@@ -118,7 +147,7 @@ var holidays = JSON.parse('<?= json_encode($holidays); ?>');
               }
             });
         });
-
+        
         $('#attendance').click(function(e){
             window.location.href = "<?= base_url('admin/schedules/attendance') ?>?id="+event.event.id+"&type="+event.event.extendedProps.schedule+"&date="+eventDate;
         });
@@ -160,10 +189,11 @@ var holidays = JSON.parse('<?= json_encode($holidays); ?>');
         var eventId = arg.event._def.publicId;
 
         if(arg.event.extendedProps.schedule == 'event'){
-
           $.each(holidays,function(index,val){
+
             if(val.schedsubj_id == eventId && val.date == eventDate){
-              // console.log(val.schedsubj_id)
+              // console.log(val)
+
               $(arg.el).hide();
 
             }
@@ -171,7 +201,6 @@ var holidays = JSON.parse('<?= json_encode($holidays); ?>');
 
         }
         else if(arg.event.extendedProps.schedule == 'lab'){
-
           $.each(holidays,function(index,val){
             if(val.schedlab_id == eventId && val.date == eventDate){
               // console.log(val.schedsubj_id)

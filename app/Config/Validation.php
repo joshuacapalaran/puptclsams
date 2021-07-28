@@ -542,4 +542,32 @@ class Validation
 		
 	];
 
+
+	public $profile = [
+		'first_name' => [
+			'rules' => 'required',
+			'label' => 'Name',
+			'errors' => ['required' => 'First Name is required.']
+		],
+		'last_name' => [
+			'rules' => 'required',
+			'label' => 'Name',
+			'errors' => ['required' => 'Last Name is required.']
+		],
+		'm_initial' => [
+			'rules' => 'required',
+			'label' => 'Name',
+			'errors' => ['required' => 'Middle Initial is required.']
+		],
+		'username' => [
+			'rules' => 'required',
+			'label' => 'Name',
+			'errors' => ['required' => 'User Name is required.']
+		],
+		'password' => [
+			'rules' => 'required',
+			'label' => 'Name',
+			'errors' => ['required' => 'Password is required.']
+		],
+	];
 }

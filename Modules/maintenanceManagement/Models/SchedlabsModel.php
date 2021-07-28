@@ -35,7 +35,10 @@ class SchedlabsModel extends BaseModel {
     $this->from('schedlabs sched');
     $this->join('categories category', 'category.id = sched.category_id','inner');
     $this->join('labs','sched.lab_id = labs.id','inner');
+    // $this->Where('sched.end_time >=', date('H:i:s','16:30:00'));
+    // $this->where('sched.start_time >=', date('H:i:s','13:30:00'));
     $this->where('sched.date', date('Y-m-d'));
+
     return $this->findAll();
   }
 
@@ -56,13 +59,17 @@ class SchedlabsModel extends BaseModel {
     return $this->first();
   }
 
+  public function getScheduleLabs(){
+    return $this->findAll();
+  }
+
   
   public function getLabScheduleById($id){
     $this->select('sched.*, category.*,labs.lab_name, sched.id as id, sched.status as status');
     $this->distinct('sched');
     $this->from('schedlabs sched');
     $this->join('categories category', 'category.id = sched.category_id','inner');
-    $this->join('labs','sched.lab_id = labs.id');
+    $this->join('labs','sched.lab_id = labs.id','inner');
     $this->where('sched.id', $id);
 
     return $this->first();

@@ -14,9 +14,14 @@ use Modules\MaintenanceManagement\Models\SectionsModel;
 use Modules\MaintenanceManagement\Models\StudentsModel;
 use Modules\MaintenanceManagement\Models\AttendancesModel;
 use Modules\MaintenanceManagement\Models\HolidayModel;
+use Modules\MaintenanceManagement\Models\ActivityLogsModel;
 
 class Schedules extends BaseController {
 
+
+  function __construct(){
+    $this->activityLogsModel = new ActivityLogsModel;
+  }
 
 public function index(){
 
@@ -152,6 +157,7 @@ public function cancelSchedule(){
       'date' => $date,
       'status' => 'c',
     ];
+    $this->activityLogsModel->addLogs($_SESSION['uid'], 'Cancel Schedule Subject', 'admin/schedules', json_encode($data));
     $holidayModel->cancel($data);
   }else if($_POST['type'] == 'lab'){
     
@@ -161,6 +167,7 @@ public function cancelSchedule(){
       'date' => $date,
       'status' => 'c',
     ];
+    $this->activityLogsModel->addLogs($_SESSION['uid'], 'Cancel Schedule Event', 'admin/schedules', json_encode($_POST));
     $holidayModel->cancel($data);
 
   }
@@ -194,6 +201,11 @@ public function verify(){
   $attendanceModel = new AttendancesModel();
   $schedsubj = new SchedsubjsModel;
   $schedlabs = new SchedlabsModel;
+  date_default_timezone_set('Asia/Singapore');
+  $current_day = date('l');
+  $current_time = date('H:i:s',time());
+  $time_now = time();
+
   $students = $studentModel->getStudentByStudNum($_POST['student_num']);
   
 	if(!empty($students) ) {
@@ -201,17 +213,24 @@ public function verify(){
       if($_POST['sched_data']['type'] == 'event'){
         $data['schedule_id'] = $_POST['sched_data']['id'];
         $attendance = $attendanceModel->getAttendance($students['id'],$_POST['sched_data']['id'],$_POST['sched_data']['date']);
-
+        $sched = $schedsubj->getStudentSchedule($students['course_id'],$students['section_id'],$current_day,$current_time);
       }else if($_POST['sched_data']['type'] == 'lab'){
         $data['lab_id'] = $_POST['sched_data']['id'];
         $attendance = $attendanceModel->getAttendanceLab($students['id'],$_POST['sched_data']['id'],$_POST['sched_data']['date']);
-
       }
       $data['student_id'] = $students['id'];
       $data['student_number'] = $_POST['student_num'];
       $data['date'] = $_POST['sched_data']['date'];
-     
+     $start_time = strtotime($sched[0]['start_time']);
+
+     $difference = $start_time - $time_now;
+     $difference_minute =  $difference/60;
       if(empty($attendance)){
+        if(abs($difference_minute) >= 15){
+          $data['remarks'] = 'late';
+        }else{
+          $data['remarks'] = 'present';
+        }
       
         if($attendanceModel->insertAttendance($data)){
           $this->session->setFlashData('success', 'You have succesfully time in!');
@@ -257,7 +276,8 @@ public function verify(){
   
         if(!empty($attendance) ){
             if ($attendance['time_out'] == null) {
-           
+              $difference = $to_time - $time_now;
+              $difference_minute =  $difference/60;
               if ($attendanceModel->timeOut($attendance['id'])) {
                 $this->session->setFlashData('success', 'You have succesfully time out!');
               } else {
@@ -276,7 +296,7 @@ public function verify(){
   }
 
   public function pdf(){
-    $attendanceModel = new AttendancesModel();
+    $attendanceModel = new AttendancesModel(); 
     $studentModel = new StudentsModel();
     $schedsubj = new SchedsubjsModel;
     $schedlabs = new SchedlabsModel;
@@ -292,18 +312,47 @@ public function verify(){
     }elseif($_GET['type'] == 'lab'){
       $pdf_data['info'] = $schedlabs->getLabScheduleById($_GET['id']);
     }
+    $info = $schedsubj->getSubjectById($_GET['id']);
+    $course_abbrev = $info['course_abbrev'];
+    $section = $info['section'];
+    $year = $info['year'];
+    $course_abbrev = $info['course_abbrev'];
+    $subj_name = $info['subj_name'];
     $pdf_data['type'] = $_GET['type'];
+    
+    $mpdf->setHTMLHeader('
+        <div class="col12" style="padding-left:100px">
+            <div class="col6" style=" width:10%;float:left; padding-left:120px;">
+            <img src="data:image/png;base64,'.base64_encode(file_get_contents('assets/img/pup_logo.png')).'" style="width:50px; ">
+            </div>
+            <div class="col6" style=" padding-right:245px;text-align:center;">  
+              <b>Polytechnic University of the Philippines</b>
+              <br>
+              Taguig Branch<br> General Santos Avenue, Lower Bicutan, Taguig City
+              <br>
+              <br>
+              <b>Attendance</b>
+            </div>
+        </div>
+    ');
+
+  
     $html = view('html_to_pdf', $pdf_data);
+    // $mpdf->showImage = true;
+    // $mpdf->setHTMLHeader(site_url("assets/img/pup_logo.png")); 
+
+  
+    
     $mpdf->Addpage('L', // L - landscape, P - portrait
     '', '', '', '', 30, // margin_left
     30, // margin right
-    30, // margin top
+    40, // margin top
     30, // margin bottom
-    18, // margin header
-    12); // margin footer
+    5, // margin header
+    5); // margin footer
     $mpdf->WriteHTML($html);
     $this->response->setHeader('Content-Type', 'application/pdf');
-    $mpdf->Output('arjun.pdf','I'); // opens in browser
+    $mpdf->Output("$subj_name  $course_abbrev  $year-$section.pdf",'I'); // opens in browser
 
     $data['view'] = 'Modules\MaintenanceManagement\Views\attendance\frmAttendance';
     return view('template/index', $data);
@@ -333,4 +382,45 @@ public function getDayNumber($days){
     return $sched;
   }
 
+
+
+  
+	public function penalty(){
+	  $schedsubj = new SchedsubjsModel;
+    $attendanceModel = new AttendancesModel();
+    $studentModel = new StudentsModel();
+    date_default_timezone_set('Asia/Singapore');
+
+		$data = [];
+		$current_day = date('l');
+		$current_time = date('H:i:s',time());
+		$time_now = time();
+    $schedules = $schedsubj->checkSchedule($current_day, $current_time);
+		foreach($schedules as $schedule){
+      $end_time = date('H:i:s',strtotime($schedule['end_time']));
+     
+      $data = [];
+      $difference = $to_time - $time_now;
+      $difference_minute =  $difference/60;
+      
+            if($current_time >= $end_time){
+              $students = $studentModel->getStudentBySchedule($schedule['course_id'],$schedule['section_id']);
+              foreach($students as $student){
+                  $attendance = $attendanceModel->getAttendance($student['id'],$schedule['id'],date('Y-m-d'));
+                    if(empty($attendance)){
+                      $data['schedule_id'] = $schedule['id'];
+                      $data['student_number'] = $student['student_num'];
+                      $data['student_id'] = $student['id'];
+                      $attendanceModel->insertAbsent($data);
+                    }
+              }
+             
+            }
+        
+    }
+		
+  }
+  
+
+  
 }

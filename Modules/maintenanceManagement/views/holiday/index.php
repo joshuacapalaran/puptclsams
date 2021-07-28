@@ -53,7 +53,7 @@
                             <tr>
                               <td><?=esc($ctr)?></td>
                                <td><?=esc($holiday['name'])?></td>
-                               <td><?=esc(date('F d, Y',strtotime($holiday['date'])))?></td>
+                               <td><?=esc(date('F d ',strtotime(date('Y').'-'.$holiday['date'])))?></td>
                                <td><?=esc(($holiday['status'] == 'a') ? 'Active':'Inactive')?></td>
 
                               <td>

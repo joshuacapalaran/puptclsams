@@ -10,7 +10,7 @@ class ActivityLogsModel extends BaseModel {
 
  
   public function getActivityLogs(){
-    $this->select('activity_logs.id as id, activity_logs.description,activity_logs.properties,activity_logs.data,activity_logs.created_at');
+    $this->select('activity_logs.id as id, activity_logs.description,activity_logs.properties,activity_logs.data,activity_logs.created_at, users.username');
     $this->join('users','users.id = activity_logs.user_id');
     return $this->findAll();
   }

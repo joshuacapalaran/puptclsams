@@ -6,6 +6,8 @@ use Modules\MaintenanceManagement\Models\SchedlabsModel;
 use Modules\MaintenanceManagement\Models\LabsModel;
 use Modules\MaintenanceManagement\Models\CategoriesModel;
 use Modules\MaintenanceManagement\Models\ActivityLogsModel;
+use Modules\MaintenanceManagement\Models\CapacitiesModel;
+use Modules\MaintenanceManagement\Models\HolidayModel;
 
 class Schedlabs extends BaseController {
 
@@ -25,20 +27,46 @@ class Schedlabs extends BaseController {
   public function add(){
     $schedlabsModel = new SchedlabsModel;
     $categories = new CategoriesModel;
+    $capacitiesModel = new CapacitiesModel;
     $labs = new LabsModel;
+    $holidayModel = new HolidayModel;
+  
+    $holidays = $holidayModel->getCancelDates();
+
+    $holi = [];
+
+    
+    foreach($holidays as $holiday){
+      if($holiday['status'] == 'c'){
+        $holi[] = date('Y-m-d',strtotime($holiday['date']));
+      }else{
+        $holi[] = date('Y-m-d',strtotime(date('Y').'-'.$holiday['date']));
+        
+      }
+    }
+
     $data['categories'] = $categories->getActiveCategories();
     $data['labs'] = $labs->getLabsByActive();
+    $data['capacities'] = $capacitiesModel->getAllCapacity();
     $data['edit'] = false;
     $data['view'] = 'Modules\MaintenanceManagement\Views\schedlabs\form';
     if($this->request->getMethod() === 'post'){
       if($this->validate('schedlabs')){
-        if($schedlabsModel->add($_POST)){
-          $this->activityLogsModel->addLogs($_SESSION['uid'], 'Add Sched lab', 'admin/schedlabs', json_encode($_POST));
-          $this->session->setFlashData('success_message', 'Sucessfuly created a schedsubject');
-        } else {
-          $this->session->setFlashData('error_message', 'Something went wrong!');
+        if(in_array($_POST['date'], $holi )){
+          $this->session->setFlashData('error', 'You cant add schedule on holiday dates');
+          $data['value'] = $_POST;
+          // return redirect()->to(base_url('admin/schedlabs/add'));
+        }else{
+
+          if($schedlabsModel->add($_POST)){
+            $this->activityLogsModel->addLogs($_SESSION['uid'], 'Add Sched lab', 'admin/schedlabs', json_encode($_POST));
+            $this->session->setFlashData('success', 'Sucessfuly created a schedlab');
+          } else {
+            $this->session->setFlashData('error', 'Something went wrong!');
+          } 
+          return redirect()->to(base_url('admin/schedlabs'));
         }
-        return redirect()->to(base_url('admin/schedlabs'));
+    
       } else {
         $data['value'] = $_POST;
         $data['errors'] = $this->validation->getErrors();
@@ -53,7 +81,22 @@ class Schedlabs extends BaseController {
     $labs = new LabsModel;
     $data['categories'] = $categories->getActiveCategories();
     $data['labs'] = $labs->getLabsByActive();
+    $holidayModel = new HolidayModel;
 
+    
+    $holidays = $holidayModel->getCancelDates();
+
+    $holi = [];
+
+    
+    foreach($holidays as $holiday){
+      if($holiday['status'] == 'c'){
+        $holi[] = date('Y-m-d',strtotime($holiday['date']));
+      }else{
+        $holi[] = date('Y-m-d',strtotime(date('Y').'-'.$holiday['date']));
+        
+      }
+    }
     $data['edit'] = true;
     $data['view'] = 'Modules\MaintenanceManagement\Views\schedlabs\form';
     $data['id'] = $id;
@@ -63,13 +106,20 @@ class Schedlabs extends BaseController {
     }
     if($this->request->getMethod() === 'post'){
       if($this->validate('schedlabs')){
-        if($this->schedlabsModel->edit($id, $_POST)){
-          $this->activityLogsModel->addLogs($_SESSION['uid'], 'Edit Sched lab', 'admin/schedlabs', $id);
-          $this->session->setFlashData('success_message', 'Sucessfuly edited a schedsubject');
-        } else {
-          $this->session->setFlashData('error_message', 'Something went wrong!');
+        if(in_array($_POST['date'], $holi )){
+          $this->session->setFlashData('error', 'You cant add schedule on holiday dates');
+          $data['value'] = $_POST;
+          // return redirect()->to(base_url('admin/schedlabs/add'));
+        }else{
+
+          if($this->schedlabsModel->edit($id, $_POST)){
+            $this->activityLogsModel->addLogs($_SESSION['uid'], 'Edit Sched lab', 'admin/schedlabs', $id);
+            $this->session->setFlashData('success_message', 'Sucessfuly edited a schedsubject');
+          } else {
+            $this->session->setFlashData('error_message', 'Something went wrong!');
+          }
+          return redirect()->to(base_url('admin/schedlabs'));
         }
-        return redirect()->to(base_url('admin/schedlabs'));
       } else {
         $data['value'] = $_POST;
         $data['errors'] = $this->validation->getErrors();

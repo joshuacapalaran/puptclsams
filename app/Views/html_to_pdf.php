@@ -1,9 +1,11 @@
 <!DOCTYPE html>
+
 <html lang="en">
- 
+
 <head>
     <meta charset="utf-8">
     <title>Attendance Report</title>
+    
 </head>
  <style>
  
@@ -19,9 +21,11 @@ td {
   font-size:11px;
 }
  </style>
-
+<img src="data:image/png;base64,'.base64_encode(file_get_contents('assets/img/pup_logo.png'))'" style="width:100%;">
 <body>
+    
     <div id="container">
+
     <?php if($info):?>
         
         <?php if($type == 'event'):?>

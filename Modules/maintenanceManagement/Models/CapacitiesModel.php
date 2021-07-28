@@ -18,6 +18,10 @@ class CapacitiesModel extends BaseModel {
       //return $builder->get(); (makukua nya lahat pati mga deleted)
       return $builder->getWhere(['p.deleted_at' => null]); //kukuhain lang yung may values na null sa deleted_at
   }
+
+  public function getAllCapacity(){
+    return $this->findAll();
+  }
   
   public function add($val_array){
     $val_array['status'] = 'a';

@@ -24,7 +24,7 @@
             <div class="card">
                 <div class="card-header">
                   <div class="form-group col-md-6 offset-md-3">
-                      
+                  
                       <label for="stud_num" class="form-label">Student Number</label><br>
                       <span>  <?= $info['event_name'] ? 'Event: '.$info['event_name']:'Subject: '.$info['subj_code'].' - '.$info['subj_name']; ?> <br> Date:  <?= $data['date']?></span>
                       <br>
@@ -33,8 +33,8 @@
                   <div class="col-md-12">
 
                 <center>
-                  <button id="time_in" class="btn btn-success m-3">TIME IN</button>
-                  <button id="time_out" class="btn btn-success m-3"> TIME OUT</button>
+                  <button id="time_in" type="submit" class="btn btn-success m-3">TIME IN</button>
+                  <button id="time_out" type="submit" class="btn btn-success m-3"> TIME OUT</button>
                 </center>
               </div>
                 </div>
@@ -63,8 +63,8 @@
                           <td><?=esc($attendance['student_num'])?></td>
                           <td><?=esc($attendance['last_name'])?>, <?=esc($attendance['first_name'])?> <?=esc($attendance['m_initial'])?></td>
                           <td><?=esc($attendance['subj_name'] ? $attendance['subj_name']:$attendance['event_name'])?></td>
-                          <td><?=esc(date('H:i:s A', strtotime($attendance['time_in'])))?></td>
-                          <td><?=esc(($attendance['time_out']) ? date('H:i:s A', strtotime($attendance['time_out'])):' ')?></td>
+                          <td><?=esc(date('h:i:s A', strtotime($attendance['time_in'])))?></td>
+                          <td><?=esc(($attendance['time_out']) ? date('h:i:s A', strtotime($attendance['time_out'])):' ')?></td>
                           <td><?=esc($attendance['remarks'])?></td>
                           </tr>
                         <?php $ctr++?>
@@ -96,7 +96,7 @@ $(function(){
       dom: 'frtipB',
       buttons: [
         {
-            text: 'Export',
+            text: 'Generate Report',
             action: function ( e, dt, node, config ) {
                 location.href = "<?= base_url('admin/schedules/pdf') ?>?id="+sched_data['id']+"&date="+sched_data['date']+"&type="+sched_data['type'];
             }
@@ -105,7 +105,8 @@ $(function(){
   });
 });
 
-$('#time_in').on('click', function(){
+$('#time_in').on('click', function(e){
+  e.preventDefault();
   var student_num = $('#stud_num').val();
   $.ajax({
       url: "<?= base_url("admin/schedules/verify")?>",
@@ -113,7 +114,7 @@ $('#time_in').on('click', function(){
       data: {student_num :student_num,sched_data:sched_data},
       success: function(response){
         console.log(response)
-        location.reload();
+        // location.reload();
       }
   });
 });

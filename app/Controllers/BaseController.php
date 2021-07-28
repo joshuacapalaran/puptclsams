@@ -31,6 +31,8 @@ class BaseController extends Controller
 	 * @var array
 	 */
 	protected $helpers = ['link', 'namesearch'];
+	protected $permissions = [];
+	protected $modules = [];
 	/**
 	 * Constructor.
 	 *
@@ -50,19 +52,32 @@ class BaseController extends Controller
 		$this->session = \Config\Services::session();
 		$this->session->start();
 		$this->validation = \Config\Services::validation();
+		
+		$model_permission = new PermissionsModel();
+		$model_module = new ModulesModel();
+		if(isset($_SESSION['user_logged_in']))
+		{	
+			$this->permissions = $model_permission->like('allowed_roles', $_SESSION['rid'])->findAll();
+			$this->modules = $model_module->findAll();
+
+			$_SESSION['appmodules'] = $this->modules;
+			$_SESSION['userPermmissions'] = $this->permissions;
+		}else{
+			return redirect()->to(base_url('logout'));
+		}
 	}
 
 	public function __construct()
 	{
 		date_default_timezone_set('Asia/Singapore');
 		$this->session = \Config\Services::session();
-		$this->session->start();
+		helper(['link', 'namesearch', 'paging', 'document', 'url','form']);
 	
 		$model_permission = new PermissionsModel();
 		$model_module = new ModulesModel();
-		
+		// print_r($_SESSION['user_logged_in']);
 		if(isset($_SESSION['user_logged_in']))
-		{
+		{	
 			$this->permissions = $model_permission->like('allowed_roles', $_SESSION['rid'])->findAll();
 			$this->modules = $model_module->findAll();
 

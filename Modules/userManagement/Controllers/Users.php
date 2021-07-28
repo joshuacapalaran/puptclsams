@@ -3,6 +3,8 @@ namespace Modules\UserManagement\Controllers;
 
 use Modules\UserManagement\Models\RolesModel;
 use Modules\maintenanceManagement\Models\UsersModel;
+use Modules\maintenanceManagement\Models\StudentsModel;
+use Modules\maintenanceManagement\Models\ProfessorsModel;
 use Modules\MaintenanceManagement\Models\ActivityLogsModel;
 use App\Controllers\BaseController;
 
@@ -37,6 +39,8 @@ class Users extends BaseController
     	helper(['form', 'url']);
 		$model = new UsersModel();
     	$roleModel = new RolesModel();
+    	$studentModel = new StudentsModel();
+    	$professorModel = new ProfessorsModel();
 		$data['roles'] = $roleModel->getRoles();
 		
     	if(!empty($_POST))
@@ -52,6 +56,14 @@ class Users extends BaseController
 		    {
 		        if($model->addUsers($_POST))
 		        {
+					$id = $model->insertID();
+					if($_POST['role_id'] == '2'){
+						unset($_POST['role_id']);
+						$professorModel->addProfessor($_POST,$id);
+					}else if($_POST['role_id'] == '3'){
+						unset($_POST['role_id']);
+						$studentModel->addRegisteredStudent($_POST,$id);
+					}
 					$this->activityLogsModel->addLogs($_SESSION['uid'], 'Add Users', 'admin/users', json_encode($_POST));
 					$_SESSION['success'] = 'You have added a new record';
 					$this->session->markAsFlashdata('success');

@@ -11,13 +11,12 @@ class AttendancesModel extends \CodeIgniter\Model
   protected $allowedFields = ['schedule_id','lab_id','student_id','student_number','subject_id','date','time_in','time_out','remarks','created_at','updated_at', 'deleted_at'];
 
   public function insertAttendance($data){
-  date_default_timezone_set('Asia/Singapore');
-  $data['time_in'] = date('H:i:s');
-  $data['time_out'] = null;
-  $data['remarks'] = 'present';
-  $data['created_at'] = date('y-m-d H:i:s');
-  return $this->insert($data);
-}
+    date_default_timezone_set('Asia/Singapore');
+    $data['time_in'] = date('H:i:s');
+    $data['time_out'] = null;
+    $data['created_at'] = date('y-m-d H:i:s');
+    return $this->insert($data);
+  }
   public function getAttendance($student_id,$schedule_id,$date){
     $this->where('student_id', $student_id);
     $this->where('schedule_id', $schedule_id);
@@ -37,7 +36,15 @@ class AttendancesModel extends \CodeIgniter\Model
   ->set(['time_out' => date('H:i:s')])
   ->update();
   }
-
+  public function insertAbsent($data){
+    date_default_timezone_set('Asia/Singapore');
+    $data['date'] = date('H:i:s');
+    $data['time_in'] = null;
+    $data['time_out'] = null;
+    $data['remarks'] = 'absent';
+    $data['created_at'] = date('y-m-d H:i:s');
+    return $this->insert($data);
+  }
   public function getAttendances(){
     $this->select('attendances.id as id, students.student_num,students.first_name, students.last_name, students.m_initial, attendances.time_in, attendances.time_out, attendances.date, attendances.remarks,subjects.subj_name,schedlabs.event_name');
     $this->join('students', 'attendances.student_id = students.id');

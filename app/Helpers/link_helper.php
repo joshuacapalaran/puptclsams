@@ -21,7 +21,7 @@ if (! function_exists('user_primary_links'))
 		$strAdditionalUrl = '';
 
 		foreach($_SESSION['appmodules'] as $module)
-		{
+		{	
 			if(hasPrimary($module['id'], $array_permissions))
 			{
 				if($module['module_name'] !== 'Users' && $module['is_dropdown'] == 0){

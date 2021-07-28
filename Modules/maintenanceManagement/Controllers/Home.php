@@ -14,6 +14,8 @@ use Modules\MaintenanceManagement\Models\SectionsModel;
 use Modules\MaintenanceManagement\Models\StudentsModel;
 use Modules\MaintenanceManagement\Models\AttendancesModel;
 use Modules\MaintenanceManagement\Models\HolidayModel;
+use Modules\MaintenanceManagement\Models\CapacitiesModel;
+use Modules\userManagement\Models\VisitorsModel;
 
 class Home extends BaseController {
 
@@ -25,7 +27,11 @@ class Home extends BaseController {
     $schedlabsModel = new SchedlabsModel;
     $sched = new SchedsubjsModel;
     $holidayModel = new HolidayModel;
-
+    $attendancesModel = new AttendancesModel;
+    $capacitiesModel = new CapacitiesModel;
+    $studentsModel = new StudentsModel;
+    $professorsModel = new ProfessorsModel;
+    $visitorsModel = new VisitorsModel;
     $holidays = $holidayModel->getCancelDates();
     $schedlabs = $schedlabsModel->getCalendarLabSchedules();
     $holi = [];
@@ -38,17 +44,32 @@ class Home extends BaseController {
         ];
     }
 
- 
+    $capacities = $capacitiesModel->getAllCapacity();
+    $students = $studentsModel->getStudents();
+    $professors = $professorsModel->getProfessors();
+    $total_registered = count($students) + count($professors);
+
+    $total_capacities = 0;
+    foreach($capacities as $capacity){
+
+      $total_capacities += $capacity['capacity'];
+
+    }
+
+    $data['total_capacities'] = $total_capacities;
+    $data['total_registered'] = $total_registered;
+    $data['attendance'] = count($attendancesModel->getAttendances());
+    $data['visitors'] = count($visitorsModel->getVisitors());
     $data['schedsubjects'] = $schedsubj;
     $data['holidays'] = $holi;
-    $data['view'] = 'Modules\MaintenanceManagement\Views\schedules\index';
+    $data['view'] = 'Modules\MaintenanceManagement\Views\home\index';
     return view('template/index', $data);
 }
 public function get_events(){
   $schedlabsModel = new SchedlabsModel;
   $schedModel = new SchedsubjsModel;
   $holidayModel = new HolidayModel;
-
+  
   $schedsubjects = $schedModel->getCalendarSubjSchedules();
   $schedlabs = $schedlabsModel->getCalendarLabSchedules();
   

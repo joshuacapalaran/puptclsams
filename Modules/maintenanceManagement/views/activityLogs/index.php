@@ -50,7 +50,7 @@
                                 <td><?=esc($activityLog['username'])?></td>
                                 <td><?=esc($activityLog['description'])?></td>
                                 <td><?=esc($activityLog['properties'])?></td>
-                                <td><?=esc(date('M d y, H:i:s a',strtotime($activityLog['created_at'])))?></td>
+                                <td><?=esc(date('M d y, h:i:s a',strtotime($activityLog['created_at'])))?></td>
                               </tr>
                               <?php $ctr++?>
                             <?php endforeach; ?>

@@ -47,6 +47,7 @@
       <li class="nav-item dropdown">
         <a class="nav-link" data-toggle="dropdown" href="#">
           <span class="mr-2 d-none d-lg-inline text-gray-600 small"></span>
+          <?= ($_SESSION['fullname'] !== ' ')? $_SESSION['fullname']:$_SESSION['uname']?>
           <i class="fas fa-power-off"></i>
         </a>
         <div class="dropdown-menu dropdown-menu-sm dropdown-menu-center">

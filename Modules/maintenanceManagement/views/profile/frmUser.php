@@ -23,7 +23,7 @@
     <div class="container-fluid">
       <div class="card card-default">
        
-          <form action="<?= base_url("admin/profle")?>/<?= isset($rec) ? 'edit/'.esc($rec['id']): 'add'?>" method="post" accept-charset="utf-8">
+          <form action="<?= base_url("admin/profile")?>/<?= isset($rec) ? 'edit/'.esc($rec['id']): 'add'?>" method="post" accept-charset="utf-8">
             <div class="card-body">
                 <div class="row">
                   <div class="col-md-6">
@@ -77,29 +77,15 @@
                 <div class="row">
                   <div class="col-md-6">
                     <div class="form-group">
-                      <label for="password">Password*</label>
-                      <input name="password" type="password" value="<?= isset($rec['password']) ? $rec['password'] : set_value('password') ?>" class="form-control <?= isset($errors['password']) ? 'is-invalid':' '  ?>" id="password" placeholder="Password">
+                      <label for="password">Password (for set new password)</label>
+                      <!-- <input name="password" type="password" value="<?= isset($rec['password']) ? $rec['password'] : set_value('password') ?>" class="form-control <?= isset($errors['password']) ? 'is-invalid':' '  ?>" id="password" placeholder="Password"> -->
+                      <input name="password" type="password" value="" class="form-control <?= isset($errors['password']) ? 'is-invalid':' '  ?>" id="password" placeholder="Password">
                       <div class="form-check">
                         <input type="checkbox" class="form-check-input" id="exampleCheck1" onclick="myFunction()">
                         <label class="form-check-label" for="exampleCheck1">Show Password</label>
                       </div>
                       <?php if(isset($errors['password'])):?>
                         <p class="text-danger"><?=esc($errors['password'])?><p>
-                      <?php endif;?>  
-                    </div>
-                  </div>
-
-                  <div class="col-md-6">
-                    <div class="form-group">
-                      <label for="username">Role*</label>
-                      <select name="role_id" class="form-control <?= isset($errors['role_id']) ? 'is-invalid':' ' ?>">
-                      <option selected disabled >Please select role</option>
-                      <?php foreach($roles as $role): ?>
-                        <option value="<?= $role['id'] ?>" <?= ($role['id'] == $rec['role_id'] ? 'selected':'')?>><?= ucwords($role['role_name']) ?></option>
-                      <?php endforeach; ?>
-                    </select>
-                      <?php if(isset($errors['role_id'])):?>
-                        <p class="text-danger"><?=esc($errors['role_id'])?><p>
                       <?php endif;?>  
                     </div>
                   </div>

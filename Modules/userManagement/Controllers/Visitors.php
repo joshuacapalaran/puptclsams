@@ -5,6 +5,7 @@ use Modules\UserManagement\Models\UsersModel;
 use Modules\UserManagement\Models\PermissionsModel;
 use Modules\maintenanceManagement\Models\labsModel;
 use Modules\UserManagement\Models\VisitorsModel;
+use Modules\maintenanceManagement\Models\SchedlabsModel;
 use App\Controllers\BaseController;
 
 class Visitors extends BaseController
@@ -22,10 +23,11 @@ class Visitors extends BaseController
     public function index($offset = 0)
     {
 
-    	$model = new VisitorsModel();
-
-        $data['visitors'] = $model->getVisitorsLab();
-
+		$model = new VisitorsModel();
+    	$schedLabsmodel = new SchedlabsModel();
+		$data['schedlabs'] = $schedLabsmodel->getScheduleLabs();
+        $data['visitors'] = $model->getVisitorsLabByDateAttendee($_POST['date'],$_POST['attendee']);
+		$data['rec'] = $_POST;
         $data['view'] = 'Modules\UserManagement\Views\visitors\index';
         return view('template\index', $data);
     }
@@ -35,6 +37,7 @@ class Visitors extends BaseController
 
 		$labs = new labsModel();
     	$model = new VisitorsModel();
+    	$schedLabsmodel = new SchedlabsModel();
 		
 		$data['labs'] = $labs->getLabs();
 		$visit = $model->getVisitorByName($_POST['name']);
@@ -52,9 +55,9 @@ class Visitors extends BaseController
 		    // else
 		    // {
 				if(!empty($visit)){
-					if($model->logoutVisitor($_POST, $visit['id']))
+					if($model->logoutVisitor($visit['id']))
 					{
-						$_SESSION['success'] = 'You have added a new record';
+						$_SESSION['success'] = 'You successfuly logout';
 						$this->session->markAsFlashdata('success');
 						return redirect()->to(base_url());
 					}
@@ -65,18 +68,31 @@ class Visitors extends BaseController
 						return redirect()->to(base_url());
 					}
 				}else{
-					if($model->loginVisitor($_POST))
-					{
-						$_SESSION['success'] = 'You have added a new record';
-						$this->session->markAsFlashdata('success');
-						return redirect()->to(base_url());
-					}
-					else
-					{
-						$_SESSION['error'] = 'You have an error in adding a new record';
+					$schedlab = $schedLabsmodel->getScheduleLabById($_POST['event_id']);
+					$visitor_total = count($model->getVisitorsLabById($_POST['event_id']));
+					
+				
+					if($visitor_total >= $schedlab['num_people']){
+						$_SESSION['error'] = 'You cant login, Laboratory is full';
 						$this->session->markAsFlashdata('error');
 						return redirect()->to(base_url());
+
+					}else{
+					
+						if($model->loginVisitor($_POST))
+						{
+							$_SESSION['success'] = 'You successfuly login as visitor';
+							$this->session->markAsFlashdata('success');
+							return redirect()->to(base_url());
+						}
+						else
+						{
+							$_SESSION['error'] = 'You have an error in adding a new record';
+							$this->session->markAsFlashdata('error');
+							return redirect()->to(base_url());
+						}
 					}
+					
 				}
 		        
 		    // }
@@ -85,48 +101,6 @@ class Visitors extends BaseController
     	{
 
 	    	$data['function_title'] = "Adding Visitor";
-	        $data['view'] = 'Modules\UserManagement\Views\visitors\frmVisitor';
-	        echo view('App\Views\template\index', $data);
-    	}
-    }
-
-    public function logout_visitor($id)
-    {
-    	helper(['form', 'url']);
-    	$model = new RolesModel();
-    	$data['rec'] = $model->find($id);
-    	$permissions_model = new PermissionsModel();
-    	$data['permissions'] = $this->permissions;
-
-    	if(!empty($_POST))
-    	{
-	    	if (!$this->validate('visitor'))
-		    {
-		    	$data['errors'] = \Config\Services::validation()->getErrors();
-		        $data['function_title'] = "Edit of Visitor";
-		        $data['view'] = 'Modules\UserManagement\Views\visitors\frmVisitor';
-		        echo view('App\Views\template\index', $data);
-		    }
-		    else
-		    {
-		    	if($model->editVisitors($_POST, $id))
-		        {
-		        	$permissions_model->update_permitted_role($id, $_POST['function_id'], $data['rec']['function_id']);
-		        	$_SESSION['success'] = 'You have updated a record';
-					$this->session->markAsFlashdata('success');
-		        	return redirect()->to(base_url('admin/visitors'));
-		        }
-		        else
-		        {
-		        	$_SESSION['error'] = 'You an error in updating a record';
-					$this->session->markAsFlashdata('error');
-		        	return redirect()->to( base_url('admin/visitors'));
-		        }
-		    }
-    	}
-    	else
-    	{
-	    	$data['function_title'] = "Editing of Visitor";
 	        $data['view'] = 'Modules\UserManagement\Views\visitors\frmVisitor';
 	        echo view('App\Views\template\index', $data);
     	}

@@ -164,6 +164,7 @@ $routes->group('admin/schedules', ['namespace' => 'Modules\MaintenanceManagement
   $routes->match(['get', 'post'],'verify', 'Schedules::verify');
   $routes->match(['get', 'post'],'attendanceTimeOut', 'Schedules::attendance_time_out');
   $routes->match(['get', 'post'],'pdf', 'Schedules::pdf');
+  $routes->match(['get', 'post'],'penalty', 'Schedules::penalty');
 
 
 });

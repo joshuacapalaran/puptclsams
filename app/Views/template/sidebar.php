@@ -28,7 +28,6 @@
                with font-awesome or any other icon font library -->
             <?php if(isset($_SESSION['userPermmissions'])):?>
 				       <?php user_primary_links($_SESSION['userPermmissions']);?>
-            <?php else:?>
             <?php endif;?>
 
         </ul>
