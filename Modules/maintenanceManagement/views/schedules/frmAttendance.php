@@ -34,7 +34,7 @@
 
                 <center>
                   <button id="time_in" class="btn btn-success m-3">TIME IN</button>
-                  <button id="time_out" class="btn btn-success m-3"> TIME OUT</button>
+                  <button id="time_out" class="btn btn-danger m-3"> TIME OUT</button>
                 </center>
               </div>
                 </div>

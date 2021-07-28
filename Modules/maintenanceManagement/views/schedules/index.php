@@ -76,14 +76,40 @@
 
             </div>
             <div class="modal-footer">
-              <button type="submit" id="cancel-schedule" class="btn btn-success">Cancel Schedule</button>
-              <button type="submit" id="attendance" class="btn btn-primary">Attendance</button>
+              <!-- <button type="submit" id="cancel-schedule" class="btn btn-warning">Cancel Schedule</button> -->
+              <button type="submit" class="btn btn-warning" data-toggle="modal"  data-target="#modal-warning">Cancel Schedule</button>
+               
+              <button type="submit" id="attendance" class="btn btn-info">Attendance</button>
             </div>
         </div>
     </div>
 </div>
+<div class="modal fade" id="modal-warning">
+        <div class="modal-dialog">
+          <div class="modal-content ">
+            <div class="modal-header bg-warning">
+              <h4 class="modal-title">Warning!</h4>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body">
+              <p>Are you sure, do you want to cancel this schedule?</p>
+            </div>
+            <div class="modal-footer justify-content-between">
+              <button type="button" class="btn btn-outline-dark" data-dismiss="modal">No</button>
+              <button type="button" class="btn btn-outline-primary" id="cancel-schedule">Yes, save changes</button>
+            </div>
+          </div>
+          <!-- /.modal-content -->
+        </div>
+        <!-- /.modal-dialog -->
+      </div>
+      <!-- /.modal -->
   <link href='https://cdn.jsdelivr.net/npm/bootstrap@4.5.0/dist/css/bootstrap.css' rel='stylesheet' />
 <link href='https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.13.1/css/all.css' rel='stylesheet'>
+
+
 <script>
 
 var holidays = JSON.parse('<?= json_encode($holidays); ?>');
