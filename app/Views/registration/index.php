@@ -43,7 +43,7 @@
               </div>
               <div class="input-group">
                 <i class="bx bxs-user"></i>
-                <label class="form-label" for="course_id" >Course*</label>
+                <label class="form-label" for="course_id" ></label>
                           <select name="course_id" id="course_id" class="form-control">
                             <option selected disabled>-- Please Select Course --</option>
                             <?php foreach($courses as $course): ?>
@@ -58,7 +58,7 @@
                         <?php endif;?>
               <div class="input-group">
                 <i class="bx bxs-user"></i>
-                <label class="form-label" for="section_id">Section*</label>
+                <label class="form-label" for="section_id"></label>
                           <select name="section_id" id="section_id" class="form-control">
                             <option selected disabled>-- Please Select Section --</option>
                             <?php foreach($sections as $section): ?>

@@ -79,22 +79,26 @@
                 <i class="bx bxs-lock-alt"></i>
                 <input type="password" name="password" class="form-control" placeholder="Your Password" id="password"required>
               </div>
-              <div style="position : left "class="form-check" >
-                <input type="checkbox" class="form-check-input" id="exampleCheck1" onclick="myFunction()">
-                <a>
-                <label class="form-check-label" for="exampleCheck1">Show Password</label>
-                </a>
+              <div style="position: left"class="form-check" >
+                <div class="form-group" stle="position: 1rem">
+                  <input type="checkbox" class="form-check-input" id="exampleCheck1" onclick="myFunction()">
+                  
+                  <span class="form-check-label" for="exampleCheck1">Show Password</span>
+                </div>
               </div>
           </form>
-              <button type="submit" value="Sign In" class="btn btn-sm btn-dark" style="background-color:rgb(68,68,68)">Sign In</button>
-              <p>
-                <span><a> Are you visitor? </a></span>
-                <a data-toggle="modal" data-target="#modal-edit">Click here</a>
-              </p>
-              <p>
-                <span> Don't have an account? </span>
+              <button type="submit" value="Sign In" style="background-color:rgb(68,68,68)">Sign In</button>
+              <div class="form-group">
+                <!-- <p><a> Are you visitor? </a></p> -->
+                <br>
+                
+                <button style="background-color:rgb(128, 0, 0)"><a data-toggle="modal" data-target="#modal-edit">Are you a visitor?</a></button>
+                
+                <p>
+                <a> Don't have an account? </a>
                 <a id="sign-up" href="<?php echo base_url('Registration') ?>">Sign up here</a>
-              </p>
+                </p>
+              </div>
             </div>
           </div>
 
