@@ -17,7 +17,7 @@
       </div><!-- /.container-fluid -->
     </div>
     <!-- /.content-header -->
-<section class="content"> 
+<section class="content">
   <div class="container-fluid">
   <div class="col-12">
     <div class="card card-outline card-secondary">
@@ -39,7 +39,7 @@
                         <option value="all">All</option>
                         <?php foreach($schedlabs as $sched):?>
                           <option value="<?= $sched['id'];?>" <?= ($sched['id'] == $rec['attendee']) ? 'selected':''?>><?= $sched['event_name'];?> </option>
-                        <?php endforeach;?>                      
+                        <?php endforeach;?>
                         <option value="others" <?= ($rec['attendee'] == 'others') ? 'selected':''?>>Others</option>
 
                       </select>
@@ -71,7 +71,7 @@
                 </div>
                 <!-- /.card-header -->
                 <div class="card-body">
-                
+
                   <table id="visitorTable" class="table table-bordered table-striped">
                     <thead>
                     <tr class="text-center">
@@ -79,8 +79,8 @@
                       <th>Name</th>
                       <th>Purpose</th>
                       <th>Laboratory Name</th>
-                      <th>Time in</th>
-                      <th>Time out</th>
+                      <th>Datetime</th>
+                      <!-- <th>Time out</th> -->
                     </tr>
                     </thead>
                     <tbody class="text-center">
@@ -96,10 +96,12 @@
                             <td><?=esc($visitor['name'])?></td>
                             <td><?=esc($visitor['purpose'])?></td>
                             <td><?=esc($visitor['lab_name'])?></td>
-                            <td><?=esc(date('h:i A', strtotime($visitor['time_in'])))?></td>
-                            <td><?=esc(($visitor['time_out'] != '0000-00-00 00:00:00') ? date('h:i A', strtotime($visitor['time_out'])) :'')?></td>
+                            <td><?=esc($visitor['created_at'])?></td>
 
-                     
+                            <!-- <td><?=esc(date('h:i A', strtotime($visitor['time_in'])))?></td>
+                            <td><?=esc(($visitor['time_out'] != '0000-00-00 00:00:00') ? date('h:i A', strtotime($visitor['time_out'])) :'')?></td> -->
+
+
                       </tr>
                       <?php $ctr++?>
                       <?php endforeach; ?>
@@ -146,7 +148,7 @@
 					messageTop: ' ',
 					download: 'open',
 					orientation: 'landscape',
-					title: ' List of NSTP Graduates \n S.Y '+conceptName,
+					title: 'Visitors Report'+conceptName,
 					customize: function ( doc, btn, tbl ) {
 
 						pdfMake.tableLayouts = {
@@ -171,11 +173,11 @@
 							}
 							}
 						};
-						
+
 						doc.content[2].layout = 'exampleLayout';
 
-						
-						
+
+
 					}
 					// pageSize: 'LEGAL'
             	}

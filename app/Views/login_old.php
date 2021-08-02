@@ -82,7 +82,7 @@
               <div style="position: left"class="form-check" >
                 <div class="form-group" stle="position: 1rem">
                   <input type="checkbox" class="form-check-input" id="exampleCheck1" onclick="myFunction()">
-
+                  
                   <span class="form-check-label" for="exampleCheck1">Show Password</span>
                 </div>
               </div>
@@ -91,9 +91,9 @@
               <div class="form-group">
                 <!-- <p><a> Are you visitor? </a></p> -->
                 <br>
-
-                <button id="visitor" style="background-color:rgb(128, 0, 0)"><a data-toggle="modal" data-target="#modal-edit">Are you a visitor?</a></button>
-
+                
+                <button style="background-color:rgb(128, 0, 0)"><a data-toggle="modal" data-target="#modal-edit">Are you a visitor?</a></button>
+                
                 <p>
                 <a> Don't have an account? </a>
                 <a id="sign-up" href="<?php echo base_url('Registration') ?>">Sign up here</a>
@@ -192,7 +192,7 @@
                       <!--  -->
                       </select>
                     </div>
-                    
+
                     <div class="form-group">
                       <label>Others</label>
                           <input type="text" class="form-control" value="<?=isset($value['others']) ? esc($value['others']): ''?>" placeholder="Others" id="others" name="others">

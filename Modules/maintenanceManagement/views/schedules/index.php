@@ -77,62 +77,39 @@
             </div>
             <?php if($_SESSION['rid'] == '1'):?>
             <div class="modal-footer">
-<<<<<<< HEAD
-              <button type="submit"  class="btn btn-success" data-toggle="modal" data-target="#modal-schedule">Cancel Schedule</button>
+              <button type="submit"  class="btn btn-warning" data-toggle="modal" data-target="#modal-schedule">Cancel Schedule</button>
               <button type="submit" id="attendance" class="btn btn-primary">Attendance</button>
-=======
-              <!-- <button type="submit" id="cancel-schedule" class="btn btn-warning">Cancel Schedule</button> -->
-              <button type="submit" class="btn btn-warning" data-toggle="modal"  data-target="#modal-warning">Cancel Schedule</button>
-               
-              <button type="submit" id="attendance" class="btn btn-info">Attendance</button>
->>>>>>> f5b15442b4cc41b4e72dc13a1620fb85240360e0
             </div>
             <?php endif;?>
         </div>
     </div>
 </div>
-<<<<<<< HEAD
 <div class="modal fade" id="modal-schedule">
         <div class="modal-dialog">
           <div class="modal-content">
             <div class="modal-header">
-              <h4 class="modal-title">Log-out</h4>
-=======
-<div class="modal fade" id="modal-warning">
-        <div class="modal-dialog">
-          <div class="modal-content ">
-            <div class="modal-header bg-warning">
               <h4 class="modal-title">Warning!</h4>
->>>>>>> f5b15442b4cc41b4e72dc13a1620fb85240360e0
               <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                 <span aria-hidden="true">&times;</span>
               </button>
             </div>
             <div class="modal-body">
-<<<<<<< HEAD
               <p>Are you sure do you want to cancel schedule</p>
             </div>
             <div class="modal-footer justify-content-between">
               <button type="button"  class="btn btn-default" data-dismiss="modal">Close</button>
                 <a class="btn btn-primary" id="cancel-schedule" >Yes</a>
-=======
-              <p>Are you sure, do you want to cancel this schedule?</p>
-            </div>
-            <div class="modal-footer justify-content-between">
-              <button type="button" class="btn btn-outline-dark" data-dismiss="modal">No</button>
-              <button type="button" class="btn btn-outline-primary" id="cancel-schedule">Yes, save changes</button>
->>>>>>> f5b15442b4cc41b4e72dc13a1620fb85240360e0
             </div>
           </div>
           <!-- /.modal-content -->
         </div>
         <!-- /.modal-dialog -->
       </div>
-<<<<<<< HEAD
+<!-- <<<<<<< HEAD
 
-=======
+======= -->
       <!-- /.modal -->
->>>>>>> f5b15442b4cc41b4e72dc13a1620fb85240360e0
+<!-- >>>>>>> f5b15442b4cc41b4e72dc13a1620fb85240360e0 -->
   <link href='https://cdn.jsdelivr.net/npm/bootstrap@4.5.0/dist/css/bootstrap.css' rel='stylesheet' />
 <link href='https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.13.1/css/all.css' rel='stylesheet'>
 
@@ -176,7 +153,7 @@ var holidays = JSON.parse('<?= json_encode($holidays); ?>');
               }
             });
         });
-        
+
         $('#attendance').click(function(e){
             window.location.href = "<?= base_url('admin/schedules/attendance') ?>?id="+event.event.id+"&type="+event.event.extendedProps.schedule+"&date="+eventDate;
         });

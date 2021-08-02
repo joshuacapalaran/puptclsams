@@ -24,7 +24,7 @@
             <div class="card">
                 <div class="card-header">
                   <div class="form-group col-md-6 offset-md-3">
-                  
+
                       <label for="stud_num" class="form-label">Student Number</label><br>
                       <span>  <?= $info['event_name'] ? 'Event: '.$info['event_name']:'Subject: '.$info['subj_code'].' - '.$info['subj_name']; ?> <br> Date:  <?= $data['date']?></span>
                       <br>
@@ -33,13 +33,13 @@
                   <div class="col-md-12">
 
                 <center>
-<<<<<<< HEAD
+<!-- <<<<<<< HEAD -->
                   <button id="time_in" type="submit" class="btn btn-success m-3">TIME IN</button>
-                  <button id="time_out" type="submit" class="btn btn-success m-3"> TIME OUT</button>
-=======
+                  <button id="time_out" type="submit" class="btn btn-danger m-3"> TIME OUT</button>
+<!-- =======
                   <button id="time_in" class="btn btn-success m-3">TIME IN</button>
                   <button id="time_out" class="btn btn-danger m-3"> TIME OUT</button>
->>>>>>> f5b15442b4cc41b4e72dc13a1620fb85240360e0
+>>>>>>> f5b15442b4cc41b4e72dc13a1620fb85240360e0 -->
                 </center>
               </div>
                 </div>
@@ -76,18 +76,18 @@
                       <?php endforeach; ?>
                     <?php endif; ?>
                       </tbody>
-                    
+
                     </table>
                   </div>
               <!-- /.card-body -->
             </div>
           </div>
       </div>
-      
+
   </section>
 </div>
 
-<script>  
+<script>
 var sched_data =  JSON.parse('<?= json_encode($data);?>');
 $(function(){
   $('#attendance').DataTable({
@@ -111,7 +111,7 @@ $(function(){
 });
 
 $('#time_in').on('click', function(e){
-  e.preventDefault();
+  // e.preventDefault();
   var student_num = $('#stud_num').val();
   $.ajax({
       url: "<?= base_url("admin/schedules/verify")?>",
@@ -119,7 +119,7 @@ $('#time_in').on('click', function(e){
       data: {student_num :student_num,sched_data:sched_data},
       success: function(response){
         console.log(response)
-        // location.reload();
+        location.reload();
       }
   });
 });
@@ -134,7 +134,7 @@ $('#time_out').on('click', function(e){
       data: {student_num :student_num,sched_data:sched_data},
       success: function(response){
         console.log(response)
-        location.reload(); 
+        location.reload();
       }
   });
 });

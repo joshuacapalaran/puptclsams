@@ -558,16 +558,16 @@
         },
         {
             "name": "mpdf/mpdf",
-            "version": "v8.0.11",
+            "version": "v8.0.12",
             "source": {
                 "type": "git",
                 "url": "https://github.com/mpdf/mpdf.git",
-                "reference": "af17afbbfa0b6ce76defc8da5d02a73d54f94c64"
+                "reference": "9d94344844c9daec7266eb6dd14448f728aeccb1"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/mpdf/mpdf/zipball/af17afbbfa0b6ce76defc8da5d02a73d54f94c64",
-                "reference": "af17afbbfa0b6ce76defc8da5d02a73d54f94c64",
+                "url": "https://api.github.com/repos/mpdf/mpdf/zipball/9d94344844c9daec7266eb6dd14448f728aeccb1",
+                "reference": "9d94344844c9daec7266eb6dd14448f728aeccb1",
                 "shasum": ""
             },
             "require": {
@@ -629,7 +629,7 @@
                     "type": "custom"
                 }
             ],
-            "time": "2021-05-12T14:18:06+00:00"
+            "time": "2021-07-25T16:07:20+00:00"
         },
         {
             "name": "myclabs/deep-copy",
@@ -1238,16 +1238,16 @@
         },
         {
             "name": "symfony/polyfill-mbstring",
-            "version": "v1.23.0",
+            "version": "v1.23.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/polyfill-mbstring.git",
-                "reference": "2df51500adbaebdc4c38dea4c89a2e131c45c8a1"
+                "reference": "9174a3d80210dca8daa7f31fec659150bbeabfc6"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/polyfill-mbstring/zipball/2df51500adbaebdc4c38dea4c89a2e131c45c8a1",
-                "reference": "2df51500adbaebdc4c38dea4c89a2e131c45c8a1",
+                "url": "https://api.github.com/repos/symfony/polyfill-mbstring/zipball/9174a3d80210dca8daa7f31fec659150bbeabfc6",
+                "reference": "9174a3d80210dca8daa7f31fec659150bbeabfc6",
                 "shasum": ""
             },
             "require": {
@@ -1298,7 +1298,7 @@
                 "shim"
             ],
             "support": {
-                "source": "https://github.com/symfony/polyfill-mbstring/tree/v1.23.0"
+                "source": "https://github.com/symfony/polyfill-mbstring/tree/v1.23.1"
             },
             "funding": [
                 {
@@ -1314,7 +1314,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2021-05-27T09:27:20+00:00"
+            "time": "2021-05-27T12:26:48+00:00"
         }
     ],
     "packages-dev": [
@@ -3477,16 +3477,16 @@
         },
         {
             "name": "theseer/tokenizer",
-            "version": "1.2.0",
+            "version": "1.2.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/theseer/tokenizer.git",
-                "reference": "75a63c33a8577608444246075ea0af0d052e452a"
+                "reference": "34a41e998c2183e22995f158c581e7b5e755ab9e"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/theseer/tokenizer/zipball/75a63c33a8577608444246075ea0af0d052e452a",
-                "reference": "75a63c33a8577608444246075ea0af0d052e452a",
+                "url": "https://api.github.com/repos/theseer/tokenizer/zipball/34a41e998c2183e22995f158c581e7b5e755ab9e",
+                "reference": "34a41e998c2183e22995f158c581e7b5e755ab9e",
                 "shasum": ""
             },
             "require": {
@@ -3515,7 +3515,7 @@
             "description": "A small library for converting tokenized PHP source code into XML and potentially other formats",
             "support": {
                 "issues": "https://github.com/theseer/tokenizer/issues",
-                "source": "https://github.com/theseer/tokenizer/tree/master"
+                "source": "https://github.com/theseer/tokenizer/tree/1.2.1"
             },
             "funding": [
                 {
@@ -3523,7 +3523,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2020-07-12T23:59:07+00:00"
+            "time": "2021-07-28T10:34:58+00:00"
         },
         {
             "name": "webmozart/assert",
@@ -3593,5 +3593,5 @@
         "php": "^7.3||^8.0"
     },
     "platform-dev": [],
-    "plugin-api-version": "2.1.0"
+    "plugin-api-version": "2.0.0"
 }
