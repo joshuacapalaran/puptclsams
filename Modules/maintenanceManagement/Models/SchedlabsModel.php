@@ -63,6 +63,17 @@ class SchedlabsModel extends BaseModel {
     return $this->findAll();
   }
 
+  public function checkSchedule($current_date,$current_time){
+    // $this->where('end_time >=',$current_time);
+    // $this->where('start_time <=',$current_time);
+    // $this->where('date', $current_date);
+    // $this->where('status', 'a');
+    // $this->where('category', '1');
+    $this->where('end_time >=','13:18:00');
+    $this->where('start_time <=',' 13:18:00');
+    $this->where('date', $current_date);
+    return $this->findAll();
+  }
   
   public function getLabScheduleById($id){
     $this->select('sched.*, category.*,labs.lab_name, sched.id as id, sched.status as status');

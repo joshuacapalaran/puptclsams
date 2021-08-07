@@ -16,39 +16,108 @@
       </div><!-- /.container-fluid -->
     </div>
     <!-- /.content-header -->
-    <div class="col-md-12">
-            <div class="card card-secondary">
-              <div class="card-header">
-                <h3 class="card-title">Time in / Time out</h3>
+    <section class="content">
+  <div class="container-fluid">
+  <div class="col-12">
+    <div class="card card-outline card-secondary">
+        <div class="card-header">
+          <div class="row">
+            <div class="col-md-12">
+              <form action="<?= base_url("admin/attendance") ?>" method="post">
+                <div class="row">
+                  <div class="col-md-6">
+                    <div class="form-group">
+                      <label for="schyear_id">Date</label>
+                      <input type="date" value="<?= isset($rec['date']) ? $rec['date']:''?>"class="form-control" id="date" name="date">
+                    </div>
 
-  <section class="content">
-      <div class="container-fluid">
-        <div class="row">
-          <div class="col-12">
-            <div class="card">
-            <?php if($_SESSION['rid'] == '2'):?>
-                <div class="card-header">
-                  <div class="form-group col-md-6 offset-md-3">
+                    <div class="form-group">
+                        <label class="form-label" for="section_id"> Year & Section</label>
+                        <select name="section_id" id="section_id" class="form-control">
+                          <option selected disabled>-- Please Select Section --</option>
+                          <?php foreach($sections as $section): ?>
+                          <option value="<?= $section['id'] ?>" <?=   ($section['id'] == $value['section_id']) ? 'selected':'' ?>><?= ucwords($section['year']) ?> - <?= ucwords($section['section']) ?></option>
+                          <?php endforeach; ?>
+                        <!--  -->
+                        </select>
+                      </div>
+                      
+                      <div class="form-group">
+                        <label class="form-label" for="semester_id"> Semester</label>
+                        <select name="semester_id" id="semester_id" class="form-control">
+                          <option selected disabled>-- Please Select semester --</option>
+                          <?php foreach($semesters as $semester): ?>
+                          <option value="<?= $semester['id'] ?>" <?=   ($semester['id'] == $value['semester_id']) ? 'selected':'' ?>><?= ucwords($semester['sem']) ?></option>
+                          <?php endforeach; ?>
+                        <!--  -->
+                        </select>
+                      </div>
 
-                      <label for="stud_num" class="form-label">Student Number</label>
-                      <br>
-                      <input name="stud_num" class="form-control" type="text" autocomplete="on" id="stud_num" placeholder="Student Number" required>
+                      <div class="form-group">
+                        <label class="form-label" for="sy_id">School Year</label>
+                        <select name="sy_id" id="sy_id" class="form-control">
+                          <option selected disabled>-- Please Select School Year --</option>
+                          <?php foreach($schoolyears as $schoolyear): ?>
+                          <option value="<?= $schoolyear['id'] ?>" <?=   ($schoolyear['id'] == $value['sy_id']) ? 'selected':'' ?>><?= ucwords($schoolyear['start_sy']) ?> - <?= ucwords($schoolyear['end_sy']) ?></option>
+                          <?php endforeach; ?>
+                        <!--  -->
+                        </select>
+                      </div>
+
                   </div>
-                  <div class="col-md-12">
 
-                <center>
-                  <button id="time_in" class="btn btn-success m-3">TIME IN</button>
-                  <button id="time_out" class="btn btn-danger m-3"> TIME OUT</button>
-                </center>
-            <?php endif;?>
 
-              </div>
-              </div>
-              <!-- /.card-body -->
+
+                  <div class="col-md-6">
+                      <div class="form-group">
+                        <label class="form-label" for="subject_id">Subject</label>
+                        <select name="subject_id" id="subject_id" class="form-control">
+                          <option selected disabled>-- Please Select Subject --</option>
+                          <?php foreach($subjects as $subject): ?>
+                          <option value="<?= $subject['id'] ?>" <?=   ($subject['id'] == $value['subject_id']) ? 'selected':'' ?>><?= ucwords($subject['subj_name']) ?></option>
+                          <?php endforeach; ?>
+                        <!--  -->
+                        </select>
+                      </div>
+
+                      <div class="form-group">
+                          <label class="form-label" for="course_id">Course</label>
+                          <select name="course_id" id="course_id" class="form-control">
+                            <option selected disabled>-- Please Select Course --</option>
+                            <?php foreach($courses as $course): ?>
+                            <option value="<?= $course['id'] ?>" <?=   ($course['id'] == $value['course_id']) ? 'selected':'' ?>><?= ucwords($course['course_abbrev']) ?> - <?= ucwords($course['course_name']) ?></option>
+                            <?php endforeach; ?>
+                          <!--  -->
+                          </select>
+                      </div>
+
+                      <div class="form-group">
+                        <label class="form-label" for="lab_id">Laboratory</label>
+                        <select name="lab_id" id="lab_id" class="form-control">
+                          <option selected disabled>-- Please Select Laboratory --</option>
+                          <?php foreach($labs as $lab): ?>
+                          <option value="<?= $lab['id'] ?>" <?=   ($lab['id'] == $value['lab_id']) ? 'selected':'' ?>><?= ucwords($lab['lab_name']) ?></option>
+                          <?php endforeach; ?>
+                        <!--  -->
+                        </select>
+                      </div>
+
+                  </div>
+
+                </div>
+                <div class="row">
+                  <div class="col-md-5">
+                    <button type="submit" class="btn btn-success">Submit</button>
+                  </div>
+                </div>
+              </form>
             </div>
-            <!-- /.card -->
-      </div>
-
+          </div>
+        </div>
+    </div>
+  </div>
+  </div>
+</section>
   <section class="content">
       <div class="container-fluid">
         <div class="row">
@@ -59,7 +128,7 @@
                 </div>
                   <!-- /.card-header -->
                   <div class="card-body">
-                    <table id="example1" class="table table-bordered table-striped">
+                    <table id="attendance" class="table table-bordered table-striped">
                       <thead>
                       <tr class="text-center">
                         <th>Student Number</th>
@@ -114,7 +183,7 @@ $(function(){
       dom: 'frtipB',
       buttons: [
         {
-            text: 'Export',
+            text: 'Generate PDF',
             action: function ( e, dt, node, config ) {
                 location.href = "<?= base_url('admin/attendance/pdf') ?>";
             }

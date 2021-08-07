@@ -23,7 +23,7 @@
           <div class="col-12">
             <div class="card card-outline card-secondary">
                       <div class="card-header">
-                         <a href="<?=base_url('admin/schedlabs/add')?>" class="btn btn-sm btn-primary">+Add</a>
+                         <a href="<?=base_url('admin/schedlabs/add')?>" class="btn btn-sm btn-primary">+ Schedule Event</a>
                       </div>
                       <!-- /.card-header -->
                       <div class="card-body">

@@ -41,6 +41,7 @@ class Visitors extends BaseController
 		
 		$data['labs'] = $labs->getLabs();
 		$visit = $model->getVisitorByName($_POST['name']);
+		
     	helper(['form', 'url']);
 
     	if(!empty($_POST))
@@ -54,20 +55,7 @@ class Visitors extends BaseController
 		    // }
 		    // else
 		    // {
-				if(!empty($visit)){
-					if($model->logoutVisitor($visit['id']))
-					{
-						$_SESSION['success'] = 'You successfuly logout';
-						$this->session->markAsFlashdata('success');
-						return redirect()->to(base_url());
-					}
-					else
-					{
-						$_SESSION['error'] = 'You have an error in adding a new record';
-						$this->session->markAsFlashdata('error');
-						return redirect()->to(base_url());
-					}
-				}else{
+				if(empty($visit)){
 					$schedlab = $schedLabsmodel->getScheduleLabById($_POST['event_id']);
 					$visitor_total = count($model->getVisitorsLabById($_POST['event_id']));
 					
@@ -93,9 +81,12 @@ class Visitors extends BaseController
 						}
 					}
 					
+				}else{
+					$_SESSION['error'] = 'You already log-in!';
+					$this->session->markAsFlashdata('error');
+					return redirect()->to(base_url());
 				}
-		        
-		    // }
+		 
     	}
     	else
     	{

@@ -27,7 +27,7 @@
           <div class="col-12">
             <div class="card card-outline card-secondary">
                       <div class="card-header">
-                         <a href="<?=base_url('admin/labs/add')?>" class="btn btn-sm btn-primary">+Add</a>
+                         <a href="<?=base_url('admin/labs/add')?>" class="btn btn-sm btn-primary">+ Lab</a>
                         <!--  <h4>List of Laboratory</h4> -->
                       </div>
                       <!-- /.card-header -->

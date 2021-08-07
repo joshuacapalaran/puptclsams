@@ -25,7 +25,7 @@
           <div class="col-12">
             <div class="card card-outline card-secondary">
                       <div class="card-header">
-                         <a href="<?=base_url('admin/categories/add')?>" class="btn btn-sm btn-primary">+Add</a>
+                         <a href="<?=base_url('admin/categories/add')?>" class="btn btn-sm btn-primary">+ Category</a>
                          <!-- <h4>List of Categories</h4> -->
                       </div>
                       <!-- /.card-header -->

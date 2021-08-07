@@ -35,7 +35,7 @@
                 <div class="card-body">
                  
                   <div class="row">
-                    <div class="col-md-6">
+                    <div class="col-md-6" id="first-column"> 
 
                     <div class="form-group">
                         <label class="form-label" for="lab_id">Laboratory*</label>
@@ -44,7 +44,6 @@
                           <?php foreach($labs as $lab): ?>
                           <option value="<?= $lab['id'] ?>" <?=   ($lab['id'] == $value['lab_id']) ? 'selected':'' ?>><?= ucwords($lab['lab_name']) ?></option>
                           <?php endforeach; ?>
-                        <!--  -->
                         </select>
                       </div>
                         <?php if(isset($errors['lab_id'])):?>
@@ -68,17 +67,31 @@
                         <p class="text-danger"><?=esc($errors['assigned_person'])?><p>
                       <?php endif;?>
 
-                    <div class="form-group">
-                      <label class="form-label" for="num_people">No. of People*</label>
-                        <input type="number" class="form-control" value="<?=isset($value['num_people']) ? esc($value['num_people']): ''?>" placeholder="No. of People" id="num_people" name="num_people" readonly>
-                      </div>
-                        <?php if(isset($errors['num_people'])):?>
-                          <p class="text-danger"><?=esc($errors['num_people'])?><p>
-                        <?php endif;?>
-                      
-                    </div>
+                      <div class="form-group" id="date-div">
+                          <label class="form-label" for="date">Dates*</label>
+                          <input type="date" class="form-control" value="<?=isset($value['date']) ? esc($value['date']): ''?>" placeholder="Date" id="date" name="date[]">
+                        </div>
+                        <?php if(isset($errors['date'])):?>
+                          <p class="text-danger"><?=esc($errors['date'])?><p>
+                        <?php endif;?>    
+                    
+
+                     <div class="form-group" id="end-time-div">
+                       <label class="form-label" for="end_time">End Time*</label>
+                       <div class="input-group">
+                          <input type="time" class="form-control" value="<?=isset($value['end_time']) ? esc($value['end_time']): ''?>" placeholder="End Time" id="end_time" name="end_time[]">
+                          <div class="input-group-append">
+                            <button class="input-group-text" id="add-more-input"><i class="fa fa-plus"></i></button>
+                          </div>
+                        </div>
+                     </div>
+                      <?php if(isset($errors['end_time'])):?>
+                        <p class="text-danger"><?=esc($errors['end_time'])?><p>
+                      <?php endif;?>
+                    </div>          
+
                     <!-- /.col -->
-                    <div class="col-md-6">
+                    <div class="col-md-6" id="second-column">
 
                     <div class="form-group">
                         <label class="form-label" for="category_id">Category*</label>
@@ -94,38 +107,43 @@
                           <p class="text-danger"><?=esc($errors['event_name'])?><p>
                         <?php endif;?>
 
+                   
                         <div class="form-group">
-                      <label class="form-label" for="date">Dates*</label>
-                      <input type="date" class="form-control" value="<?=isset($value['date']) ? esc($value['date']): ''?>" placeholder="Date" id="date" name="date">
-                    </div>
-                      <?php if(isset($errors['date'])):?>
-                        <p class="text-danger"><?=esc($errors['date'])?><p>
-                      <?php endif;?>              
+                          <label class="form-label" for="num_people">No. of People*</label>
+                            <input type="number" class="form-control" value="<?=isset($value['num_people']) ? esc($value['num_people']): ''?>" placeholder="No. of People" id="num_people" name="num_people" readonly>
+                          </div>
+                            <?php if(isset($errors['num_people'])):?>
+                              <p class="text-danger"><?=esc($errors['num_people'])?><p>
+                            <?php endif;?>
+                          
+                          <div class="form-group col-md-12">
+
+                              <div class="col-md-12">&nbsp;<br></div><br><br>
+                          </div>
                  
                  <!-- /.form-group -->
-                    <div class="form-group">
+                    <div class="form-group" id="start-time-div">
                       <label class="form-label" for="start_time">Start Time*</label>
-                      <input type="time" class="form-control" value="<?=isset($value['start_time']) ? esc($value['start_time']): ''?>" placeholder="Start Time" id="start_time" name="start_time">
+                      <input type="time" class="form-control" value="<?=isset($value['start_time']) ? esc($value['start_time']): ''?>" placeholder="Start Time" id="start_time" name="start_time[]">
                     </div>
                       <?php if(isset($errors['start_time'])):?>
                         <p class="text-danger"><?=esc($errors['start_time'])?><p>
                       <?php endif;?>
-             
-                    <div class="form-group">
-                       <label class="form-label" for="end_time">End Time*</label>
-                        <input type="time" class="form-control" value="<?=isset($value['end_time']) ? esc($value['end_time']): ''?>" placeholder="End Time" id="end_time" name="end_time">
-                    </div>
-                      <?php if(isset($errors['end_time'])):?>
-                        <p class="text-danger"><?=esc($errors['end_time'])?><p>
-                      <?php endif;?>
+
+                      <div class="form-group" id="blank-div">
+                        <br><br><br>
+                      </div>
+                    
                  
                     <!-- /.form-group -->
-                    <div class="form-group">
-                      <button type="submit" class="btn btn-success">Save</button>
-                    </div>
+                  
                     </div>
                     <!-- /.col -->
+                 
                   </div>
+                  <div class="panel-footer text-right">
+                      <button type="submit" class="btn btn-success pull-right">Save</button>
+                    </div>
                   <!-- /.row -->
         
                   <!-- /.row -->
@@ -151,6 +169,20 @@
           if(data.id == id){
             $('#num_people').val(data.capacity);
           }
+        });
+      });
+      $(document).ready(function(){
+
+        $(document).on('click', '#add-more-input', function(e){
+          e.preventDefault();
+
+            startDiv = $('#start-time-div').html();
+            endDiv = $('#end-time-div').html();
+            dateDiv = $('#date-div').html();
+            blankDiv = $('#blank-div').html();
+
+          $('#first-column').append(dateDiv+endDiv);
+          $('#second-column').append(startDiv+blankDiv);
         });
       });
   </script>

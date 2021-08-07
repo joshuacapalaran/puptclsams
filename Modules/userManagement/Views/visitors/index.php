@@ -29,7 +29,7 @@
                   <div class="col-md-6">
                     <div class="form-group">
                       <label for="schyear_id">Date</label>
-                      <input type="date" value="<?= isset($rec['date']) ? $rec['date']:''?>"class="form-control" name="date">
+                      <input type="date" value="<?= isset($rec['date']) ? $rec['date']:''?>"class="form-control" id="date" name="date">
                     </div>
                   </div>
                   <div class="col-md-6">
@@ -77,9 +77,8 @@
                     <tr class="text-center">
                       <th>#</th>
                       <th>Name</th>
-                      <th>Purpose</th>
                       <th>Laboratory Name</th>
-                      <th>Datetime</th>
+                      <th>Date</th>
                       <!-- <th>Time out</th> -->
                     </tr>
                     </thead>
@@ -94,9 +93,8 @@
                           <tr>
                             <td><?=esc($ctr)?></td>
                             <td><?=esc($visitor['name'])?></td>
-                            <td><?=esc($visitor['purpose'])?></td>
                             <td><?=esc($visitor['lab_name'])?></td>
-                            <td><?=esc($visitor['created_at'])?></td>
+                            <td><?=esc(date('F d, Y', strtotime($visitor['date'])))?></td>
 
                             <!-- <td><?=esc(date('h:i A', strtotime($visitor['time_in'])))?></td>
                             <td><?=esc(($visitor['time_out'] != '0000-00-00 00:00:00') ? date('h:i A', strtotime($visitor['time_out'])) :'')?></td> -->
@@ -134,7 +132,16 @@
 
 <script>
 	$(document).ready( function () {
-		var conceptName = $('#schyear_id').find(":selected").text();
+		var date = $('#date').val();
+		var attendee = $('#attendee').find(":selected").text();
+    if(date == ''){
+      current_date = new Date();
+      month = current_date.getMonth() + 1;
+      date = month + '-' + current_date.getDate() + '-' +  current_date.getFullYear();
+    }
+    if(attendee == 'All'){
+      attendee = ' ';
+    }
 		$('#visitorTable').DataTable({
 			"bInfo": false,
 			dom: 'lft<"#space">Bip',
@@ -148,7 +155,7 @@
 					messageTop: ' ',
 					download: 'open',
 					orientation: 'landscape',
-					title: 'Visitors Report'+conceptName,
+					title: attendee+' ('+date+')',
 					customize: function ( doc, btn, tbl ) {
 
 						pdfMake.tableLayouts = {

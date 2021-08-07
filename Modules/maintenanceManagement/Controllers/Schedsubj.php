@@ -74,24 +74,36 @@ class Schedsubj extends BaseController {
     $data['view'] = 'Modules\MaintenanceManagement\Views\schedsubj\form';
     if($this->request->getMethod() === 'post'){
       if($this->validate('schedsubj')){
-        if($_POST['day']){
-           $_POST['day'] = implode(',',$_POST['day']);
-        }
+     
         
         if(in_array($_POST['date'], $holi )){
           $this->session->setFlashData('error', 'You cant add schedule on holiday dates');
           // $data['value'] = $_POST;
           return redirect()->to(base_url('admin/schedsubject/add'));
         }else{
-          if($schedsubj->add_schedsubj($_POST)){
+          if($_POST['day']){
+            foreach($_POST['day'] as $key => $day){
+              $_POST['day'] = $day;
+              $_POST['start_time'] = $_POST['start_time'][$key];
+              $_POST['end_time'] = $_POST['end_time'][$key];
+              $schedsubj->add_schedsubj($_POST);
+            }
             $this->activityLogsModel->addLogs($_SESSION['uid'], 'Add Sched Subject', 'admin/schedsubject', json_encode($_POST));
             $this->session->setFlashData('success', 'Sucessfuly created a schedsubject');
             return redirect()->to(base_url('admin/schedsubject'));
-          } else {
-            $this->session->setFlashData('error', 'Something went wrong!');
-            return redirect()->to(base_url('admin/schedsubject'));
-
+          }else{
+            if($schedsubj->add_schedsubj($_POST)){
+              $this->activityLogsModel->addLogs($_SESSION['uid'], 'Add Sched Subject', 'admin/schedsubject', json_encode($_POST));
+              $this->session->setFlashData('success', 'Sucessfuly created a schedsubject');
+              return redirect()->to(base_url('admin/schedsubject'));
+            } else {
+              $this->session->setFlashData('error', 'Something went wrong!');
+              return redirect()->to(base_url('admin/schedsubject'));
+  
+            }
           }
+        
+          
 
         }
       } else {

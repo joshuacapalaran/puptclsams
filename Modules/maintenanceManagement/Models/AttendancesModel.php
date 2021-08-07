@@ -38,7 +38,7 @@ class AttendancesModel extends \CodeIgniter\Model
   }
   public function insertAbsent($data){
     date_default_timezone_set('Asia/Singapore');
-    $data['date'] = date('H:i:s');
+    $data['date'] = date('Y-m-d');
     $data['time_in'] = null;
     $data['time_out'] = null;
     $data['remarks'] = 'absent';

@@ -52,14 +52,6 @@
                 <?php endif;?>
 
                 
-                <div class="form-group">
-                <label>Purpose</label>
-                 <input type="text" class="form-control" value="<?=isset($value['purpose']) ? esc($value['purpose']): ''?>" placeholder="Section" id="purpose" name="purpose" required>
-                </div>
-                <?php if(isset($errors['purpose'])):?>
-                    <p class="text-danger"><?=esc($errors['purpose'])?><p>
-                <?php endif;?>
-                <!-- /.form-group -->
 
                 <div class="form-group">
                 <label>Laboratory</label>

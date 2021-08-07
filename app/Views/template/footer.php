@@ -146,6 +146,19 @@ function get_fb(){
         url: "<?= base_url('admin/schedules/penalty'); ?>",
         async: false,
         success: function(response){
+          console.log(response)
+        }
+    });
+    // $('div.feedback-box').html(feedback);
+}
+
+setInterval(function(){get_visitor();}, 1000);
+function get_visitor(){
+    $.ajax({
+        type: "POST",
+        url: "<?= base_url('admin/schedules/visitor_timeout'); ?>",
+        async: false,
+        success: function(response){
           // console.log(response)
         }
     });

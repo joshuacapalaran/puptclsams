@@ -158,16 +158,6 @@
                     <p class="text-danger"><?=esc($errors['name'])?><p>
                     <?php endif;?>
 
-
-                    <div class="form-group">
-                    <label>Purpose</label>
-                      <input type="text" class="form-control" value="<?=isset($value['purpose']) ? esc($value['purpose']): ''?>" placeholder="Purpose" id="purpose" name="purpose">
-                    </div>
-                    <?php if(isset($errors['purpose'])):?>
-                        <p class="text-danger"><?=esc($errors['purpose'])?><p>
-                    <?php endif;?>
-                    <!-- /.form-group -->
-
                     <div class="form-group">
                     <label>Laboratory</label>
                     <select name="lab_id" id="lab_id" class="form-control">
@@ -189,15 +179,9 @@
                         <?php foreach($events as $event): ?>
                         <option value="<?= $event['id'] ?>" <?=   ($event['id'] == $value['event_id']) ? 'selected':'' ?>><?= ucwords($event['event_name']) ?></option>
                         <?php endforeach; ?>
-                      <!--  -->
                       </select>
                     </div>
-                    
-                    <div class="form-group">
-                      <label>Others</label>
-                          <input type="text" class="form-control" value="<?=isset($value['others']) ? esc($value['others']): ''?>" placeholder="Others" id="others" name="others">
-                    </div>
-                    <!-- /.form-group -->
+                  
                     </div>
                   <!-- /.col -->
                   </div>

@@ -21,90 +21,22 @@ class Attendance extends BaseController {
     $attendanceModel = new AttendancesModel();
     $studentModel = new StudentsModel();
     $schedsubj = new SchedsubjsModel;
+    $courseModel = new CoursesModel;
+    $sectionModel = new SectionsModel;
+    $semsModel = new SemestersModel;
+    $labs = new LabsModel;
+    $schoolyear = new SchoolyearsModel;
+    $subj = new SubjectsModel;
     
-    $data['attendances'] = $attendanceModel->getAttendances();
+    $data['subjects'] = $subj->getActiveSubjects();
+    $data['labs'] = $labs->getLabsByActive();
+    $data['courses'] = $courseModel->getActiveCourse();
+    $data['semesters'] = $semsModel->getActiveSemesters();
+    $data['schoolyears'] = $schoolyear->getActiveSchoolYears();
+    $data['sections'] = $sectionModel->getActiveSections();
+    $data['attendances'] = $attendanceModel->getAttendancesByStudent();
     $data['view'] = 'Modules\MaintenanceManagement\Views\attendance\frmAttendance';
     return view('template/index', $data);
-  }
-
-  	
-public function verify(){
-	$studentModel = new StudentsModel();
-  $attendanceModel = new AttendancesModel();
-  $schedsubj = new SchedsubjsModel;
-  $schedlabs = new SchedlabsModel;
-  $students = $studentModel->getStudentByStudNum($_POST['student_num']);
- 
-	if(!empty($students) ) {
-    $current_day = date('l');
-    $current_time = date("H:i:s",time());
-    $schedule = $schedsubj->checkSchedule($students['course_id'], $students['section_id'],$current_day,$current_time);
-    // $event = $schedlabs->checkEvent($students['course_id'], $students['section_id'],$current_day,$current_time);
-    // print_r($schedule );
-    // die();
-		if (!empty($schedule)) {
-      $data['student_id'] = $students['id'];
-      $data['student_number'] = $_POST['student_num'];
-      $data['schedule_id'] = $schedule['id'];
-     
-      $attendance = $attendanceModel->getAttendance($students['id'],$schedule['id']);
-   
-      if(empty($attendance)){
-      
-        if($attendanceModel->insertAttendance($data)){
-          $this->session->setFlashData('success', 'You have succesfully time in!');
-        }else {
-          $_SESSION['error'] = 'Something Went Wrong!';
-          $this->session->markAsFlashdata('error');
-        }
-
-      }else{
-        $_SESSION['error'] = 'You already Time in!';
-        $this->session->markAsFlashdata('error');
-      }
-        
-    
-
-    }else{
-      $_SESSION['error'] = 'You dont have class today';
-      $this->session->markAsFlashdata('error');
-
-    }
-  }else{
-    $_SESSION['error'] = 'Student Number Not Found';
-    $this->session->markAsFlashdata('error');
-
-  }
-}
-
-  public function attendance_time_out(){
-    $studentModel = new StudentsModel();
-    $attendanceModel = new AttendancesModel();
-    $schedsubj = new SchedsubjsModel;
-
-    $students = $studentModel->getStudentByStudNum($_POST['student_num']);
- 
-    if(!empty($students) ) {
-        $schedule = $schedsubj->checkSchedule($students['course_id'], $students['section_id']);
-        $attendance = $attendanceModel->getAttendance($students['id'],$schedule['id']);
-       
-        if(!empty($attendance) || !empty($schedule)){
-            if ($attendance[0]['timeout'] == null) {
-              if ($attendanceModel->timeOut($attendance[0]['id'])) {
-                $this->session->setFlashData('success', 'You have succesfully time out!');
-              } else {
-                $_SESSION['error_message'] = 'Something Went Wrong!';
-                $this->session->setFlashData('error_message');
-              }
-            }else{
-                $_SESSION['error_message'] = "You cant time out again! Please Time-in on another day!";
-                $this->session->setFlashData('error_message');
-            }
-      }
-    } else{
-      $this->session->setFlashData('error_message','Student Number Not Found');
-    }
-      
   }
 
   public function pdf(){
@@ -117,17 +49,36 @@ public function verify(){
     $pdf_data['headers'] = $attendanceModel->getAttendancesGroupByDate();
     $pdf_data['times'] = $attendanceModel->getAttendancesByTime();
 
+    $mpdf->setHTMLHeader('
+        <div class="col12" style="padding-left:100px">
+            <div class="col6" style=" width:10%;float:left; padding-left:120px;">
+            <img src="data:image/png;base64,'.base64_encode(file_get_contents('assets/img/pup_logo.png')).'" style="width:50px; ">
+            </div>
+            <div class="col6" style=" padding-right:245px;text-align:center;">  
+              <b>Polytechnic University of the Philippines</b>
+              <br>
+              Taguig Branch<br> General Santos Avenue, Lower Bicutan, Taguig City
+              <br>
+              <br>
+              <b>Attendance</b>
+            </div>
+        </div>
+    ');
+
     $html = view('html_to_pdf', $pdf_data);
+
     $mpdf->Addpage('L', // L - landscape, P - portrait
     '', '', '', '', 30, // margin_left
     30, // margin right
-    30, // margin top
+    40, // margin top
     30, // margin bottom
-    18, // margin header
-    12); // margin footer
+    5, // margin header
+    5); // margin footer
+
     $mpdf->WriteHTML($html);
     $this->response->setHeader('Content-Type', 'application/pdf');
-    $mpdf->Output('arjun.pdf','I'); // opens in browser
+    $random = rand();
+    $mpdf->Output("$subj_name  $course_abbrev  $year-$section $random.pdf",'I'); // opens in browser
 
     $data['view'] = 'Modules\MaintenanceManagement\Views\attendance\frmAttendance';
     return view('template/index', $data);

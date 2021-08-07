@@ -15,6 +15,7 @@ use Modules\MaintenanceManagement\Models\StudentsModel;
 use Modules\MaintenanceManagement\Models\AttendancesModel;
 use Modules\MaintenanceManagement\Models\HolidayModel;
 use Modules\MaintenanceManagement\Models\ActivityLogsModel;
+use Modules\userManagement\Models\VisitorsModel;
 
 class Schedules extends BaseController {
 
@@ -218,35 +219,52 @@ public function verify(){
         $data['lab_id'] = $_POST['sched_data']['id'];
         $attendance = $attendanceModel->getAttendanceLab($students['id'],$_POST['sched_data']['id'],$_POST['sched_data']['date']);
       }
+ 
       $data['student_id'] = $students['id'];
       $data['student_number'] = $_POST['student_num'];
       $data['date'] = $_POST['sched_data']['date'];
-     $start_time = strtotime($sched[0]['start_time']);
+      $start_time = strtotime($sched[0]['start_time']);
 
-     $difference = $start_time - $time_now;
-     $difference_minute =  $difference/60;
-      if(empty($attendance)){
-        if(abs($difference_minute) >= 15){
-          $data['remarks'] = 'late';
+      if(!empty($sched)){
+
+            $difference = $start_time - $time_now;
+            $difference_minute =  $difference/60;
+              if(empty($attendance)){
+                if(abs($difference_minute) >= 15){
+                  $data['remarks'] = 'late';
+                }else{
+                  $data['remarks'] = 'present';
+                }
+              
+                if($attendanceModel->insertAttendance($data)){
+                  $this->session->setFlashData('success', 'You have succesfully time in!');
+                }else {
+                  $_SESSION['error'] = 'Something Went Wrong!';
+                  $this->session->markAsFlashdata('error');
+                }
+
+              }else{
+                // $_SESSION['error'] = 'You already Time in!';
+                // $this->session->markAsFlashdata('error');
+                if($attendance['time_out'] == null){
+                  if ($attendanceModel->timeOut($attendance['id'])) {
+                    $this->session->setFlashData('success', 'You have time-in and you succesfully time out!');
+                  } 
+                }else if($attendance['time_out'] !== null){
+                  $this->session->setFlashData('error', 'You have already log, Please Time-in/Time-out on next schedule.');
+
+                }
+               
+              }
         }else{
-          $data['remarks'] = 'present';
-        }
-      
-        if($attendanceModel->insertAttendance($data)){
-          $this->session->setFlashData('success', 'You have succesfully time in!');
-        }else {
-          $_SESSION['error'] = 'Something Went Wrong!';
+          $_SESSION['error'] = 'You are not tagged this schedule.';
           $this->session->markAsFlashdata('error');
         }
-
-      }else{
-        $_SESSION['error'] = 'You already Time in!';
-        $this->session->markAsFlashdata('error');
-      }
-    
+      
   }else{
     $_SESSION['error'] = 'Student Number Not Found';
     $this->session->markAsFlashdata('error');
+
 
   }
 }
@@ -274,23 +292,24 @@ public function verify(){
 
       }
   
-        if(!empty($attendance) ){
-            if ($attendance['time_out'] == null) {
-              $difference = $to_time - $time_now;
-              $difference_minute =  $difference/60;
-              if ($attendanceModel->timeOut($attendance['id'])) {
-                $this->session->setFlashData('success', 'You have succesfully time out!');
-              } else {
-                $_SESSION['error'] = 'Something Went Wrong!';
-                $this->session->markAsFlashdata('error');
-              }
-            }else{
-                $_SESSION['error'] = "You cant time out again! Please Time-in on another day!";
-                $this->session->markAsFlashdata('error');
+      if(!empty($attendance) ){
+          if ($attendance['time_out'] == null) {
+            $difference = $to_time - $time_now;
+            $difference_minute =  $difference/60;
+            if ($attendanceModel->timeOut($attendance['id'])) {
+              $this->session->setFlashData('success', 'You have succesfully time out!');
+            } else {
+              $_SESSION['error'] = 'Something Went Wrong!';
+              $this->session->markAsFlashdata('error');
             }
+          }else{
+              $_SESSION['error'] = "You cant time out again! Please Time-in on another day!";
+              $this->session->markAsFlashdata('error');
+          }
       }
     } else{
       $this->session->setFlashData('error','Student Number Not Found');
+
     }
       
   }
@@ -352,7 +371,8 @@ public function verify(){
     5); // margin footer
     $mpdf->WriteHTML($html);
     $this->response->setHeader('Content-Type', 'application/pdf');
-    $mpdf->Output("$subj_name  $course_abbrev  $year-$section.pdf",'I'); // opens in browser
+    $random = rand();
+    $mpdf->Output("$subj_name  $course_abbrev  $year-$section $random.pdf",'I'); // opens in browser
 
     $data['view'] = 'Modules\MaintenanceManagement\Views\attendance\frmAttendance';
     return view('template/index', $data);
@@ -394,24 +414,34 @@ public function getDayNumber($days){
 		$data = [];
 		$current_day = date('l');
 		$current_time = date('H:i:s',time());
-		$time_now = time();
+    $time_now = time();
+    
     $schedules = $schedsubj->checkSchedule($current_day, $current_time);
+
 		foreach($schedules as $schedule){
       $end_time = date('H:i:s',strtotime($schedule['end_time']));
-     
       $data = [];
       $difference = $to_time - $time_now;
       $difference_minute =  $difference/60;
       
             if($current_time >= $end_time){
               $students = $studentModel->getStudentBySchedule($schedule['course_id'],$schedule['section_id']);
+
               foreach($students as $student){
+
                   $attendance = $attendanceModel->getAttendance($student['id'],$schedule['id'],date('Y-m-d'));
+                
                     if(empty($attendance)){
+                      print_r($student);
+
                       $data['schedule_id'] = $schedule['id'];
                       $data['student_number'] = $student['student_num'];
                       $data['student_id'] = $student['id'];
                       $attendanceModel->insertAbsent($data);
+                    }
+                    
+                    if($attendance['time_in'] !== null && $attendance['time_out'] == null){
+                      $attendanceModel->timeOut($attendance['id']);
                     }
               }
              
@@ -421,6 +451,25 @@ public function getDayNumber($days){
 		
   }
   
+  public function visitor_timeout(){
+    date_default_timezone_set('Asia/Singapore');
 
+    $schedlabs = new SchedlabsModel;
+    $visitorsModel = new VisitorsModel;
+    $current_date = date('Y-m-d');
+		$current_time = date('H:i:s',time());
+		$time_now = time();
+    $schedules = $schedlabs->checkSchedule($current_date, $current_time);
+    foreach($schedules as $schedule){
+      $visitors = $visitorsModel->getVisitorsLabById($schedule['id']);
+      foreach($visitors as $visitor){
+        if($visitor['time_out'] == null){
+          $visitorsModel->logoutVisitor($visitor['id']);
+        }
+
+      }
+
+    }
+  }
   
 }

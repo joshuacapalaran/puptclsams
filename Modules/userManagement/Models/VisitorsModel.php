@@ -61,7 +61,7 @@ class VisitorsModel extends \CodeIgniter\Model
     public function loginVisitor($val_array = [])
 	{
 		date_default_timezone_set('Asia/Singapore');
-		$val_array['time_in'] = date('Y-m-d H:i:s');
+		$val_array['time_in'] = date('H:i:s');
 		$val_array['date'] = date('Y-m-d');
 		$val_array['created_at'] = (new \DateTime())->format('Y-m-d H:i:s');
 	    return $this->save($val_array);
@@ -71,7 +71,7 @@ class VisitorsModel extends \CodeIgniter\Model
 	{
 		date_default_timezone_set('Asia/Singapore');
 		$val_array['updated_at'] = (new \DateTime())->format('Y-m-d H:i:s');
-		$val_array['time_out'] = date('Y-m-d H:i:s');
+		$val_array['time_out'] = date('H:i:s');
 		return $this->update($id, $val_array);
 	}
 

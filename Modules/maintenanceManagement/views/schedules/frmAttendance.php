@@ -23,25 +23,23 @@
           <div class="col-12">
             <div class="card">
                 <div class="card-header">
+                  <form method="post">
                   <div class="form-group col-md-6 offset-md-3">
 
                       <label for="stud_num" class="form-label">Student Number</label><br>
-                      <span>  <?= $info['event_name'] ? 'Event: '.$info['event_name']:'Subject: '.$info['subj_code'].' - '.$info['subj_name']; ?> <br> Date:  <?= $data['date']?></span>
+                      <span>  <?= $info['event_name'] ? 'Event: '.$info['event_name']:'Subject: '.$info['subj_code'].' - '.$info['subj_name']; ?> <br> Date:  <?= $data['date']?> <br> Time: <?= $info['start_time']?> - <?=$info['end_time']?></span>
                       <br>
                       <input name="stud_num" class="form-control" type="text" autocomplete="on" id="stud_num" placeholder="Student Number" required>
                   </div>
                   <div class="col-md-12">
 
                 <center>
-<!-- <<<<<<< HEAD -->
                   <button id="time_in" type="submit" class="btn btn-success m-3">TIME IN</button>
                   <button id="time_out" type="submit" class="btn btn-danger m-3"> TIME OUT</button>
-<!-- =======
-                  <button id="time_in" class="btn btn-success m-3">TIME IN</button>
-                  <button id="time_out" class="btn btn-danger m-3"> TIME OUT</button>
->>>>>>> f5b15442b4cc41b4e72dc13a1620fb85240360e0 -->
                 </center>
-              </div>
+                  </div>
+                </form>
+
                 </div>
                   <!-- /.card-header -->
                   <div class="card-body">
@@ -68,7 +66,7 @@
                           <td><?=esc($attendance['student_num'])?></td>
                           <td><?=esc($attendance['last_name'])?>, <?=esc($attendance['first_name'])?> <?=esc($attendance['m_initial'])?></td>
                           <td><?=esc($attendance['subj_name'] ? $attendance['subj_name']:$attendance['event_name'])?></td>
-                          <td><?=esc(date('h:i:s A', strtotime($attendance['time_in'])))?></td>
+                          <td><?=esc(($attendance['time_in']) ? date('h:i:s A', strtotime($attendance['time_in'])):' ')?></td>
                           <td><?=esc(($attendance['time_out']) ? date('h:i:s A', strtotime($attendance['time_out'])):' ')?></td>
                           <td><?=esc($attendance['remarks'])?></td>
                           </tr>
@@ -111,7 +109,7 @@ $(function(){
 });
 
 $('#time_in').on('click', function(e){
-  // e.preventDefault();
+  e.preventDefault();
   var student_num = $('#stud_num').val();
   $.ajax({
       url: "<?= base_url("admin/schedules/verify")?>",

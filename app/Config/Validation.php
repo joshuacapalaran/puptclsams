@@ -482,11 +482,6 @@ class Validation
 			'label' => 'Name',
 			'errors' => ['required' => 'Name is required.']
 		],
-		'purpose' => [
-			'rules' => '',
-			'label' => 'Purpose',
-			'errors' => ['required' => 'Purpose is required.']
-		],
 		'lab_id' => [
 			'rules' => '',
 			'label' => 'Laboratory',
