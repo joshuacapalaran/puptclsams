@@ -38,6 +38,7 @@ public function index(){
     foreach($holidays as $holiday){
         $holi[] = [
           'date' => $holiday['date'],
+          'holiday_status' => $holiday['status'],
           'schedlab_id' => $holiday['schedlab_id'],
           'schedsubj_id' => $holiday['schedsubj_id'],
         ];

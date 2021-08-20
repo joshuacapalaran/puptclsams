@@ -75,24 +75,6 @@
                
 
                 <div class="row">
-                  <div class="col-md-6">
-                    <div class="form-group">
-                      <label for="password">Password (for set new password)</label>
-                      <!-- <input name="password" type="password" value="<?= isset($rec['password']) ? $rec['password'] : set_value('password') ?>" class="form-control <?= isset($errors['password']) ? 'is-invalid':' '  ?>" id="password" placeholder="Password"> -->
-                      <input name="password" type="password" value="" class="form-control <?= isset($errors['password']) ? 'is-invalid':' '  ?>" id="password" placeholder="Password">
-                      <div class="form-check">
-                        <input type="checkbox" class="form-check-input" id="exampleCheck1" onclick="myFunction()">
-                        <label class="form-check-label" for="exampleCheck1">Show Password</label>
-                      </div>
-                      <?php if(isset($errors['password'])):?>
-                        <p class="text-danger"><?=esc($errors['password'])?><p>
-                      <?php endif;?>  
-                    </div>
-                  </div>
-
-                  
-                </div>
-                <div class="row">
                   <div class="col-md-6 offset-md-5">
                     <button type="submit" class="btn btn-primary float-right">Submit</button>
                   </div>

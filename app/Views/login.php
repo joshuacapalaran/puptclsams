@@ -159,6 +159,11 @@
                     <?php endif;?>
 
                     <div class="form-group">
+                      <label>Purpose</label>
+                      <input type="text" class="form-control" placeholder="Purpose" id="purpose" name="purpose">
+                    </div>
+
+                    <div class="form-group">
                     <label>Laboratory</label>
                     <select name="lab_id" id="lab_id" class="form-control">
                       <option selected disabled>-- Please Select Laboratory --</option>
@@ -182,10 +187,10 @@
                       </select>
                     </div>
                   
-                    </div>
-                  <!-- /.col -->
-                  </div>
-                <!-- /.row -->
+                </div>
+              <!-- /.col -->
+              </div>
+            <!-- /.row -->
 
            <!-- /.row -->
             <div class="modal-footer justify-content-between">

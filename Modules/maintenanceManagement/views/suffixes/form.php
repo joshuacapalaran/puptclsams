@@ -48,10 +48,10 @@
                 <div class="form-group">
                 <label class="form-label" for="suffix">Suffix*</label>
                 <div class="input-group mb-3">
-                  <input type="text" class="form-control" value="<?=isset($value['suffix_name']) ? esc($value['suffix_name']): ''?>" placeholder="Suffix" id="suffix" name="suffix">
+                  <input type="text" class="form-control" value="<?=isset($value['suffix_name']) ? esc($value['suffix_name']): ''?>" placeholder="Suffix" id="suffix" name="suffix_name">
                 </div>
-                  <?php if(isset($errors['suffix'])):?>
-                    <p class="text-danger"><?=esc($errors['suffix'])?><p>
+                  <?php if(isset($errors['suffix_name'])):?>
+                    <p class="text-danger"><?=esc($errors['suffix_name'])?><p>
                   <?php endif;?>
                 <!-- /.form-group -->
                 

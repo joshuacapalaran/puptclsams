@@ -113,7 +113,11 @@ class Schedlabs extends BaseController {
           $data['value'] = $_POST;
           // return redirect()->to(base_url('admin/schedlabs/add'));
         }else{
-
+          if($_POST['date']){
+            $_POST['date'] = $_POST['date'][0];
+            $_POST['start_time'] = $_POST['start_time'][0];
+            $_POST['end_time'] = $_POST['end_time'][0];
+          }
           if($this->schedlabsModel->edit($id, $_POST)){
             $this->activityLogsModel->addLogs($_SESSION['uid'], 'Edit Sched lab', 'admin/schedlabs', $id);
             $this->session->setFlashData('success_message', 'Sucessfuly edited a schedsubject');

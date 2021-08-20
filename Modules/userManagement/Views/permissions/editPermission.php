@@ -39,10 +39,10 @@
           <div class="card card-outline card-info">
           <div class="card-header">
             <!-- <h3 class="card-title">Select2 (Default Theme)</h3> -->
-              <div class="col-md-2 offset-md-10">
-                  <a href="<?= base_url("Permission/edit_permission") ?>" class="btn btn-sm btn-primary btn-block float-right">Edit Permissions</a>
+              <!-- <div class="col-md-2 offset-md-10">
+                  <a href="<?= base_url("admin/permissions/edit") ?>" class="btn btn-sm btn-primary btn-block float-right">Edit Permissions</a>
               </div>
-            
+             -->
           
             <div class="card-tools">
                 <?= \Config\Services::validation()->listErrors(); ?>

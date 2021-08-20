@@ -57,9 +57,7 @@
                 <?php endif;?>
                 <!-- /.form-group -->
                 
-                <div class="form-group">
-                  <button type="submit" class="btn btn-success">Save</button>
-                </div>
+               
               </div>
               <!-- /.col -->
             </div>

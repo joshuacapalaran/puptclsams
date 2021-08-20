@@ -35,6 +35,7 @@ $routes->group('admin/users', ['namespace' => 'Modules\UserManagement\Controller
     $routes->match(['get', 'post'], 'view/(:num)', 'Users::view/$1');
     $routes->get('delete/(:num)', 'Users::delete/$1');
     $routes->get('active/(:num)', 'Users::active/$1');
+    $routes->match(['get', 'post'],'change-password/(:num)', 'Users::change_password/$1');
 
 });
 

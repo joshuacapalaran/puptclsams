@@ -75,7 +75,7 @@
             <div id="modalBody" class="modal-body">
 
             </div>
-            <?php if($_SESSION['rid'] == '1'):?>
+            <?php if($_SESSION['rid'] == '1' || $_SESSION['rid'] == '2'):?>
             <div class="modal-footer">
               <button type="submit"  class="btn btn-warning" data-toggle="modal" data-target="#modal-schedule">Cancel Schedule</button>
               <button type="submit" id="attendance" class="btn btn-primary">Attendance</button>
@@ -195,11 +195,16 @@ var holidays = JSON.parse('<?= json_encode($holidays); ?>');
         var eventId = arg.event._def.publicId;
 
         if(arg.event.extendedProps.schedule == 'event'){
+          current_date = new Date();
           $.each(holidays,function(index,val){
+            console.log()
+            if(current_date.getFullYear()+'-'+val.date == eventDate){
+              $(arg.el).hide();
 
-            if(val.schedsubj_id == eventId && val.date == eventDate){
+            }
+            if(val.schedsubj_id == eventId && val.date == eventDate && val.holiday_status == 'c'){
               // console.log(val)
-
+              // holiday_status
               $(arg.el).hide();
 
             }

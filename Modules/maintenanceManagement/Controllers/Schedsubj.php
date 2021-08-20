@@ -159,7 +159,9 @@ class Schedsubj extends BaseController {
     if($this->request->getMethod() === 'post'){
       if($this->validate('schedsubj')){
         if($_POST['day']){
-            $_POST['day'] = implode(',',$_POST['day']);
+            $_POST['day'] = $_POST['day'][0];
+            $_POST['start_time'] = $_POST['start_time'][0];
+            $_POST['end_time'] = $_POST['end_time'][0];
         }
         if(in_array($_POST['date'], $holi )){
           $this->session->setFlashData('error', 'You cant add schedule on holiday dates');

@@ -80,7 +80,7 @@
                        <label class="form-label" for="end_time">End Time*</label>
                        <div class="input-group">
                           <input type="time" class="form-control" value="<?=isset($value['end_time']) ? esc($value['end_time']): ''?>" placeholder="End Time" id="end_time" name="end_time[]">
-                          <div class="input-group-append">
+                          <div class="input-group-append" <?= $edit ? 'hidden': ''?>>
                             <button class="input-group-text" id="add-more-input"><i class="fa fa-plus"></i></button>
                           </div>
                         </div>

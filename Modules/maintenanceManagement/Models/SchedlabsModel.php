@@ -62,6 +62,11 @@ class SchedlabsModel extends BaseModel {
   public function getScheduleLabs(){
     return $this->findAll();
   }
+  public function getScheduleLabsActive(){
+    $this->where('status', 'a');
+    return $this->findAll();
+  }
+
 
   public function checkSchedule($current_date,$current_time){
     // $this->where('end_time >=',$current_time);
@@ -99,4 +104,6 @@ class SchedlabsModel extends BaseModel {
     $data['status'] = 'a';
     return $this->update($id, $data);
   }
+
+  
 }

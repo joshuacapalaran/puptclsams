@@ -39,7 +39,7 @@
                 <div class="form-group">
                    <label class="form-label" for="semester">Semester*</label>
                     <div class="input-group mb-3">
-                      <input type="text" class="form-control" value="<?=isset($value['sem']) ? esc($value['sem']): ''?>" placeholder="Semester" id="semester" name="semester">
+                      <input type="text" class="form-control" value="<?=isset($value['sem']) ? esc($value['sem']): ''?>" placeholder="Semester" id="semester" name="sem">
                     </div>
                       <?php if(isset($errors['sem'])):?>
                         <p class="text-danger"><?=esc($errors['sem'])?><p>

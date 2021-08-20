@@ -61,10 +61,10 @@
                               <td><?=esc($schedlab['num_people'])?></td>
                               <td><?=esc(($schedlab['status'] == 'a') ? 'Active':'Inactive')?></td>
                               <td>
-                               <a class="btn btn-secondary btn-sm fas fa-eye" href="<?=base_url('admin/schedlabs/view/' . esc($schedlab['id'], 'url'))?>"> </a>
-                                <a class="btn btn-outline-info btn-sm fas fa-edit" href="<?=base_url('admin/schedlabs/edit/' . esc($schedlab['id'], 'url'))?>">  </a>
+                               <a class="btn btn-secondary btn-sm" href="<?=base_url('admin/schedlabs/view/' . esc($schedlab['id'], 'url'))?>"> View </a>
+                                <a class="btn btn-outline-info btn-sm" href="<?=base_url('admin/schedlabs/edit/' . esc($schedlab['id'], 'url'))?>"> Edit </a>
                                 <?php if($schedlab['status'] == 'a'):?>
-                                  <a class="btn btn-danger btn-sm fas fa-trash-alt" onclick=" confirmUpdateStatus('<?= base_urL('admin/schedlabs/delete/')?>',<?=$schedlab['id']?>,'d')" title="deactivate"> </i></a>
+                                  <a class="btn btn-danger btn-sm fas" onclick=" confirmUpdateStatus('<?= base_urL('admin/schedlabs/delete/')?>',<?=$schedlab['id']?>,'d')" title="deactivate"> Delete</i></a>
                                 <?php else:?>
                                   <a class="btn btn-success btn-sm remove" onclick=" confirmUpdateStatus('<?= base_urL('admin/schedlabs/active/')?>',<?=$schedlab['id']?>,'a')" title="activate">Restore</i></a>
                                 <?php endif;?>

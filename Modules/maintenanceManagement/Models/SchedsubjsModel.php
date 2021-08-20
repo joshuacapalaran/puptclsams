@@ -36,7 +36,7 @@ class SchedsubjsModel extends \CodeIgniter\Model {
     $this->join('professors','sched.professor_id = professors.id','inner');
     $this->join('semesters','sched.semester_id = semesters.id','inner');
     $this->join('schoolyears','sched.sy_id = schoolyears.id','inner');
-    $this->join('suffixes','professors.suffix_id = suffixes.id','inner');
+    $this->join('suffixes','professors.suffix_id = suffixes.id','left');
     // $this->where('sched.deleted_at', null);
     $this->where('sched.status', 'a');
     return $this->findAll();

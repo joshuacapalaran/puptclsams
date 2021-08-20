@@ -4,6 +4,7 @@ use App\Controllers\BaseController;
 use Modules\MaintenanceManagement\Models as MaintenanceManagement;
 use Modules\MaintenanceManagement\Models\capacitiesModel;
 use Modules\MaintenanceManagement\Models\ActivityLogsModel;
+use Modules\MaintenanceManagement\Models\labsModel;
 
 class Capacities extends BaseController {
 
@@ -22,9 +23,10 @@ class Capacities extends BaseController {
 
   public function add(){
     $capacitiesModel = new capacitiesModel;
+    $labsModel = new labsModel;
     $data['edit'] = false;
     $data['view'] = 'Modules\MaintenanceManagement\Views\capacities\form';
-    $data['labs'] = $this->labsModel->get();
+    $data['labs'] = $labsModel->getLabsByActive();
     if($this->request->getMethod() === 'post'){
       if($this->validate('capacities')){
         if($capacitiesModel->add($_POST)){

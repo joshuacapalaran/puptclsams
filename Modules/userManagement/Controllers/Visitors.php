@@ -25,7 +25,7 @@ class Visitors extends BaseController
 
 		$model = new VisitorsModel();
     	$schedLabsmodel = new SchedlabsModel();
-		$data['schedlabs'] = $schedLabsmodel->getScheduleLabs();
+		$data['schedlabs'] = $schedLabsmodel->getScheduleLabsActive();
         $data['visitors'] = $model->getVisitorsLabByDateAttendee($_POST['date'],$_POST['attendee']);
 		$data['rec'] = $_POST;
         $data['view'] = 'Modules\UserManagement\Views\visitors\index';
@@ -59,14 +59,14 @@ class Visitors extends BaseController
 					$schedlab = $schedLabsmodel->getScheduleLabById($_POST['event_id']);
 					$visitor_total = count($model->getVisitorsLabById($_POST['event_id']));
 					
-				
-					if($visitor_total >= $schedlab['num_people']){
-						$_SESSION['error'] = 'You cant login, Laboratory is full';
-						$this->session->markAsFlashdata('error');
-						return redirect()->to(base_url());
-
+					if(!empty($schedlab)){
+						if($visitor_total >= $schedlab['num_people']){
+							$_SESSION['error'] = 'You cant login, Laboratory is full';
+							$this->session->markAsFlashdata('error');
+							return redirect()->to(base_url());
+	
+						}
 					}else{
-					
 						if($model->loginVisitor($_POST))
 						{
 							$_SESSION['success'] = 'You successfuly login as visitor';
@@ -79,7 +79,12 @@ class Visitors extends BaseController
 							$this->session->markAsFlashdata('error');
 							return redirect()->to(base_url());
 						}
+					
+					
 					}
+					
+					
+					
 					
 				}else{
 					$_SESSION['error'] = 'You already log-in!';

@@ -51,6 +51,10 @@
           <i class="fas fa-power-off"></i>
         </a>
         <div class="dropdown-menu dropdown-menu-sm dropdown-menu-center">
+          <a class="dropdown-item" href="<?php echo base_url("admin/users/change-password/".$_SESSION['uid']) ?>">
+          <i class="fas fa-key fa-sm fa-fw mr-2 text-gray-400"></i>
+          Change Password</a>
+
           <a class="dropdown-item" data-toggle="modal" data-target="#modal-default">
           <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
           Logout
@@ -65,6 +69,7 @@
         <div class="modal-dialog">
           <div class="modal-content">
             <div class="modal-header">
+
               <h4 class="modal-title">Log-out</h4>
               <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                 <span aria-hidden="true">&times;</span>

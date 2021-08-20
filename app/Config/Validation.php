@@ -246,11 +246,11 @@ class Validation
 	];
 
 	public $suffixes = [
-		'suffix' => [
+		'suffix_name' => [
 			'rules' => 'required|alpha',
 			'label' => 'Suffix',
 			'errors' => [
-								'required|alpha' => '{field} is required.']
+				'required|alpha' => 'suffix_name is required.']
 		],
 	];
 
@@ -565,4 +565,25 @@ class Validation
 			'errors' => ['required' => 'Password is required.']
 		],
 	];
+
+	public $change_password = [
+		'old_password' => [
+			'rules' => 'required',
+			'label' => 'Old Password',
+			'errors' => ['required' => 'Old Password is required.']
+		],
+		'password' => [
+			'rules' => 'required',
+			'label' => 'Password',
+			'errors' => ['required' => 'Password is required.']
+		],
+		'password_retype' => [
+			'rules' => 'required',
+			'label' => 'Date',
+			'errors' => ['required' => 'Date is required.']
+		],
+		
+	];
+
+
 }
