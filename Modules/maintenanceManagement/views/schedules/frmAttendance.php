@@ -27,7 +27,7 @@
                   <div class="form-group col-md-6 offset-md-3">
 
                       <label for="stud_num" class="form-label">Student Number</label><br>
-                      <span>  <?= $info['event_name'] ? 'Event: '.$info['event_name']:'Subject: '.$info['subj_code'].' - '.$info['subj_name']; ?> <br> Date:  <?= $data['date']?> <br> Time: <?= $info['start_time']?> - <?=$info['end_time']?></span>
+                      <span>  <?= $info['event_name'] ? 'Event: '.$info['event_name']:'Subject: '.$info['subj_code'].' - '.$info['subj_name']; ?> <br> Section: <?= $info['year'].'-'.$info['section']?> <br> Date:  <?= $data['date']?> <br> Time: <?= $info['start_time']?> - <?=$info['end_time']?></span>
                       <br>
                       <input name="stud_num" class="form-control" type="text" autocomplete="on" id="stud_num" placeholder="Student Number" required>
                   </div>

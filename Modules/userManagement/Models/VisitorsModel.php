@@ -26,9 +26,9 @@ class VisitorsModel extends \CodeIgniter\Model
 
 	public function getVisitorsLabByDateAttendee($date,$attendee){
 		$this->distinct('visitors.id');
-		$this->join('labs', 'visitors.lab_id = labs.id');
+		$this->join('labs', 'visitors.lab_id = labs.id', 'left');
 
-		if($date !== ''){
+		if(!empty($date)){
 			$this->where('date', $date);
 		}
 

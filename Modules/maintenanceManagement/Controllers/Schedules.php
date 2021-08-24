@@ -72,6 +72,7 @@ public function get_events(){
             'start' => $schedsubject['start_time'],
             'extendedProps' => [
               'course' => $schedsubject['course_name'],
+              'year_section' => $schedsubject['year'].'-'.$schedsubject['section'],
               'time' => date("h:i A", strtotime($schedsubject['start_time'])).'-'.date("h:i A", strtotime($schedsubject['end_time'])),
               'lab_day' => ($schedsubject['end_day']) ? $schedsubject['day'].' and '.$schedsubject['end_day']:$schedsubject['day'],
               'lab' => $schedsubject['lab_name'],
@@ -92,6 +93,7 @@ public function get_events(){
             'date' => $date,
             'extendedProps' => [
               'course' => $schedsubject['course_name'],
+              'year_section' => $schedsubject['year'],
               'lab' => $schedsubject['lab_name'],
               'lab_day' => $schedsubject['date'],
               'prof' => $schedsubject['first_name'].' '.$schedsubject['last_name'].' '.$schedsubject['suffix_name'] ,
@@ -122,7 +124,7 @@ public function get_events(){
 
       $data[] = [
         'title' => $schedlab['event_name'],
-        'start' => $schedlab['date'],
+        'date' => $schedlab['date'],
         'id' => $schedlab['id'],
         'extendedProps' => [
           'lab_id' => $schedlab['id'],
@@ -205,6 +207,7 @@ public function verify(){
   $schedlabs = new SchedlabsModel;
   date_default_timezone_set('Asia/Singapore');
   $current_day = date('l');
+  $selected_day = date('l', strtotime($_POST['sched_data']['date']));
   $current_time = date('H:i:s',time());
   $time_now = time();
 
@@ -215,7 +218,11 @@ public function verify(){
       if($_POST['sched_data']['type'] == 'event'){
         $data['schedule_id'] = $_POST['sched_data']['id'];
         $attendance = $attendanceModel->getAttendance($students['id'],$_POST['sched_data']['id'],$_POST['sched_data']['date']);
-        $sched = $schedsubj->getStudentSchedule($students['course_id'],$students['section_id'],$current_day,$current_time);
+        if($current_day == $selected_day){
+          $sched = $schedsubj->getStudentSchedule($students['course_id'],$students['section_id'],$current_day,$current_time);
+        }else{
+          $sched = array();
+        }
       }else if($_POST['sched_data']['type'] == 'lab'){
         $data['lab_id'] = $_POST['sched_data']['id'];
         $attendance = $attendanceModel->getAttendanceLab($students['id'],$_POST['sched_data']['id'],$_POST['sched_data']['date']);
@@ -225,7 +232,7 @@ public function verify(){
       $data['student_number'] = $_POST['student_num'];
       $data['date'] = $_POST['sched_data']['date'];
       $start_time = strtotime($sched[0]['start_time']);
-
+  
       if(!empty($sched)){
 
             $difference = $start_time - $time_now;

@@ -26,9 +26,9 @@ class Suffixes extends BaseController {
       if($this->validate('suffixes')){
         if($suffixesModel->add($_POST)){
           $this->activityLogsModel->addLogs($_SESSION['uid'], 'Add suffix', 'admin/suffixes', json_encode($_POST));
-          $this->session->setFlashData('success_message', 'Sucessfuly created a suffix');
+          $this->session->setFlashData('success', 'Sucessfuly created a suffix');
         } else {
-          $this->session->setFlashData('error_message', 'Something went wrong!');
+          $this->session->setFlashData('error', 'Something went wrong!');
         }
         return redirect()->to(base_url('admin/suffixes'));
       } else {
@@ -51,9 +51,9 @@ class Suffixes extends BaseController {
       if($this->validate('suffixes')){
         if($this->suffixesModel->edit($id, $_POST)){
           $this->activityLogsModel->addLogs($_SESSION['uid'], 'Edit suffix', 'admin/suffixes', $id);
-          $this->session->setFlashData('success_message', 'Sucessfuly edited a suffix');
+          $this->session->setFlashData('success', 'Sucessfuly edited a suffix');
         } else {
-          $this->session->setFlashData('error_message', 'Something went wrong!');
+          $this->session->setFlashData('error', 'Something went wrong!');
         }
         return redirect()->to(base_url('admin/suffixes'));
       } else {
@@ -68,9 +68,9 @@ class Suffixes extends BaseController {
     $suffixesModel = new suffixesModel;
     if($suffixesModel->inactive($id)) {
       $this->activityLogsModel->addLogs($_SESSION['uid'], 'Archive suffix', 'admin/suffixes', $id);
-      $this->session->setFlashData('success_message', 'Successfully deleted suffix');
+      $this->session->setFlashData('success', 'Successfully deleted suffix');
     } else {
-      $this->session->setFlashData('error_message', 'Something went wrong!');
+      $this->session->setFlashData('error', 'Something went wrong!');
     }
     return redirect()->to(base_url('admin/suffixes'));
   }
@@ -79,9 +79,9 @@ class Suffixes extends BaseController {
     $suffixesModel = new suffixesModel;
     if($suffixesModel->active($id)) {
       $this->activityLogsModel->addLogs($_SESSION['uid'], 'Restore suffix', 'admin/suffixes', $id);
-      $this->session->setFlashData('success_message', 'Successfully restored suffix');
+      $this->session->setFlashData('success', 'Successfully restored suffix');
     } else {
-      $this->session->setFlashData('error_message', 'Something went wrong!');
+      $this->session->setFlashData('error', 'Something went wrong!');
     }
     return redirect()->to(base_url('admin/suffixes'));
   }

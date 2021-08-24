@@ -133,6 +133,7 @@ var holidays = JSON.parse('<?= json_encode($holidays); ?>');
         end: 'dayGridMonth,dayGridWeek,dayGridDay,dayGridlist'
       },
       eventClick: function(event) {
+        console.log(event.event.extendedProps)
         var eventDate = moment(event.event.start).format('YYYY-MM-DD');
         $('#fullCalModal').modal();
         if(event.event.extendedProps.time !== undefined && event.event.extendedProps.lab_day !== undefined){
@@ -165,6 +166,7 @@ var holidays = JSON.parse('<?= json_encode($holidays); ?>');
         if(event.event.extendedProps.schedule == 'event'){
             html += '<span> Class: '+ event.event.title+'</span> <br>';
             html += '<span> Course: '+ event.event.extendedProps.course+'</span> <br>';
+            html += '<span> Year & Section: '+ event.event.extendedProps.year_section+'</span> <br>';
           if(event.event.extendedProps.time !== undefined && event.event.extendedProps.lab_day !== undefined){
             html += '<span> Time: '+ event.event.extendedProps.time+'</span><br>';
             html += '<span> Laboratory Day: '+ event.event.extendedProps.lab_day+'</span><br>';
@@ -197,7 +199,7 @@ var holidays = JSON.parse('<?= json_encode($holidays); ?>');
         if(arg.event.extendedProps.schedule == 'event'){
           current_date = new Date();
           $.each(holidays,function(index,val){
-            console.log()
+            // console.log(val)
             if(current_date.getFullYear()+'-'+val.date == eventDate){
               $(arg.el).hide();
 
@@ -213,6 +215,10 @@ var holidays = JSON.parse('<?= json_encode($holidays); ?>');
         }
         else if(arg.event.extendedProps.schedule == 'lab'){
           $.each(holidays,function(index,val){
+            if(current_date.getFullYear()+'-'+val.date == eventDate){
+              $(arg.el).hide();
+
+            }
             if(val.schedlab_id == eventId && val.date == eventDate){
               // console.log(val.schedsubj_id)
               $(arg.el).hide();
