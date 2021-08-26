@@ -189,7 +189,7 @@ class Users extends BaseController
 						if($model->editUsers($_POST, $id))
 						{
 							$this->activityLogsModel->addLogs($_SESSION['uid'], 'Edit Users', 'admin/users/change-password/'.$id, $id);
-							$this->session->setFlashData('success', 'Sucessfuly change password');
+							$this->session->setFlashData('success', 'Sucessfully change password');
 							return redirect()->to( base_url('admin/users/change-password/'.$id));
 
 						}
@@ -200,13 +200,13 @@ class Users extends BaseController
 							return redirect()->to(base_url('admin/users/change-password/'.$id));
 						}
 					}else{
-						$_SESSION['error'] = 'Password & Password Re-type not matched';
+						$_SESSION['error'] = 'Password not matched';
 						$this->session->markAsFlashdata('error');
 						return redirect()->to(base_url('admin/users/change-password/'.$id));
 					}
 					
 				}else{
-					$_SESSION['error'] = 'Your old password is not correct';
+					$_SESSION['error'] = 'Your old password incorrect';
 					$this->session->markAsFlashdata('error');
 					return redirect()->to( base_url('admin/users/change-password/'.$id));
 

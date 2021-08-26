@@ -1,7 +1,7 @@
 <sidebar class = "main-sidebar">
 	<aside class="main-sidebar sidebar-dark-primary elevation-4" style="background-color: rgb(68,68,68);">
     <!-- Brand Logo -->
-    <a href="index3.html" class="brand-link d-flex align-items-center justify-content-center">
+    <a href="<?= base_url('admin/home')?> " class="brand-link d-flex align-items-center justify-content-center">
       <img src="<?=base_url();?>/stemp/img/taguig.png" alt="PUP logo" style="width: 70px; height: 70px">
      <!-- <span class="brand-text font-weight-light">CLAMS</span> -->
     </a>

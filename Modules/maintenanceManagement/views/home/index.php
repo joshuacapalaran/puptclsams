@@ -35,7 +35,7 @@
                 <i class="far fa-clock"></i>
               </div>
               <a href="#" class="small-box-footer">
-                More info <i class="fas fa-arrow-circle-right"></i>
+               
               </a>
             </div>
           </div>
@@ -52,7 +52,7 @@
               <i class="fas fa-chart-bar"></i>
               </div>
               <a href="#" class="small-box-footer">
-                More info <i class="fas fa-arrow-circle-right"></i>
+               
               </a>
             </div>
           </div>
@@ -69,7 +69,7 @@
                 <i class="fas fa-user-plus"></i>
               </div>
               <a href="#" class="small-box-footer">
-                More info <i class="fas fa-arrow-circle-right"></i>
+               
               </a>
             </div>
           </div>
@@ -86,7 +86,7 @@
                  <i class="fas fa-users"></i>
               </div>
               <a href="#" class="small-box-footer">
-                More info <i class="fas fa-arrow-circle-right"></i>
+               
               </a>
             </div>
           </div>

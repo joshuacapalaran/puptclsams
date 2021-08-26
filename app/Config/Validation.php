@@ -579,8 +579,8 @@ class Validation
 		],
 		'password_retype' => [
 			'rules' => 'required',
-			'label' => 'Date',
-			'errors' => ['required' => 'Date is required.']
+			'label' => 'Password Re-type',
+			'errors' => ['required' => 'Password Re-type is required.']
 		],
 		
 	];

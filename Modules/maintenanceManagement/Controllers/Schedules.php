@@ -270,7 +270,7 @@ public function verify(){
         }
       
   }else{
-    $_SESSION['error'] = 'Student Number Not Found';
+    $_SESSION['error'] = 'Student Number Not Found!';
     $this->session->markAsFlashdata('error');
 
 
@@ -431,16 +431,15 @@ public function getDayNumber($days){
       $data = [];
       $difference = $to_time - $time_now;
       $difference_minute =  $difference/60;
-      
-            if($current_time >= $end_time){
-              $students = $studentModel->getStudentBySchedule($schedule['course_id'],$schedule['section_id']);
 
+            if( date('H:i:s',strtotime($current_time)) >= date('H:i:s',strtotime($end_time))){
+              $students = $studentModel->getStudentBySchedule($schedule['course_id'],$schedule['section_id']);
+            
               foreach($students as $student){
 
                   $attendance = $attendanceModel->getAttendance($student['id'],$schedule['id'],date('Y-m-d'));
-                
+             
                     if(empty($attendance)){
-                      print_r($student);
 
                       $data['schedule_id'] = $schedule['id'];
                       $data['student_number'] = $student['student_num'];

@@ -44,8 +44,8 @@ class SchedsubjsModel extends \CodeIgniter\Model {
   }
 
   public function getSubjectById($id){
-    $this->join('subjects', 'schedsubjs.subject_id = subjects.id');
-    $this->join('courses','schedsubjs.course_id = courses.id');
+    $this->join('subjects', 'schedsubjs.subject_id = subjects.id','left');
+    $this->join('courses','schedsubjs.course_id = courses.id','left');
     $this->join('sections','schedsubjs.section_id = sections.id','left');
     $this->where('schedsubjs.id',$id);
     return $this->first();
@@ -67,12 +67,12 @@ class SchedsubjsModel extends \CodeIgniter\Model {
   }
   public function checkSchedule($current_day,$current_time){
     $this->where('end_time <=',$current_time);
-    // $this->where('start_time <=',$current_time);
+    // $this->where('start_time >=',$current_time);
     $this->where('day',$current_day);
     // $this->where('status', 'a');
     // $this->where('category', '1');
-    // $this->where('end_time >=','13:18:00');
-    // $this->where('start_time <=',' 13:18:00');
+    // $this->where('end_time >=','00:55:00');
+    // $this->where('start_time <=',' 00:55:00');
     // $this->like('day', '%Wednesday%');
     return $this->findAll();
   }

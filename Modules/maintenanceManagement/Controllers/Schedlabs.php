@@ -38,9 +38,9 @@ class Schedlabs extends BaseController {
     
     foreach($holidays as $holiday){
       if($holiday['status'] == 'c'){
-        $holi[] = date('Y-m-d',strtotime($holiday['date']));
+        $holi[] = date('m/d/Y',strtotime($holiday['date']));
       }else{
-        $holi[] = date('Y-m-d',strtotime(date('Y').'-'.$holiday['date']));
+        $holi[] = date('m/d/Y',strtotime(date('Y').'-'.$holiday['date']));
         
       }
     }
@@ -67,6 +67,7 @@ class Schedlabs extends BaseController {
             $this->activityLogsModel->addLogs($_SESSION['uid'], 'Add Sched lab', 'admin/schedlabs', json_encode($_POST));
             $this->session->setFlashData('success', 'Sucessfuly created a schedlab');
         } 
+        return redirect()->to(base_url('admin/schedlabs'));
         
     
       } else {

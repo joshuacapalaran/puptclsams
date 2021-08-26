@@ -41,7 +41,7 @@ class Registration extends BaseController
                     }else{
                         $_SESSION['error_message'] = 'You have an error in adding a new record';
                         $this->session->setFlashData('error_message',$_SESSION['error_message']);
-                        return redirect()->to( base_url('Registration'));
+                        return redirect()->to( base_url('Registration'))        ;
                     }
                     
                 }else{

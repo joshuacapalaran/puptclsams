@@ -195,7 +195,7 @@
            <!-- /.row -->
             <div class="modal-footer justify-content-between">
               <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-              <button type="submit" class="btn btn-primary"> Save changes</button>
+              <button type="submit" class="btn btn-primary"> Submit</button>
             </div>
             </form>
 
@@ -207,6 +207,12 @@
       <?php if(isset($_SESSION["success_registered"])): ?>
         <script type="text/javascript">
             alert_success('<?= $_SESSION["success_registered"]; ?>');
+        </script>
+      <?php endif; ?>
+
+      <?php if(isset($_SESSION["success"])): ?>
+        <script type="text/javascript">
+            alert_success('<?= $_SESSION["success"]; ?>');
         </script>
       <?php endif; ?>
         <script type="text/javascript">
