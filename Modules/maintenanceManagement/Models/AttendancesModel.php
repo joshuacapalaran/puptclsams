@@ -88,6 +88,7 @@ class AttendancesModel extends \CodeIgniter\Model
 
     return $this->findAll();
   }
+  
   public function getAttendancesGroupByDate($id = null, $date = null, $type = null){
     $this->select('date,schedule_id');
     $this->groupBy('date');
@@ -124,4 +125,70 @@ class AttendancesModel extends \CodeIgniter\Model
     $this->where('schedule_id', $id);
     return $this->findAll();
   }
+
+  public function getAttendancesByFilter($data){
+    $this->select('attendances.id as id, students.student_num,students.first_name, students.last_name, students.m_initial, attendances.time_in,attendances.schedule_id,attendances.student_number, attendances.time_out, attendances.date, attendances.remarks');
+    $this->join('students', 'attendances.student_id = students.id');
+    $this->join('schedsubjs', 'attendances.schedule_id = schedsubjs.id');
+   
+    if(!empty($data['date'])){
+      $this->where('attendances.date', $data['date']);
+    }
+
+    if(!empty($data['subject_id'])){
+      $this->where('attendances.subject_id', $data['subject_id']);
+    }
+
+    if(!empty($data['section_id'])){
+      $this->where('students.section_id', $data['section_id']);
+    }
+
+    if(!empty($data['course_id'])){
+      $this->where('students.course_id', $data['course_id']);
+    }
+    
+    if(!empty($data['semester_id'])){
+      $this->where('schedsubjs.semester_id', $data['semester_id']);
+    }
+        
+    if(!empty($data['lab_id'])){
+      $this->where('schedsubjs.lab_id', $data['lab_id']);
+    }
+        
+    if(!empty($data['sy_id'])){
+      $this->where('schedsubjs.sy_id', $data['sy_id']);
+    }
+
+    if(!empty($data['start_time']) && !empty($data['end_time'])){
+      $this->where('schedsubjs.start_time', $data['start_time']);
+      $this->where('schedsubjs.end_time', $data['end_time']);
+    }
+ 
+ 
+    if(!empty($data['date'])){
+      return $this->findAll();
+    }
+  }
+
+  public function getAttendancesByDate($id,$date){
+    $this->select('date,schedule_id');
+    $this->groupBy('date');
+    $this->orderBy('date ASC');
+    if(!empty($date)){
+      $this->where('schedule_id', $id);
+      $this->where('date', $date);
+    }
+    return $this->findAll();
+  }
+
+  public function getAttendancesOnTime($id,$date){
+    
+    if(!empty($date)){
+      $this->where('schedule_id', $id);
+      $this->where('date', $date);
+    }
+    $this->orderBy('date ASC');
+    return $this->findAll();
+  }
+
 }

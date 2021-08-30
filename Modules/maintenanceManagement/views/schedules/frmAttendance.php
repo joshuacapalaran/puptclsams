@@ -87,6 +87,7 @@
 
 <script>
 var sched_data =  JSON.parse('<?= json_encode($data);?>');
+var info =  JSON.parse('<?= json_encode($info);?>');
 $(function(){
   $('#attendance').DataTable({
       "paging": true,
@@ -114,7 +115,7 @@ $('#time_in').on('click', function(e){
   $.ajax({
       url: "<?= base_url("admin/schedules/verify")?>",
       type: "POST",
-      data: {student_num :student_num,sched_data:sched_data},
+      data: {student_num :student_num,sched_data:sched_data,info:info},
       success: function(response){
         console.log(response)
         location.reload();

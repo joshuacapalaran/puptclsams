@@ -52,8 +52,10 @@ class Profile extends BaseController {
     $roleModel = new RolesModel();
     $data['roles'] = $roleModel->getRoles();
     $data['rec'] = $model->getUsersWithRolesById($id);
+    
     if(!empty($_POST))
     {
+      
       if (!$this->validate('profile'))
       {
         $data['errors'] = \Config\Services::validation()->getErrors();
@@ -63,7 +65,54 @@ class Profile extends BaseController {
       }
       else
       {
-        if($model->editUsers($_POST, $id))
+        if(!empty($_FILES)){
+          $targetDir = $_SERVER['DOCUMENT_ROOT'] ."/assets/uploads/".$data['rec']['id']."/";
+          $fileName = basename($_FILES['profile_image']["name"]);
+          $oldFilePath = $data['rec']['profile_image'];
+          $targetFilePath = $targetDir .'/'. $fileName;
+          $fileType = pathinfo($targetFilePath,PATHINFO_EXTENSION);
+          $allowTypes = array('jpg','JPG','PNG','png','jpeg','JPEG');
+
+          if (!file_exists($targetDir)) {
+            mkdir($targetDir, 0777, true);
+          }
+          if(!empty($data['rec']['profile_image'])){
+            $dd = substr($oldFilePath, strlen(base_url()));
+            $delete_file = $_SERVER['DOCUMENT_ROOT'].$dd;
+            if (file_exists($delete_file)) {
+              unlink($delete_file);
+            } 
+          }
+          
+
+            if(in_array($fileType, $allowTypes)){
+              // Upload file to server
+              if(move_uploaded_file($_FILES["profile_image"]["tmp_name"], $targetFilePath)){
+                $_POST['profile_image'] = base_url('/assets/uploads/'.$data['rec']['id'].'/'.$fileName);
+                if($model->editUsers($_POST, $id))
+                {
+                  $_SESSION['success'] = 'You have updated a record';
+                  $this->session->markAsFlashdata('success');
+                  return redirect()->to(base_url('admin/profile'));
+                }
+                else
+                {
+                  $_SESSION['error'] = 'You an error in updating a record';
+                  $this->session->markAsFlashdata('error');
+                  return redirect()->to( base_url('admin/profile'));
+                }
+              }
+              
+            }else{
+              $_SESSION['error'] = "Sorry, only JPG, JPEG, PNG, image are allowed to upload.";
+              $this->session->markAsFlashdata('error');
+              return redirect()->to( base_url('admin/profile'));
+            }
+        
+      
+         
+        }else{
+          if($model->editUsers($_POST, $id))
           {
             $_SESSION['success'] = 'You have updated a record';
             $this->session->markAsFlashdata('success');
@@ -75,6 +124,9 @@ class Profile extends BaseController {
             $this->session->markAsFlashdata('error');
             return redirect()->to( base_url('admin/profile'));
           }
+        }
+        
+        
       }
     }
     else

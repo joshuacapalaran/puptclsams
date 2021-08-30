@@ -559,11 +559,6 @@ class Validation
 			'label' => 'Name',
 			'errors' => ['required' => 'User Name is required.']
 		],
-		'password' => [
-			'rules' => 'required',
-			'label' => 'Name',
-			'errors' => ['required' => 'Password is required.']
-		],
 	];
 
 	public $change_password = [

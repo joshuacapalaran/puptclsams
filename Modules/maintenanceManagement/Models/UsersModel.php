@@ -7,7 +7,7 @@ class UsersModel extends \CodeIgniter\Model
 {
     protected $table = 'users';
 
-    protected $allowedFields = ['last_name', 'first_name','m_initial', 'username', 'email', 'password', 'role_id', 'status', 'created_at','updated_at', 'deleted_at', 'title', 'description'];
+    protected $allowedFields = ['last_name', 'first_name','m_initial', 'username', 'email', 'password', 'role_id','profile_image', 'status', 'created_at','updated_at', 'deleted_at', 'title', 'description'];
 
     public function getUserWithCondition($conditions = [])
 	{

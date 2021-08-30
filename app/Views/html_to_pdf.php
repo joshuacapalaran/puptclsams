@@ -21,7 +21,7 @@ td {
   font-size:11px;
 }
  </style>
-<img src="data:image/png;base64,'.base64_encode(file_get_contents('assets/img/pup_logo.png'))'" style="width:100%;">
+
 <body>
     
     <div id="container">

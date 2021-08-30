@@ -34,7 +34,22 @@ class Attendance extends BaseController {
     $data['semesters'] = $semsModel->getActiveSemesters();
     $data['schoolyears'] = $schoolyear->getActiveSchoolYears();
     $data['sections'] = $sectionModel->getActiveSections();
-    $data['attendances'] = $attendanceModel->getAttendancesByStudent();
+
+    
+    if($_POST){
+      if(empty($_POST['date'])){
+        $_SESSION['error'] = "Please Select Date";
+        $this->session->markAsFlashdata('error');
+      }
+      if(empty($_POST['start_time']) || empty($_POST['end_time'])){
+        $_SESSION['error'] = "Start Time and End Time is required";
+        $this->session->markAsFlashdata('error');
+      }
+       $data['attendances'] = $attendanceModel->getAttendancesByFilter($_POST);
+       $data['value'] = $_POST;
+
+
+    }
     $data['view'] = 'Modules\MaintenanceManagement\Views\attendance\frmAttendance';
     return view('template/index', $data);
   }
@@ -45,9 +60,29 @@ class Attendance extends BaseController {
     $schedsubj = new SchedsubjsModel;
     
     $mpdf = new \Mpdf\Mpdf();
-    $pdf_data['attendances'] = $attendanceModel->getAttendancesByStudent();
-    $pdf_data['headers'] = $attendanceModel->getAttendancesGroupByDate();
-    $pdf_data['times'] = $attendanceModel->getAttendancesByTime();
+    $data = array();
+    $data['date'] = ($_GET['date'] !== 'undefined') ? $_GET['date']:'';
+    $data['subject_id'] = ($_GET['subject_id'] !== 'undefined') ? $_GET['subject_id']:'';
+    $data['section_id'] = ($_GET['section_id'] !== 'undefined') ? $_GET['section_id']:'';
+    $data['course_id'] = ($_GET['course_id'] !== 'undefined') ? $_GET['course_id']:'';
+    $data['semester_id'] = ($_GET['semester_id'] !== 'undefined') ? $_GET['semester_id']:'';
+    $data['lab_id'] = ($_GET['lab_id'] !== 'undefined') ? $_GET['lab_id']:'';
+    $data['sy_id'] = ($_GET['sy_id'] !== 'undefined') ? $_GET['sy_id']:'';
+    $data['start_time'] = ($_GET['start_time'] !== 'undefined') ? $_GET['start_time']:'';
+    $data['end_time'] = ($_GET['end_time'] !== 'undefined') ? $_GET['end_time']:'';
+    $attendance = $attendanceModel->getAttendancesByFilter($data);
+    $pdf_data['attendances'] = $attendance;
+    $pdf_data['headers'] = $attendanceModel->getAttendancesByDate($attendance[0]['schedule_id'],$data['date']);
+    $pdf_data['times'] = $attendanceModel->getAttendancesOnTime($attendance[0]['schedule_id'],$data['date']);
+
+    $pdf_data['info'] = $schedsubj->getScheduleSubjDetailsById($attendance[0]['schedule_id']);
+    $info = $schedsubj->getSubjectById($attendance[0]['schedule_id']);
+    $course_abbrev = $info['course_abbrev'];
+    $section = $info['section'];
+    $year = $info['year'];
+    $course_abbrev = $info['course_abbrev'];
+    $subj_name = $info['subj_name'];
+    $pdf_data['type'] = 'event';
 
     $mpdf->setHTMLHeader('
         <div class="col12" style="padding-left:100px">

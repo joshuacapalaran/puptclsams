@@ -1,4 +1,35 @@
-
+<style>
+.form-div { margin-top: 100px; border: 1px solid #e0e0e0; }
+#profileDisplay {
+  display: block;
+  height: 200px;
+  width: 40%;
+  margin: 0px auto;
+  border-radius: 10%;
+}
+.img-placeholder {
+  width: 40%;
+  color: white;
+  height: 100%;
+  background: black;
+  opacity: .7;
+  height: 200px;
+  border-radius: 10%;
+  z-index: 2;
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  display: none;
+}
+.img-placeholder h4 {
+  margin-top: 40%;
+  color: white;
+}
+.img-div:hover .img-placeholder {
+  display: block;
+  cursor: pointer;
+}
+</style>
  <div class="content-wrapper">
     <!-- Content Header (Page header) -->
     <div class="content-header">
@@ -19,20 +50,39 @@
     <!-- /.content-header -->
 
   <!-- Main content -->
+  
   <div class="content">
     <div class="container-fluid">
       <div class="card card-default">
        
-          <form action="<?= base_url("admin/profile")?>/<?= isset($rec) ? 'edit/'.esc($rec['id']): 'add'?>" method="post" accept-charset="utf-8">
+          <form action="<?= base_url("admin/profile")?>/<?= isset($rec) ? 'edit/'.esc($rec['id']): 'add'?>" method="post" accept-charset="utf-8" enctype="multipart/form-data">
             <div class="card-body">
                 <div class="row">
+                  <div class="col-md-12">
+                    <div class="form-group text-center"  >
+                      <span class="img-div">
+                        <div class="text-center img-placeholder"  onClick="triggerClick()">
+                          <h4>Update image</h4>
+                        </div>
+                        <img src="<?= ($rec['profile_image'] !== '') ? $rec['profile_image']:base_url('\assets\uploads\avatar.jpg')?>" onClick="triggerClick()" class="roundeds" id="profileDisplay">
+                      </span>
+                      <input type="file" name="profile_image" onChange="displayImage(this)" id="profileImage" class="form-control" style="display: none;">
+                      <label>Profile Image</label>
+                    </div>
+                  </div>
+                </div>
+                <div class="row">
+                
                   <div class="col-md-6">
+
+                
                     <div class="form-group">
                       <label for="first_name">First name*</label>
                       <input name="first_name" type="text" value="<?= isset($rec['first_name']) ? $rec['first_name'] : set_value('first_name') ?>" class="form-control <?= isset($errors['first_name']) ? 'is-invalid':' ' ?>" id="first_name" placeholder="First Name">
                       <?php if(isset($errors['first_name'])):?>
                         <p class="text-danger"><?=esc($errors['first_name'])?><p>
                       <?php endif;?>  
+                      
                     </div>
                   </div>
 
@@ -93,19 +143,25 @@
 <script src="<?=base_url();?>/plugins/inputmask/inputmask.min.js"></script>
   <script src="<?=base_url();?>/plugins/inputmask/inputmask.extensions.min.js"></script>
   <script type="text/javascript">
+    var role = '<?= $_SESSION['rid'];?>';
     $(function(){
-      var inputmask = new Inputmask("9999-99999-TG-9");
+      if(role == '3'){
+        var inputmask = new Inputmask("9999-99999-TG-9");
           inputmask.mask($('[id*=username]'));
-          
-      $('[id*=username]').on('keypress', function (e) {
-          var number = $(this).val();
-          if (number.length == 2) {
-              $(this).val($(this).val() + '-');
-          }
-          else if (number.length == 7) {
-              $(this).val($(this).val() + '-');
-          }
-      });
+
+        $('[id*=username]').on('keypress', function (e) {
+            var number = $(this).val();
+            if (number.length == 2) {
+                $(this).val($(this).val() + '-');
+            }
+            else if (number.length == 7) {
+                $(this).val($(this).val() + '-');
+            }
+        });
+      }
+
+      
+    
 
 
       setTimeout(function(){
@@ -119,6 +175,19 @@
         x.type = "text";
       } else {
         x.type = "password";
+      }
+    }
+
+    function triggerClick(e) {
+      document.querySelector('#profileImage').click();
+    }
+    function displayImage(e) {
+      if (e.files[0]) {
+        var reader = new FileReader();
+        reader.onload = function(e){
+          document.querySelector('#profileDisplay').setAttribute('src', e.target.result);
+        }
+        reader.readAsDataURL(e.files[0]);
       }
     }
   </script>

@@ -6,6 +6,9 @@ use Modules\maintenanceManagement\Models\UsersModel;
 use Modules\maintenanceManagement\Models\StudentsModel;
 use Modules\maintenanceManagement\Models\ProfessorsModel;
 use Modules\MaintenanceManagement\Models\ActivityLogsModel;
+use Modules\MaintenanceManagement\Models\CoursesModel;
+use Modules\MaintenanceManagement\Models\SectionsModel;
+
 use App\Controllers\BaseController;
 
 class Users extends BaseController
@@ -40,7 +43,12 @@ class Users extends BaseController
 		$model = new UsersModel();
     	$roleModel = new RolesModel();
     	$studentModel = new StudentsModel();
-    	$professorModel = new ProfessorsModel();
+		$professorModel = new ProfessorsModel();
+		$course = new CoursesModel;
+		$section = new SectionsModel;
+		
+		$data['courses'] = $course->getActiveCourse();
+        $data['sections'] = $section->getActiveSections();
 		$data['roles'] = $roleModel->getRoles();
 		
     	if(!empty($_POST))

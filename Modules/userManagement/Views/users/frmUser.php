@@ -70,6 +70,8 @@
                   </div>
 
                   
+
+                  
                 </div>
               
                
@@ -87,12 +89,27 @@
                         <p class="text-danger"><?=esc($errors['password'])?><p>
                       <?php endif;?>  
                     </div>
+
+                    <div class="input-group" id="section" >
+                      <i class="bx bxs-user"></i>
+                      <label class="form-label" for="section_id"></label>
+                      <select name="section_id" id="section_id" class="form-control">
+                        <option selected disabled>-- Please Select Section --</option>
+                        <?php foreach($sections as $section): ?>
+                        <option value="<?= $section['id'] ?>" <?=   ($section['id'] == $value['section_id']) ? 'selected':'' ?>><?= ucwords($section['year']) ?> - <?= ucwords($section['section']) ?></option>
+                        <?php endforeach; ?>
+                      <!--  -->
+                      </select>
+                    </div>
+                    <?php if(isset($errors['section_id'])):?>
+                      <p class="text-danger"><?=esc($errors['section_id'])?><p>
+                    <?php endif;?>
                   </div>
 
                   <div class="col-md-6">
                     <div class="form-group">
                       <label for="username">Role*</label>
-                      <select name="role_id" class="form-control <?= isset($errors['role_id']) ? 'is-invalid':' ' ?>">
+                      <select name="role_id" class="form-control <?= isset($errors['role_id']) ? 'is-invalid':' ' ?>" id="role_id">
                       <option selected disabled >Please select role</option>
                       <?php foreach($roles as $role): ?>
                       <?php if($role['id'] !== '1'): ?>
@@ -104,9 +121,24 @@
                         <p class="text-danger"><?=esc($errors['role_id'])?><p>
                       <?php endif;?>  
                     </div>
+                    
+                    <br>
+                    
+                    <div class="input-group" id="course" >
+                      <i class="bx bxs-user"></i>
+                      <label class="form-label" for="course_id" ></label>
+                      <select name="course_id" id="course_id" class="form-control">
+                        <option selected disabled>-- Please Select Course --</option>
+                        <?php foreach($courses as $course): ?>
+                        <option value="<?= $course['id'] ?>" <?=   ($course['id'] == $value['course_id']) ? 'selected':'' ?>><?= ucwords($course['course_abbrev']) ?> - <?= ucwords($course['course_name']) ?></option>
+                        <?php endforeach; ?>
+                      </select>
+                    </div>
+                    <?php if(isset($errors['course_id'])):?>
+                      <p class="text-danger"><?=esc($errors['course_id'])?><p>
+                    <?php endif;?>
                   </div>
-
-                  
+                
                 </div>
                 <div class="row">
                   <div class="col-md-6 offset-md-6">
@@ -140,6 +172,17 @@
       //         $(this).val($(this).val() + '-');
       //     }
       // });
+      $('#course').hide();
+          $('#section').hide();
+      $(document).on('change','#role_id',function(e){
+        if(this.value == 3){
+          $('#course').show();
+          $('#section').show();
+        }else{
+          $('#course').hide();
+          $('#section').hide();
+        }
+      });
 
 
       setTimeout(function(){

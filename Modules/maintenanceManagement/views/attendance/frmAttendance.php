@@ -27,8 +27,8 @@
                 <div class="row">
                   <div class="col-md-6">
                     <div class="form-group">
-                      <label for="schyear_id">Date</label>
-                      <input type="date" value="<?= isset($rec['date']) ? $rec['date']:''?>"class="form-control" id="date" name="date">
+                      <label for="schyear_id">Date*</label>
+                      <input type="date" value="<?= isset($value['date']) ? $value['date']:''?>"class="form-control" id="date" name="date">
                     </div>
 
                     <div class="form-group">
@@ -63,6 +63,14 @@
                         <!--  -->
                         </select>
                       </div>
+
+                      <div class="form-group" id="end-time-div">
+                          <label class="form-label" for="end_time">End Time*</label>
+                          <div class="input-group">
+                              <input type="time" class="form-control" value="<?=isset($value['end_time']) ? esc($value['end_time']): ''?>" placeholder="End Time" id="end_time" name="end_time">
+                              
+                          </div>
+                        </div>
 
                   </div>
 
@@ -101,6 +109,11 @@
                         <!--  -->
                         </select>
                       </div>
+
+                      <div class="form-group" id="start-time-div">
+                          <label class="form-label" for="start_time">Start Time*</label>
+                          <input type="time" class="form-control" value="<?=isset($value['start_time']) ? esc($value['start_time']): ''?>" placeholder="Start Time" id="start_time" name="start_time">
+                        </div>
 
                   </div>
 
@@ -171,6 +184,8 @@
 </div>
 
 <script>
+var value =  JSON.parse('<?= json_encode($value);?>');
+
 $(function(){
   $('#attendance').DataTable({
       "paging": true,
@@ -185,7 +200,7 @@ $(function(){
         {
             text: 'Generate PDF',
             action: function ( e, dt, node, config ) {
-                location.href = "<?= base_url('admin/attendance/pdf') ?>";
+                location.href = "<?= base_url('admin/attendance/pdf') ?>?date="+value['date']+"&subject_id="+value['subject_id']+"&section_id="+value['section_id']+"&course_id="+value['course_id']+"&semester_id="+value['semester_id']+"&lab_id="+value['lab_id']+"&sy_id="+value['sy_id']+"&start_time="+value['start_time']+"&end_time="+value['end_time'];
             }
         }
       ],

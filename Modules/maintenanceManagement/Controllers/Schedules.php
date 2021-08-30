@@ -231,6 +231,7 @@ public function verify(){
       $data['student_id'] = $students['id'];
       $data['student_number'] = $_POST['student_num'];
       $data['date'] = $_POST['sched_data']['date'];
+      $data['subject_id'] = $_POST['info']['subject_id'];
       $start_time = strtotime($sched[0]['start_time']);
   
       if(!empty($sched)){
@@ -380,7 +381,8 @@ public function verify(){
     $mpdf->WriteHTML($html);
     $this->response->setHeader('Content-Type', 'application/pdf');
     $random = rand();
-    $mpdf->Output("$subj_name  $course_abbrev  $year-$section $random.pdf",'I'); // opens in browser
+    $current_date = date('Y-m-d');
+    $mpdf->Output("$subj_name  $course_abbrev  $year-$section  $current_date $random .pdf",'I'); // opens in browser
 
     $data['view'] = 'Modules\MaintenanceManagement\Views\attendance\frmAttendance';
     return view('template/index', $data);
