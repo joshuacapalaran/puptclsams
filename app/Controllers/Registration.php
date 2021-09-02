@@ -33,8 +33,8 @@ class Registration extends BaseController
                     if($users_model->addStudentAccount($_POST)){
                         $user_id = $users_model->insertID();
                         if($student_model->addRegisteredStudent($_POST, $user_id)){
-                            $_SESSION['success_message'] = 'You Successfuly have PUP-CLSAMS Account!';
-                            $this->session->setFlashData('success_message',$_SESSION['success_message']);
+                            $_SESSION['success_registered'] = 'You Successfuly have PUP-CLSAMS Account!';
+                            $this->session->setFlashData('success_registered',$_SESSION['success_registered']);
                             return redirect()->to( base_url());
                         }
                         

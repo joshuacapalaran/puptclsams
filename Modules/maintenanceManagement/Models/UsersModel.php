@@ -39,8 +39,9 @@ class UsersModel extends \CodeIgniter\Model
 
 	public function getUsersWithRolesById($id)
 	{	
-		$this->select('users.*, roles.*, users.id as id');
+		$this->select('users.*, roles.*, users.id as id, students.course_id, students.section_id');
 		$this->join('roles', 'users.role_id = roles.id', 'left');
+		$this->join('students', 'users.id = students.user_id','left');
 		$this->where('users.id', $id);
 	    return $this->first();
 	}

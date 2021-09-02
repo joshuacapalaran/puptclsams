@@ -99,8 +99,17 @@ class Users extends BaseController
 		helper(['form', 'url', 'html']);
 		$model = new UsersModel();
 		$roleModel = new RolesModel();
+		$course = new CoursesModel;
+		$section = new SectionsModel;
+		
+		$data['courses'] = $course->getActiveCourse();
+        $data['sections'] = $section->getActiveSections();
 		$data['roles'] = $roleModel->getRoles();
 		$data['rec'] = $model->getUsersWithRolesById($id);
+		// if($data['rec']['role_id'] == '3'){
+		// 	$data['rec'] = $model->getUsersWitStudentById($id);
+
+		// }
     	if(!empty($_POST))
     	{
 	    	if (!$this->validate('users'))

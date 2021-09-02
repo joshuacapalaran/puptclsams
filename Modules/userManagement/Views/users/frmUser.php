@@ -79,8 +79,8 @@
                 <div class="row">
                   <div class="col-md-6">
                     <div class="form-group">
-                      <label for="password">Password*</label>
-                      <input name="password" type="password" value="<?= isset($rec['password']) ? $rec['password'] : set_value('password') ?>" class="form-control <?= isset($errors['password']) ? 'is-invalid':' '  ?>" id="password" placeholder="Password">
+                      <label for="password">Password (for change password)*</label>
+                      <input name="password" type="password" value="<?= isset($rec['password']) ? '' : set_value('password') ?>" class="form-control <?= isset($errors['password']) ? 'is-invalid':' '  ?>" id="password" placeholder="Password">
                       <div class="form-check">
                         <input type="checkbox" class="form-check-input" id="exampleCheck1" onclick="myFunction()">
                         <label class="form-check-label" for="exampleCheck1">Show Password</label>
@@ -96,7 +96,7 @@
                       <select name="section_id" id="section_id" class="form-control">
                         <option selected disabled>-- Please Select Section --</option>
                         <?php foreach($sections as $section): ?>
-                        <option value="<?= $section['id'] ?>" <?=   ($section['id'] == $value['section_id']) ? 'selected':'' ?>><?= ucwords($section['year']) ?> - <?= ucwords($section['section']) ?></option>
+                        <option value="<?= $section['id'] ?>" <?=   ($section['id'] == $rec['section_id']) ? 'selected':'' ?>><?= ucwords($section['year']) ?> - <?= ucwords($section['section']) ?></option>
                         <?php endforeach; ?>
                       <!--  -->
                       </select>
@@ -130,7 +130,7 @@
                       <select name="course_id" id="course_id" class="form-control">
                         <option selected disabled>-- Please Select Course --</option>
                         <?php foreach($courses as $course): ?>
-                        <option value="<?= $course['id'] ?>" <?=   ($course['id'] == $value['course_id']) ? 'selected':'' ?>><?= ucwords($course['course_abbrev']) ?> - <?= ucwords($course['course_name']) ?></option>
+                        <option value="<?= $course['id'] ?>" <?=   ($course['id'] == $rec['course_id']) ? 'selected':'' ?>><?= ucwords($course['course_abbrev']) ?> - <?= ucwords($course['course_name']) ?></option>
                         <?php endforeach; ?>
                       </select>
                     </div>
@@ -173,7 +173,13 @@
       //     }
       // });
       $('#course').hide();
-          $('#section').hide();
+      $('#section').hide();
+      var course_id = '<?= $rec['course_id']?>';
+      var section_id = '<?= $rec['section_id']?>';
+      if(course !== '' && section_id !== ''){
+        $('#course').show();
+        $('#section').show();
+      }
       $(document).on('change','#role_id',function(e){
         if(this.value == 3){
           $('#course').show();
