@@ -27,6 +27,26 @@ class ProfessorsModel extends BaseModel {
     $this->where('p.status', 'a');
     return $this->findAll();
   }
+
+  public function getProfessorsByFcode($f_code){
+    $this->select('p.*, suf.suffix_name, p.id as id');
+    $this->from('professors p');
+    $this->distinct('p');
+    $this->join('suffixes suf', 'suf.id = p.suffix_id', 'left');
+    $this->where('p.f_code', $f_code);
+    $this->where('p.status', 'a');
+    return $this->first();
+  }
+
+  public function getProfessorsByUserId($user_id){
+    $this->select('p.*, suf.suffix_name, p.id as id');
+    $this->from('professors p');
+    $this->distinct('p');
+    $this->join('suffixes suf', 'suf.id = p.suffix_id', 'left');
+    $this->where('p.user_id', $user_id);
+    $this->where('p.status', 'a');
+    return $this->first();
+  }
   public function add($val_array){
     $val_array['status'] = 'a';
     return $this->save($val_array);

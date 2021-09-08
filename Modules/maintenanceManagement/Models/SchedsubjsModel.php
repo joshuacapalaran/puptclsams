@@ -133,5 +133,17 @@ class SchedsubjsModel extends \CodeIgniter\Model {
 		$val_array['deleted_at'] = (new \DateTime())->format('Y-m-d H:i:s');
 		$val_array['status'] = 'd';
 		return $this->update($id, $val_array);
-	}
+  }
+  
+  public function getStudentScheduleForProf($prof_id,$current_day,$current_time){
+    // $this->where('end_time >=',$current_time);
+    // $this->where('start_time <=',$current_time);
+    $this->where('status', 'a');
+    $this->where('category', '1');
+    // $this->where('end_time >=','15:18:00');
+    // $this->where('start_time <=',' 15:18:00');
+    // $this->where('day', $current_day);
+    $this->where('professor_id', $prof_id);
+    return $this->first();
+  }
 }

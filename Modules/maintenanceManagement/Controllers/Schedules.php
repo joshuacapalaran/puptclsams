@@ -301,7 +301,7 @@ public function verify(){
 
       }
   
-      if(!empty($attendance) ){
+        if(!empty($attendance) ){
           if ($attendance['time_out'] == null) {
             $difference = $to_time - $time_now;
             $difference_minute =  $difference/60;
@@ -315,7 +315,9 @@ public function verify(){
               $_SESSION['error'] = "You cant time out again! Please Time-in on another day!";
               $this->session->markAsFlashdata('error');
           }
-      }
+        }else{
+          $this->session->setFlashData('error', 'You dont have yet time-in today!');
+        }
     } else{
       $this->session->setFlashData('error','Student Number Not Found');
 

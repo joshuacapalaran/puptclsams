@@ -174,9 +174,11 @@ $routes->group('admin/schedules', ['namespace' => 'Modules\MaintenanceManagement
 //Attendance
 $routes->group('admin/attendance', ['namespace' => 'Modules\MaintenanceManagement\Controllers'], function($routes){
   $routes->match(['get', 'post'],'/', 'Attendance::index');
+  $routes->match(['get', 'post'],'prof-attendance', 'Attendance::attendance');
   $routes->match(['get', 'post'],'verify', 'Attendance::verify');
   $routes->match(['get', 'post'],'attendanceTimeOut', 'Attendance::attendance_time_out');
   $routes->match(['get', 'post'],'pdf', 'Attendance::pdf');
+  $routes->match(['get', 'post'],'prof-pdf', 'Attendance::profPdf');
 });
 
 //activity logs

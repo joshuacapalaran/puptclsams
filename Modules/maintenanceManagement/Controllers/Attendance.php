@@ -13,6 +13,7 @@ use Modules\MaintenanceManagement\Models\SchedsubjsModel;
 use Modules\MaintenanceManagement\Models\SectionsModel;
 use Modules\MaintenanceManagement\Models\StudentsModel;
 use Modules\MaintenanceManagement\Models\AttendancesModel;
+use Modules\MaintenanceManagement\Models\ProfAttendancesModel;
 
 
 class Attendance extends BaseController {
@@ -114,6 +115,172 @@ class Attendance extends BaseController {
     $this->response->setHeader('Content-Type', 'application/pdf');
     $random = rand();
     $mpdf->Output("$subj_name  $course_abbrev  $year-$section $random.pdf",'I'); // opens in browser
+
+    $data['view'] = 'Modules\MaintenanceManagement\Views\attendance\frmAttendance';
+    return view('template/index', $data);
+  }
+
+
+  public function attendance()
+  {
+    $attendanceModel = new ProfAttendancesModel();
+    $schedsubj = new SchedsubjsModel;
+    $schedlabs = new SchedlabsModel;
+    $professorsModel = new ProfessorsModel();
+
+    $professor = $professorsModel->getProfessorsByUserId($_SESSION['uid']);
+    $data['attendances'] = $attendanceModel->getAttendancesBySchedsubj($professor['id']);
+
+    $data['view'] = 'Modules\MaintenanceManagement\Views\attendance\profAttendance';
+    return view('template/index', $data);
+
+  }
+
+  public function verify(){
+    $professorsModel = new ProfessorsModel();
+    $attendanceModel = new ProfAttendancesModel();
+    $schedsubj = new SchedsubjsModel;
+    $schedlabs = new SchedlabsModel;
+    date_default_timezone_set('Asia/Singapore');
+      $current_date = date('Y-m-d');
+    $current_day = date('l');
+    $current_time = date('H:i:s',time());
+    // $time_now = time();
+    $professor = $professorsModel->getProfessorsByFcode($_POST['faculty_code']);
+  
+    if(!empty($professor) ) {
+  
+    
+
+          $attendance = $attendanceModel->getAttendance($professor['id'],$current_date);
+      
+          $sched = $schedsubj->getStudentScheduleForProf($professor['id'],$current_day,$current_time);
+         
+          
+        $data['professor_id'] = $professor['id'];
+        $data['faculty_code'] = $_POST['faculty_code'];
+        $data['date'] = $current_date;
+        $data['subject_id'] = $sched['subject_id'];
+        $data['schedule_id'] = $sched['id'];
+   
+        if(!empty($sched)){
+  
+            if(empty($attendance)){
+
+            
+              if($attendanceModel->insertAttendance($data)){
+                $this->session->setFlashData('success', 'You have succesfully time in!');
+              }else {
+                $_SESSION['error'] = 'Something Went Wrong!';
+                $this->session->markAsFlashdata('error');
+              }
+
+            }else{
+              // $_SESSION['error'] = 'You already Time in!';
+              // $this->session->markAsFlashdata('error');
+              if($attendance['time_out'] == null){
+                if ($attendanceModel->timeOut($attendance['id'])) {
+                  $this->session->setFlashData('success', 'You have time-in and you succesfully time out!');
+                } 
+              }else if($attendance['time_out'] !== null){
+                $this->session->setFlashData('error', 'You have already log, Please Time-in/Time-out on next schedule.');
+
+              }
+            
+            }
+          }else{
+            $this->session->setFlashData('error', 'You dont have class schedule today.');
+          }
+        
+    }else{
+      $_SESSION['error'] = 'Faculty Code Not Found!';
+      $this->session->markAsFlashdata('error');
+  
+  
+    }
+  }
+  
+    public function attendance_time_out(){
+      $professorsModel = new ProfessorsModel();
+      $attendanceModel = new ProfAttendancesModel();
+      $schedsubj = new SchedsubjsModel;
+  
+      $professor = $professorsModel->getProfessorsByFcode($_POST['faculty_code']);
+   
+      if(!empty($professor) ) {
+        $date = date('l');
+        $time = date('H:i:s',time());
+        $current_date = date('Y-m-d');
+     
+        $attendance = $attendanceModel->getAttendance($professor['id'],$current_date);
+        print_r($professor);
+        if(!empty($attendance)){
+            if ($attendance['time_out'] == null) {
+              if ($attendanceModel->timeOut($attendance['id'])) {
+                $this->session->setFlashData('success', 'You have succesfully time out!');
+              } else {
+                $this->session->setFlashData('error', 'Something Went Wrong!');
+              }
+            }else{
+                $this->session->setFlashData('error', 'You cant time out again! Please Time-in on another day!');
+
+            }
+        }else{
+          $this->session->setFlashData('error', 'You dont have yet time-in today!');
+        }
+      } else{
+        $this->session->setFlashData('error','Faculty Code Not Found!');
+  
+      }
+        
+    }
+  
+    
+  public function profPdf(){
+    $attendanceModel = new ProfAttendancesModel(); 
+    $professorsModel = new ProfessorsModel();
+    $schedsubj = new SchedsubjsModel;
+    $schedlabs = new SchedlabsModel;
+    
+
+    $mpdf = new \Mpdf\Mpdf();
+    $professor = $professorsModel->getProfessorsByUserId($_SESSION['uid']);
+    $pdf_data['attendances'] = $attendanceModel->getAttendancesBySchedsubj($professor['id']);
+    $mpdf->setHTMLHeader('
+        <div class="col12" style="padding-left:100px">
+            <div class="col6" style=" width:10%;float:left; padding-left:120px;">
+            <img src="data:image/png;base64,'.base64_encode(file_get_contents('assets/img/pup_logo.png')).'" style="width:50px; ">
+            </div>
+            <div class="col6" style=" padding-right:245px;text-align:center;">  
+              <b>Polytechnic University of the Philippines</b>
+              <br>
+              Taguig Branch<br> General Santos Avenue, Lower Bicutan, Taguig City
+              <br>
+              <br>
+              <b>Attendance</b>
+            </div>
+        </div>
+    ');
+
+  
+    $html = view('prof_pdf', $pdf_data);
+    // $mpdf->showImage = true;
+    // $mpdf->setHTMLHeader(site_url("assets/img/pup_logo.png")); 
+
+  
+    
+    $mpdf->Addpage('L', // L - landscape, P - portrait
+    '', '', '', '', 30, // margin_left
+    30, // margin right
+    40, // margin top
+    30, // margin bottom
+    5, // margin header
+    5); // margin footer
+    $mpdf->WriteHTML($html);
+    $this->response->setHeader('Content-Type', 'application/pdf');
+    $random = rand();
+    $current_date = date('Y-m-d');
+    $mpdf->Output(".pdf",'I'); // opens in browser
 
     $data['view'] = 'Modules\MaintenanceManagement\Views\attendance\frmAttendance';
     return view('template/index', $data);
