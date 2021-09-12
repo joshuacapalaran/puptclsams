@@ -338,10 +338,13 @@ public function verify(){
     $pdf_data['times'] = $attendanceModel->getAttendancesByTime($_GET['id'], $_GET['date'], $_GET['type']);
 
     if($_GET['type'] == 'event'){
+        
       $pdf_data['info'] = $schedsubj->getScheduleSubjDetailsById($_GET['id']);
+
     }elseif($_GET['type'] == 'lab'){
       $pdf_data['info'] = $schedlabs->getLabScheduleById($_GET['id']);
     }
+
     $info = $schedsubj->getSubjectById($_GET['id']);
     $course_abbrev = $info['course_abbrev'];
     $section = $info['section'];
@@ -349,7 +352,7 @@ public function verify(){
     $course_abbrev = $info['course_abbrev'];
     $subj_name = $info['subj_name'];
     $pdf_data['type'] = $_GET['type'];
-    
+  
     $mpdf->setHTMLHeader('
         <div class="col12" style="padding-left:100px">
             <div class="col6" style=" width:10%;float:left; padding-left:120px;">

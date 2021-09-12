@@ -54,14 +54,14 @@ class SchedsubjsModel extends \CodeIgniter\Model {
   public function getScheduleSubjDetailsById($id){
     $this->select('sched.*,subjects.*, suffixes.*, sections.*,courses.*,professors.*,semesters.*,schoolyears.*,courses.*, labs.*, sched.id as id');
     $this->from('schedsubjs sched');
-    $this->join('labs','sched.lab_id = labs.id','inner');
-    $this->join('subjects','sched.subject_id = subjects.id','inner');
-    $this->join('courses','sched.course_id = courses.id','inner');
-    $this->join('professors','sched.professor_id = professors.id','inner');
-    $this->join('semesters','sched.semester_id = semesters.id','inner');
-    $this->join('schoolyears','sched.sy_id = schoolyears.id','inner');
-    $this->join('sections','sched.section_id = sections.id','inner');
-    $this->join('suffixes','professors.suffix_id = suffixes.id','inner');
+    $this->join('labs','sched.lab_id = labs.id','left');
+    $this->join('subjects','sched.subject_id = subjects.id','left');
+    $this->join('courses','sched.course_id = courses.id','left');
+    $this->join('professors','sched.professor_id = professors.id','left');
+    $this->join('semesters','sched.semester_id = semesters.id','left');
+    $this->join('schoolyears','sched.sy_id = schoolyears.id','left');
+    $this->join('sections','sched.section_id = sections.id','left');
+    $this->join('suffixes','professors.suffix_id = suffixes.id','left');
     $this->where('sched.id', $id);
     return $this->first();
   }
