@@ -159,6 +159,21 @@
 
     <!-- /.content -->
   </div>
+
+
+
+    
+  <?php if(isset($_SESSION["success"])): ?>
+    <script type="text/javascript">
+        alert_success('<?= $_SESSION["success"]; ?>');
+    </script>
+  <?php endif; ?>
+
+  <?php if(isset($_SESSION["error"])): ?>
+    <script type="text/javascript">
+        alert_error('<?= $_SESSION["error"]; ?>');
+    </script>
+  <?php endif; ?>
   <script>
     var capacities = JSON.parse('<?= json_encode($capacities); ?>');
     // console.log(capacities);

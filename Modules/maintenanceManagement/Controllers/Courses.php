@@ -28,10 +28,13 @@ class Courses extends BaseController {
         if($courseModel->add($_POST)){
           $this->activityLogsModel->addLogs($_SESSION['uid'], 'Add Course', 'admin/courses', json_encode($_POST));
           $this->session->setFlashData('success_message', 'Sucessfuly created a course');
+          return redirect()->to(base_url('admin/courses'));
+
         } else {
           $this->session->setFlashData('error_message', 'Something went wrong!');
+          return redirect()->to(base_url('admin/courses'));
+
         }
-        return redirect()->to(base_url('admin/courses'));
       } else {
         $data['value'] = $_POST;
         $data['errors'] = $this->validation->getErrors();
@@ -53,7 +56,7 @@ class Courses extends BaseController {
         if($this->coursesModel->edit($id, $_POST)){
           $this->activityLogsModel->addLogs($_SESSION['uid'], 'Edit Course', 'admin/courses', $id);
 
-          $this->session->setFlashData('success_message', 'Sucessfuly edited a course');
+          $this->session->setFlashData('success', 'Sucessfuly edited a course');
         } else {
           $this->session->setFlashData('error_message', 'Something went wrong!');
         }

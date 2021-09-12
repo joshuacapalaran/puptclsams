@@ -26,11 +26,12 @@ class Sections extends BaseController {
       if($this->validate('sections')){
         if( $sectionModel->add($_POST)){
           $this->activityLogsModel->addLogs($_SESSION['uid'], 'Add Sections', 'admin/sections', json_encode($_POST));
-          $this->session->setFlashData('success_message', 'Sucessfuly created a section');
-        } else {
+          $this->session->setFlashData('success', 'Sucessfuly created a section');
+          return redirect()->to(base_url('admin/sections'));
+      } else {
           $this->session->setFlashData('error_message', 'Something went wrong!');
-        }
-        return redirect()->to(base_url('admin/sections'));
+          return redirect()->to(base_url('admin/sections'));
+      }
       } else {
         $data['value'] = $_POST;
         $data['errors'] = $this->validation->getErrors();
@@ -52,10 +53,11 @@ class Sections extends BaseController {
         if($this->sectionsModel->edit($id, $_POST)){
           $this->activityLogsModel->addLogs($_SESSION['uid'], 'Edit Sections', 'admin/sections', $id);
           $this->session->setFlashData('success_message', 'Sucessfuly edited a section');
+          return redirect()->to(base_url('admin/sections'));
         } else {
           $this->session->setFlashData('error_message', 'Something went wrong!');
+          return redirect()->to(base_url('admin/sections'));
         }
-        return redirect()->to(base_url('admin/sections'));
       } else {
         $data['value'] = $_POST;
         $data['errors'] = $this->validation->getErrors();

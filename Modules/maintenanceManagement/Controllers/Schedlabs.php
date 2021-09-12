@@ -37,11 +37,8 @@ class Schedlabs extends BaseController {
 
     
     foreach($holidays as $holiday){
-      if($holiday['status'] == 'c'){
-        $holi[] = date('m/d/Y',strtotime($holiday['date']));
-      }else{
-        $holi[] = date('m/d/Y',strtotime(date('Y').'-'.$holiday['date']));
-        
+      if($holiday['status'] !== 'c'){
+        $holi[] = date('Y-m-d',strtotime(date('Y').'-'.$holiday['date']));
       }
     }
 
@@ -52,17 +49,16 @@ class Schedlabs extends BaseController {
     $data['view'] = 'Modules\MaintenanceManagement\Views\schedlabs\form';
     if($this->request->getMethod() === 'post'){
       if($this->validate('schedlabs')){
-        if(in_array($_POST['date'], $holi )){
+        if(in_array($_POST['date'][0], $holi )){
           $this->session->setFlashData('error', 'You cant add schedule on holiday dates');
           $data['value'] = $_POST;
-          // return redirect()->to(base_url('admin/schedlabs/add'));
+          return redirect()->to(base_url('admin/schedlabs/add'));
         }else{
             foreach($_POST['date'] as $key => $date){
               $_POST['date'] = $date;
               $_POST['start_time'] = $_POST['start_time'][$key];
               $_POST['end_time'] = $_POST['end_time'][$key];
               $schedlabsModel->add($_POST);
-
             }
             $this->activityLogsModel->addLogs($_SESSION['uid'], 'Add Sched lab', 'admin/schedlabs', json_encode($_POST));
             $this->session->setFlashData('success', 'Sucessfuly created a schedlab');

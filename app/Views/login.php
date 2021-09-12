@@ -209,12 +209,19 @@
             alert_success('<?= $_SESSION["success_registered"]; ?>');
         </script>
       <?php endif; ?>
-
+  
       <?php if(isset($_SESSION["success"])): ?>
         <script type="text/javascript">
             alert_success('<?= $_SESSION["success"]; ?>');
         </script>
       <?php endif; ?>
+
+      <?php if(isset($_SESSION["error"])): ?>
+        <script type="text/javascript">
+            alert_error('<?= $_SESSION["error"]; ?>');
+        </script>
+      <?php endif; ?>
+      
         <script type="text/javascript">
           // $(function(){
           //   setTimeout(function(){

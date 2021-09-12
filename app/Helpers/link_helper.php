@@ -91,11 +91,11 @@ if (! function_exists('user_primary_links'))
 
 			
 		}
-		if($_SESSION['rid'] == '2'){
+		if($_SESSION['rid'] == '1' || $_SESSION['rid'] == '2'){
 			echo '<li class="nav-item">';
-			echo '<a href="'.base_url().'/admin/attendance/prof-attendance" class="nav-link '.( (uri_string() == 'prof-attendance') ? "active":" ").'"> ';
+			echo '<a href="'.base_url().'/admin/attendance/prof-attendance" class="nav-link '.( (uri_string() == 'prof-attendance') ? "active":"").'"> ';
 			echo '<i class="nav-icon fas fa-fw fa-clock"></i>';
-			echo ' <p>';
+			echo '<p>';
 			echo 'Professor Attendance';
 			echo '</p>';
 			echo '</a>';

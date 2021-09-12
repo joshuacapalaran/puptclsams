@@ -53,9 +53,9 @@ class Schedsubj extends BaseController {
     $holi = [];
     foreach($holidays as $holiday){
       if($holiday['status'] == 'c'){
-        $holi[] = date('m/d/Y',strtotime($holiday['date']));
+        $holi[] = date('Y-m-d',strtotime($holiday['date']));
       }else{
-        $holi[] = date('m/d/Y',strtotime(date('Y').'-'.$holiday['date']));
+        $holi[] = date('Y-m-d',strtotime(date('Y').'-'.$holiday['date']));
         
       }
     }
@@ -74,7 +74,7 @@ class Schedsubj extends BaseController {
     if($this->request->getMethod() === 'post'){
       if($this->validate('schedsubj')){
      
-        if(in_array($_POST['date'], $holi )){
+        if(in_array($_POST['date'][0], $holi )){
           $this->session->setFlashData('error', 'You cant add schedule on holiday dates');
           // $data['value'] = $_POST;
           return redirect()->to(base_url('admin/schedsubject/add'));

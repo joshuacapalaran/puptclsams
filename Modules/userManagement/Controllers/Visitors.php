@@ -61,34 +61,27 @@ class Visitors extends BaseController
 					
 					if(!empty($schedlab)){
 						if($visitor_total >= $schedlab['num_people']){
-							$_SESSION['error'] = 'You cant login, Laboratory is full';
-							$this->session->markAsFlashdata('error');
+							$this->session->setFlashData('error', 'You cant login, Laboratory is full');
 							return redirect()->to(base_url());
 	
 						}
 					}else{
 						if($model->loginVisitor($_POST))
 						{
-							$_SESSION['success'] = 'You successfuly login as visitor';
-							$this->session->markAsFlashdata('success');
+							$this->session->setFlashData('success', 'You successfuly login as visitor');
 							return redirect()->to(base_url());
 						}
 						else
 						{
-							$_SESSION['error'] = 'You have an error in adding a new record';
-							$this->session->markAsFlashdata('error');
+							$this->session->setFlashData('error', 'You have an error in adding a new record');
 							return redirect()->to(base_url());
 						}
 					
 					
 					}
 					
-					
-					
-					
 				}else{
-					$_SESSION['error'] = 'You already log-in!';
-					$this->session->markAsFlashdata('error');
+					$this->session->setFlashData('error', 'You already log-in!');
 					return redirect()->to(base_url());
 				}
 		 

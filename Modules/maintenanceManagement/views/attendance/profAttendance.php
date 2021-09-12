@@ -24,19 +24,18 @@
             <div class="card">
                 <div class="card-header">
                   <form method="post">
-                  <div class="form-group col-md-6 offset-md-3">
+                    <div class="form-group col-md-6 offset-md-3">
 
-                      <label for="faculty_code" class="form-label">Faculty Code</label><br>
-                      <input name="faculty_code" class="form-control" type="text" autocomplete="on" id="faculty_code" placeholder="Faculty Code" required>
-                  </div>
-                  <div class="col-md-12">
-
-                <center>
-                  <button id="time_in" type="submit" class="btn btn-success m-3">TIME IN</button>
-                  <button id="time_out" type="submit" class="btn btn-danger m-3"> TIME OUT</button>
-                </center>
-                  </div>
-                </form>
+                        <label for="faculty_code" class="form-label">Faculty Code</label><br>
+                        <input name="faculty_code" class="form-control" type="text" autocomplete="on" id="faculty_code" placeholder="Faculty Code" required>
+                    </div>
+                    <div class="col-md-12">
+                      <center>
+                        <button id="time_in" type="submit" class="btn btn-success m-3">TIME IN</button>
+                        <button id="time_out" type="submit" class="btn btn-danger m-3"> TIME OUT</button>
+                      </center>
+                    </div>
+                  </form>
 
                 </div>
                   <!-- /.card-header -->
@@ -74,10 +73,10 @@
                       </tbody>
 
                     </table>
-                  </div>
-              <!-- /.card-body -->
             </div>
+              <!-- /.card-body -->
           </div>
+        </div>
       </div>
 
   </section>
