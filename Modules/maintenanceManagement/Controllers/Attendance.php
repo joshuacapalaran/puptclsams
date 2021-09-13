@@ -127,10 +127,27 @@ class Attendance extends BaseController {
     $schedsubj = new SchedsubjsModel;
     $schedlabs = new SchedlabsModel;
     $professorsModel = new ProfessorsModel();
+ 
+    $data['professors'] = $professorsModel->getProfessors();
 
-    $professor = $professorsModel->getProfessorsByUserId($_SESSION['uid']);
-    $data['attendances'] = $attendanceModel->getAttendancesBySchedsubj($professor['id']);
 
+    if($_SESSION['rid'] == '2'){
+      $professor = $professorsModel->getProfessorsByUserId($_SESSION['uid']);
+      $data['attendances'] = $attendanceModel->getAttendancesBySchedsubj($professor['id']);
+    }else{
+      if($_POST){
+        if(empty($_POST['date'])){
+          $_SESSION['error'] = "Please Select Date";
+          $this->session->markAsFlashdata('error');
+        }
+         $data['attendances'] = $attendanceModel->getAttendancesByFilter($_POST);
+         $data['value'] = $_POST;
+
+      }else{
+        $data['attendances'] = $attendanceModel->getAllAttendanceProf();
+      }
+    }
+    
     $data['view'] = 'Modules\MaintenanceManagement\Views\attendance\profAttendance';
     return view('template/index', $data);
 
@@ -213,7 +230,6 @@ class Attendance extends BaseController {
         $current_date = date('Y-m-d');
      
         $attendance = $attendanceModel->getAttendance($professor['id'],$current_date);
-        print_r($professor);
         if(!empty($attendance)){
             if ($attendance['time_out'] == null) {
               if ($attendanceModel->timeOut($attendance['id'])) {
@@ -244,8 +260,23 @@ class Attendance extends BaseController {
     
 
     $mpdf = new \Mpdf\Mpdf();
-    $professor = $professorsModel->getProfessorsByUserId($_SESSION['uid']);
-    $pdf_data['attendances'] = $attendanceModel->getAttendancesBySchedsubj($professor['id']);
+
+    if($_SESSION['rid'] == '2'){
+      $professor = $professorsModel->getProfessorsByUserId($_SESSION['uid']);
+      $pdf_data['attendances'] = $attendanceModel->getAttendancesBySchedsubj($professor['id']);
+    }else{
+        if($_GET){
+          $data = array();
+          $data['date'] = ($_GET['date'] !== 'undefined') ? $_GET['date']:'';
+          $data['professor_id'] = ($_GET['professor_id'] !== 'undefined') ? $_GET['professor_id']:'';
+          $pdf_data['attendances'] = $attendanceModel->getAttendancesByFilter($data);
+        }else{
+          $pdf_data['attendances'] = $attendanceModel->getAllAttendanceProf();
+
+        }
+       
+    }
+  
     $mpdf->setHTMLHeader('
         <div class="col12" style="padding-left:100px">
             <div class="col6" style=" width:10%;float:left; padding-left:120px;">

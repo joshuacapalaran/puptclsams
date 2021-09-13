@@ -136,13 +136,13 @@ class SchedsubjsModel extends \CodeIgniter\Model {
   }
   
   public function getStudentScheduleForProf($prof_id,$current_day,$current_time){
-    // $this->where('end_time >=',$current_time);
-    // $this->where('start_time <=',$current_time);
+    $this->where('end_time >=',$current_time);
+    $this->where('start_time <=',$current_time);
     $this->where('status', 'a');
     $this->where('category', '1');
     // $this->where('end_time >=','15:18:00');
     // $this->where('start_time <=',' 15:18:00');
-    // $this->where('day', $current_day);
+    $this->where('day', $current_day);
     $this->where('professor_id', $prof_id);
     return $this->first();
   }

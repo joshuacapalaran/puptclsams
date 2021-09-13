@@ -16,7 +16,51 @@
       </div><!-- /.container-fluid -->
     </div>
     <!-- /.content-header -->
+    <section class="content">
+  <div class="container-fluid">
+  <div class="col-12">
+    <div class="card card-outline card-secondary">
+        <div class="card-header">
+          <div class="row">
+            <div class="col-md-12">
+              <form action="<?= base_url("admin/attendance/prof-attendance") ?>" method="post">
+                <div class="row">
+                  <div class="col-md-6">
+                    <div class="form-group">
+                      <label for="schyear_id">Date*</label>
+                      <input type="date" value="<?= isset($value['date']) ? $value['date']:''?>"class="form-control" id="date" name="date">
+                    </div>
 
+
+                  </div>
+                  <div class="col-md-6">
+                  <div class="form-group">
+                      <label class="form-label" for="professor_id"> Professor</label>
+                      <select name="professor_id" id="professor_id" class="form-control">
+                        <option selected disabled>-- Please Select Professor --</option>
+                        <?php foreach($professors as $professor): ?>
+                        <option value="<?= $professor['id'] ?>" <?=   ($professor['id'] == $value['professor_id']) ? 'selected':'' ?>><?= ucwords($professor['last_name']) ?>, <?= ucwords($professor['first_name']) ?> <?= ucwords($professor['m_initial']) ?></option>
+                        <?php endforeach; ?>
+                      <!--  -->
+                      </select>
+                    </div>
+
+
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col-md-10">
+                    <button type="submit" class="btn btn-success">Submit</button>
+                  </div>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+    </div>
+  </div>
+  </div>
+</section>
   <section class="content">
       <div class="container-fluid">
         <div class="row">
@@ -93,6 +137,7 @@
 </script>
 <?php endif;?>
 <script>
+var value =  JSON.parse('<?= json_encode($value);?>');
 
 $(function(){
   $('#attendance').DataTable({
@@ -108,7 +153,12 @@ $(function(){
         {
             text: 'Generate Report',
             action: function ( e, dt, node, config ) {
-                location.href = "<?= base_url('admin/attendance/prof-pdf') ?>";
+                if(value){
+                  location.href = "<?= base_url('admin/attendance/prof-pdf') ?>?date="+value['date']+"&professor_id="+value['professor_id'];
+                }else{
+                  location.href = "<?= base_url('admin/attendance/prof-pdf') ?>";
+
+                }
             }
         }
       ],

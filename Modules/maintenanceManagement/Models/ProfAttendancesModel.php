@@ -63,6 +63,14 @@ class ProfAttendancesModel extends \CodeIgniter\Model
     return $this->findAll();
   }
 
+  public function getAllAttendanceProf(){
+    $this->select('prof_attendance.id as id, professors.f_code,professors.first_name, professors.last_name, professors.m_initial, prof_attendance.time_in, prof_attendance.time_out, prof_attendance.date, prof_attendance.remarks, subjects.subj_name, courses.course_abbrev');
+    $this->join('professors', 'prof_attendance.professor_id = professors.id');
+    $this->join('schedsubjs', 'prof_attendance.schedule_id = schedsubjs.id');
+    $this->join('courses', 'schedsubjs.course_id = courses.id');
+    $this->join('subjects', 'schedsubjs.subject_id = subjects.id');
+    return $this->findAll();
+  }
   public function getAttendancesBySchedlabs($id,$date){
     $this->select('prof_attendance.id as id, students.student_num,students.first_name, students.last_name, students.m_initial, prof_attendance.time_in, prof_attendance.time_out, prof_attendance.date, schedlabs.event_name');
     $this->join('students', 'prof_attendance.professor_id = students.id');
@@ -126,43 +134,19 @@ class ProfAttendancesModel extends \CodeIgniter\Model
   }
 
   public function getAttendancesByFilter($data){
-    $this->select('prof_attendance.id as id, students.student_num,students.first_name, students.last_name, students.m_initial, prof_attendance.time_in,prof_attendance.schedule_id,prof_attendance.faculty_code, prof_attendance.time_out, prof_attendance.date, prof_attendance.remarks');
-    $this->join('students', 'prof_attendance.professor_id = students.id');
+    $this->select('prof_attendance.id as id, professors.f_code,professors.first_name, professors.last_name, professors.m_initial, prof_attendance.time_in, prof_attendance.time_out, prof_attendance.date, prof_attendance.remarks, subjects.subj_name, courses.course_abbrev');
+    $this->join('professors', 'prof_attendance.professor_id = professors.id');
     $this->join('schedsubjs', 'prof_attendance.schedule_id = schedsubjs.id');
-   
+    $this->join('courses', 'schedsubjs.course_id = courses.id');
+    $this->join('subjects', 'schedsubjs.subject_id = subjects.id');
+
     if(!empty($data['date'])){
       $this->where('prof_attendance.date', $data['date']);
     }
 
-    if(!empty($data['subject_id'])){
-      $this->where('prof_attendance.subject_id', $data['subject_id']);
+    if(!empty($data['professor_id'])){
+      $this->where('prof_attendance.professor_id', $data['professor_id']);
     }
-
-    if(!empty($data['section_id'])){
-      $this->where('students.section_id', $data['section_id']);
-    }
-
-    if(!empty($data['course_id'])){
-      $this->where('students.course_id', $data['course_id']);
-    }
-    
-    if(!empty($data['semester_id'])){
-      $this->where('schedsubjs.semester_id', $data['semester_id']);
-    }
-        
-    if(!empty($data['lab_id'])){
-      $this->where('schedsubjs.lab_id', $data['lab_id']);
-    }
-        
-    if(!empty($data['sy_id'])){
-      $this->where('schedsubjs.sy_id', $data['sy_id']);
-    }
-
-    if(!empty($data['start_time']) && !empty($data['end_time'])){
-      $this->where('schedsubjs.start_time', $data['start_time']);
-      $this->where('schedsubjs.end_time', $data['end_time']);
-    }
- 
  
     if(!empty($data['date'])){
       return $this->findAll();

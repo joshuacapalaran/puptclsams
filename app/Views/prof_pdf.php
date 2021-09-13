@@ -35,6 +35,7 @@ td {
                 <th>Time in</th>
                 <th>Time out</th>
                 <th>Subject</th>
+                <th>Course</th>
                 <th>Date</th>
 
             </tr>
@@ -48,6 +49,7 @@ td {
                     <td><?=esc($attendance['time_in'])?></td>
                     <td><?=esc($attendance['time_out'])?></td>
                     <td><?=esc($attendance['subj_name'])?></td>
+                    <td><?=esc($attendance['course_abbrev'])?></td>
                     <td><?=esc($attendance['date'])?></td>
 
                 </tr>

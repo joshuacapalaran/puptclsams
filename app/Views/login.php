@@ -92,7 +92,7 @@
                 <!-- <p><a> Are you visitor? </a></p> -->
                 <br>
 
-                <button id="visitor" style="background-color:rgb(128, 0, 0)"><a data-toggle="modal" data-target="#modal-edit">Are you a visitor?</a></button>
+                <button id="visitor" style="background-color:rgb(128, 0, 0)"><a data-toggle="modal"  data-backdrop="static" data-target="#modal-edit">Are you a visitor?</a></button>
 
                 <p>
                 <a> Don't have an account? </a>
@@ -209,19 +209,12 @@
             alert_success('<?= $_SESSION["success_registered"]; ?>');
         </script>
       <?php endif; ?>
-  
+
       <?php if(isset($_SESSION["success"])): ?>
         <script type="text/javascript">
             alert_success('<?= $_SESSION["success"]; ?>');
         </script>
       <?php endif; ?>
-
-      <?php if(isset($_SESSION["error"])): ?>
-        <script type="text/javascript">
-            alert_error('<?= $_SESSION["error"]; ?>');
-        </script>
-      <?php endif; ?>
-      
         <script type="text/javascript">
           // $(function(){
           //   setTimeout(function(){
