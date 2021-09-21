@@ -92,7 +92,7 @@
                 <!-- <p><a> Are you visitor? </a></p> -->
                 <br>
 
-                <button id="visitor" style="background-color:rgb(128, 0, 0)"><a data-toggle="modal"  data-backdrop="static" data-target="#modal-edit">Are you a visitor?</a></button>
+               <a id="visitor" class="form-group btn btn-success btn-block btn-lg" style="background-color:rgb(128, 0, 0)" data-toggle="modal"   data-backdrop="static" data-target="#modal-visitor">Are you a visitor?</a></button>
 
                 <p>
                 <a> Don't have an account? </a>
@@ -137,7 +137,7 @@
     </div>
     <!-- End Container -->
     <!-- modal -->
-    <div class="modal fade" id="modal-edit">
+    <div class="modal fade" id="modal-visitor">
         <div class="modal-dialog modal-md">
           <div class="modal-content">
             <div class="modal-header">
@@ -147,7 +147,7 @@
               </button>
             </div>
             <div class="card-body">
-              <form action="<?= base_url('admin/visitors/add')?>" method="post" accept-charset="utf-8">
+              <form action="<?= base_url('admin/visitors/login_visitor')?>" method="post" accept-charset="utf-8">
 
                   <div class="col-md-12">
                     <div class="form-group">

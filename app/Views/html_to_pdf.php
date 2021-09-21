@@ -41,9 +41,9 @@ td {
         <thead>
             <tr>
 
-                <th colspan="2">Date</th>
+                <th colspan=2>Date</th>
                 <?php foreach($headers as $header):?>
-                    <th colspan="2"><?= $header['date'];?></th>
+                    <th colspan="3"><?= $header['date'];?></th>
                 <?php endforeach;?>
 
             </tr>
@@ -53,6 +53,7 @@ td {
                 <?php foreach($headers as $header):?>
                     <th>Time in</th>
                     <th>Time out</th>
+                    <th>Remarks</th>
                 <?php endforeach;?>
 
             </tr>
@@ -70,6 +71,7 @@ td {
 
                         <td><?=esc(date('h:i:s A', strtotime($header['time_in'])))?></td>
                         <td><?=esc(($header['time_out']) ? date('h:i:s A', strtotime($header['time_out'])):'')?></td>
+                        <td><?=esc($header['remarks'])?></td>
 
                     <?php endif;?>
 

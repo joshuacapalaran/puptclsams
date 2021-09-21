@@ -24,6 +24,7 @@ $routes->group('admin/visitors', ['namespace' => 'Modules\UserManagement\Control
     $routes->match(['get', 'post'], '/', 'Visitors::index');
     $routes->match(['get', 'post'], 'logout', 'Visitors::logout_visitor');
     $routes->match(['get', 'post'], 'add', 'Visitors::add_visitor');
+    $routes->match(['get', 'post'], 'login_visitor', 'Visitors::login_visitor');
 
 });
 
