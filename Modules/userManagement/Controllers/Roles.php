@@ -32,7 +32,7 @@ class Roles extends BaseController
         $data['roles'] = $model->getRoleWithFunction();
 
         $data['view'] = 'Modules\UserManagement\Views\roles\index';
-        return view('template\index', $data);
+        return view('App\Views\template\index', $data);
     }
 
     public function show_role($id)

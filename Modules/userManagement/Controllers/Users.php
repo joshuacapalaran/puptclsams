@@ -32,7 +32,7 @@ class Users extends BaseController
         $data['users'] = $model->getUsersWithRoles();
 
         $data['view'] = 'Modules\UserManagement\Views\users\index';
-        return view('template\index', $data);
+        return view('App\Views\template\index', $data);
     }
 
 

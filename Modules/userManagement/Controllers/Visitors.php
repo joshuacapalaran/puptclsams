@@ -29,7 +29,7 @@ class Visitors extends BaseController
         $data['visitors'] = $model->getVisitorsLabByDateAttendee($_POST['date'],$_POST['attendee']);
 		$data['rec'] = $_POST;
         $data['view'] = 'Modules\UserManagement\Views\visitors\index';
-        return view('template\index', $data);
+        return view('App\Views\template\index', $data);
     }
 
     public function add_visitor()
